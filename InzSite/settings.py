@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+'''import os
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))'''
 
 
 # Quick-start development settings - unsuitable for production
@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '7da2z2rf^*^j6c7k+007-6mjz!%t_yr0oxb!*s*xxy0y*(y+!d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+'''DEBUG = True'''
 
 TEMPLATE_DEBUG = True
 
@@ -58,14 +58,14 @@ WSGI_APPLICATION = 'InzSite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+'''
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
