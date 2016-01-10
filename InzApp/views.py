@@ -267,6 +267,9 @@ def zaloguj(request):
             request.session["zalogowany_login"] = uzytkownik.login
             request.session["zalogowany_email"] = uzytkownik.email
             request.session["zalogowany_ostatnio"] = str(uzytkownik.data_ostatniego_logowania)
+            c = RequestContext(request, {
+                'foo': 'bar',
+            })
             wynik = {}
             wynik["nazwa"] = 'Logowanie'
             wynik["opis"] = 'Trwa logowanie użytkownika '+uzytkownik.login+' do portalu Thesis.'
@@ -277,7 +280,15 @@ def zaloguj(request):
             }
             return render(request, 'InzApp/wynik.html', kontekst)
         else:
-            return HttpResponse("Bledne haslo!")
+            wynik = {}
+            wynik["nazwa"] = 'Błąd logowania!'
+            wynik["opis"] = 'Błędny login i/lub hasło!'
+            wynik["nazwa_podstrony"] = 'Błąd'
+            wynik["url_przekierowania"] = 'logowanie'
+            kontekst = {
+                'wynik': wynik,		
+            }
+            return render(request, 'InzApp/wynik.html', kontekst)
     else:
         wynik = {}
         wynik["nazwa"] = 'Błąd logowania!'
