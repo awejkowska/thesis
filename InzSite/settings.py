@@ -103,6 +103,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 
 import dj_database_url
+DATABASE_URL = 'sqlite://' + os.path.join(BASE_DIR, 'db.sqlite3')
 DATABASES['default'] =  dj_database_url.config()
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
