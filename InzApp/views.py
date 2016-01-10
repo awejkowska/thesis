@@ -272,7 +272,7 @@ def zaloguj(request):
             })
             wynik = {}
             wynik["nazwa"] = 'Logowanie'
-            wynik["opis"] = 'Trwa logowanie użytkownika '+uzytkownik.login+' do portalu Thesis.'
+            wynik["opis"] = 'Trwa logowanie użytkownika do portalu Thesis.'
             wynik["nazwa_podstrony"] = 'Logowanie'
             wynik["url_przekierowania"] = 'strona_glowna'
             kontekst = {
