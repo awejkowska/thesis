@@ -708,3 +708,6 @@ def usun_publikacje(request, publikacja_id):
         'wynik': wynik,		
     }
     return render(request, 'InzApp/wynik.html', kontekst)
+
+def blad404(request):
+    return render(request, 'InzApp/404.html')
