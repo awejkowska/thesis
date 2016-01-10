@@ -259,7 +259,6 @@ def zaloguj(request):
     haslo = request.POST.get('logowanie_haslo')
     uzytkownicy = Uzytkownik.objects.filter(login__exact = login)
     if uzytkownicy.count() > 0:
-        #
         uzytkownik = Uzytkownik.objects.get(login__exact = login)
         kontekst = { 'zalogowany': uzytkownik }
         haslo_hash = hashlib.sha1(haslo).hexdigest()
@@ -268,15 +267,27 @@ def zaloguj(request):
             request.session["zalogowany_login"] = uzytkownik.login
             request.session["zalogowany_email"] = uzytkownik.email
             request.session["zalogowany_ostatnio"] = str(uzytkownik.data_ostatniego_logowania)
-            #session.save()
-            c = RequestContext(request, {
-                'foo': 'bar',
-            })
-            return HttpResponse("<html><head><meta http-equiv=\"refresh\" content=\"0; url=http://127.0.0.1:8000/InzApp/\"></head><body><h3>Logowanie...</h3></body></html>")#HttpResponse("OK")#render(request, 'InzApp/index.html')#HttpResponseRedirect('/InzApp/')#render(request, 'InzApp/index.html', kontekst)
-        else:
-            return HttpResponse("Bledne haslo!")
-    else:
-        return HttpResponse("Nie ma zarejestrowanego takiego uzytkownika!")
+            wynik = {}
+            wynik["nazwa"] = 'Logowanie'
+            wynik["opis"] = 'Trwa logowanie użytkownika '+uzytkownik.login+' do portalu Thesis.'
+            wynik["nazwa_podstrony"] = 'Logowanie'
+            wynik["url_przekierowania"] = 'strona_glowna'
+            kontekst = {
+                'wynik': wynik,		
+            }
+            return render(request, 'InzApp/wynik.html', kontekst)
+        #else:
+         #   return HttpResponse("Bledne haslo!")
+   # else:
+        wynik = {}
+        wynik["nazwa"] = 'Błąd logowania!'
+        wynik["opis"] = 'Błędny login i/lub hasło!'
+        wynik["nazwa_podstrony"] = 'Błąd'
+        wynik["url_przekierowania"] = 'logowanie'
+        kontekst = {
+            'wynik': wynik,		
+        }
+        return render(request, 'InzApp/wynik.html', kontekst)
 
 def wyloguj(request):
     try:
@@ -289,7 +300,15 @@ def wyloguj(request):
         del request.session["zalogowany_ostatnio"]
     except KeyError:
         pass
-    return HttpResponse("<html><head><meta http-equiv=\"refresh\" content=\"0; url=http://127.0.0.1:8000/InzApp/\"></head><body><h3>Wylogowywanie...</h3></body></html>")#HttpResponse("Zostales wylogowany pomyslnie.")
+    wynik = {}
+    wynik["nazwa"] = 'Wylogowywanie'
+    wynik["opis"] = 'Trwa wylogowywanie użytkownika z portalu Thesis.'
+    wynik["nazwa_podstrony"] = 'Wylogowywanie'
+    wynik["url_przekierowania"] = 'logowanie'
+    kontekst = {
+        'wynik': wynik,		
+    }
+    return render(request, 'InzApp/wynik.html', kontekst)
 
 def dodaj_publikacje(request):
     if "zalogowany_login" not in request.session:
