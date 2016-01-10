@@ -7,5 +7,5 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^InzApp', include('InzApp.urls')),
+    url(r'^$', include('InzApp.urls')), #url(r'^InzApp', include('InzApp.urls')),
 )
