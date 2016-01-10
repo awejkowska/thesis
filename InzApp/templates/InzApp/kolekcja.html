@@ -1,0 +1,147 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Kolekcja: {{ nazwa }}
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Kolekcja: {{ nazwa }}</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>{{ opis }}.</p>
+	{% endblock %}
+	
+	{% block dodatkowe_skrypty %}
+	<script>
+	$(function() {
+		$( ".przenies_do" ).select2();
+	});
+	</script>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(4);
+	</script> 
+	
+	<div>
+	<table>
+		<tr>
+			<td>{{ nazwa }}</td>
+			<td>
+			{% if czy_publiczna == True %}
+				<div class="widocznosc_publiczna">PUBLICZNA</div>
+			{% else %}
+				<div class="widocznosc_prywatna">PRYWATNA</div>
+			{% endif %}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<i class="fa fa-angle-double-left"></i> {{ opis }} <i class="fa fa-angle-double-right"></i>
+			</td>
+		</tr>
+		<tr>
+			<td>utworzono:</td>
+			<td>{{ data_utworzenia|slice:"0:19" }}</td>
+		</tr>
+		<tr>
+			<td>zmodyfikowano:</td>
+			<td>{{ data_modyfikacji|slice:"0:19" }}</td>
+		</tr>
+		<tr>
+			<td>autor:</td>
+			<td>{{ uzytkownik.login }} ({{ uzytkownik.email }})</td>
+		</tr>
+	</table>
+	</div>
+	<br />
+	<div id="lista_publikacji">
+		<table>
+		
+		{% for i in kp %}
+			<tr>
+				<td>
+					<div class="wstega wstega-info">
+					<a class="tooltip" tip="{{ i.id_publikacji.get_rodzaj_display }}" style="color: #ffffff;">
+					{% if i.id_publikacji.rodzaj == 'K' %}
+					<i class="fa fa-book"></i>
+					{% elif i.id_publikacji.rodzaj == 'A' %}
+					<i class="fa fa-newspaper-o"></i>
+					{% elif i.id_publikacji.rodzaj == 'M' %}
+					<i class="fa fa-comments"></i>
+					{% elif i.id_publikacji.rodzaj == 'W' %}
+					<i class="fa fa-globe"></i>
+					{% elif i.id_publikacji.rodzaj == 'R' %}
+					<i class="fa fa-file-text-o"></i>
+					{% endif %}
+					</a>
+					</div>
+					{{ forloop.counter }}. <!-- licznik foreach template-->
+				</td>
+				<td>
+				
+					
+
+					<a href="{% url 'publikacja' i.id_publikacji.id %}" style="font-weight: bold; color: #8c3c55;"> {{ i.id_publikacji.tytul }} </a> <br> 
+					{{ i.id_publikacji.autor }}<br />
+					{{ i.id_publikacji.opis }} <br />
+					<i class="fa fa-tags"></i> {{ i.id_publikacji.slowa_kluczowe }}
+					
+					
+					
+				</td>
+				<td>
+					<div class="widocznosc_publiczna" style="background: #4B6BAF; ">
+					<a class="tooltip" tip="{{ i.id_publikacji.dziedzina }}" style="color: #ffffff; ">
+					{{ i.id_publikacji.dziedzina.skrot|upper }}
+					</a>
+					</div>
+					
+					<div class="widocznosc_publiczna" style="background: #4B6BAF; ">
+					<a class="tooltip" tip="język {{ i.id_publikacji.jezyk }}" style="color: #ffffff; ">
+					{{ i.id_publikacji.jezyk.skrot|upper }}
+					</a>
+					</div>
+				</td>
+				<td style="width: 250px;">
+					<a href="{% url 'usun_publikacje_z_kolekcji' kolekcja i.id_publikacji.id %}" onClick="return confirm('Czy na pewno chcesz usunąć tą publikację z kolekcji?');" class="tooltip" tip="Usuń z kolekcji">
+					<i class="fa fa-trash"></i></a> 
+					<a class="tooltip" tip="Przenieś do kolekcji"><i class="fa fa-hand-o-right"></i></a>
+					<select class="przenies_do">
+					{% for kolekcja in moje_kolekcje %}
+					<option value="{{ kolekcja.id }}">{{ kolekcja.nazwa_kolekcji }}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+		
+		{% endfor %}
+		
+		</table>
+	</div>
+	<br />
+	
+	<a href="{% url 'dodaj_publikacje_do_kolekcji' kolekcja %}">
+	<i class="fa fa-plus-square"></i>
+	Dodaj publikację do kolekcji</a>
+	<br />
+	
+	
+	<i class="fa fa-sticky-note-o" style="padding-left: 3px;"></i>
+	Wygeneruj bibliografię z kolekcji: 
+	<a href="{% url 'bibliografia' kolekcja 1 %}">Harvard</a> | 
+	<a href="{% url 'bibliografia' kolekcja 2 %}">IEEE</a> | 
+	<a href="{% url 'bibliografia' kolekcja 3 %}">Bibtex</a>
+	
+	{% endblock %}
+	
+	
+	
+	

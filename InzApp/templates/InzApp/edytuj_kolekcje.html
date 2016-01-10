@@ -1,0 +1,62 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Edytuj kolekcję: {{ nazwa }}
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Edytuj kolekcję: {{ kolekcja.nazwa_kolekcji }}</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>Tutaj możesz edytować szczegóły dotyczące Twojej kolekcji.</p>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(5);
+	</script> 
+	
+	<div>
+		<table>
+			<form action="{% url 'edytuj_kolekcje_zapisz' %}" method="post"> 
+				{% csrf_token %}
+				<input type="hidden" name="edytuj_kolekcje_id_uzytkownika" 
+					value="{{ zalogowany.id }}">
+				<input type="hidden" name="edytuj_kolekcje_id" 
+					value="{{ kolekcja.id }}">
+				<tr>
+					<td colspan="2">
+					Utworzono: {{ kolekcja.data_utworzenia }}<br>
+					Zmodyfikowano: {{ kolekcja.data_modyfikacji }}
+					</td>
+				</tr>
+				<tr>
+					<td>Nazwa</td>
+					<td><input type="text" name="edytuj_kolekcje_nazwa" value="{{ kolekcja.nazwa_kolekcji }}"></td>
+				</tr>
+				<tr>
+					<td>Opis</td>
+					<td><input type="text" name="edytuj_kolekcje_opis" value="{{ kolekcja.opis }}"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="checkbox" name="edytuj_kolekcje_czy_publiczna" 
+					{% if kolekcja.czy_publiczna == True %}
+					checked
+					{% endif %}
+					> publiczna</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Zapisz zmiany"></td>
+				</tr>
+			</form>
+		</table>
+	</div>
+	{% endblock %}

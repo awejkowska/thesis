@@ -1,0 +1,77 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Moje publikacje
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Moje publikacje</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>Lista moich publikacji.</p>
+	{% endblock %}
+	
+	{% block dodatkowe_skrypty %}
+	<script>
+	$(document).ready(function() { 
+    	$("#moje_publikacje").tablesorter({
+    	sortList: [[1,0]] 
+    	});
+		} 
+	); 
+	</script>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(2);
+	</script> 
+	
+	<div>
+		<table class="tablesorter" id="moje_publikacje"> 
+			<thead>
+			<tr>
+				<th>#</th>
+				<th>Tytuł</th>
+				<th>Autor</th>
+				<th>Rodzaj</th>
+				<th>Dziedzina</th>
+				<th>Język</th>
+				<th>Widoczność</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for publikacja in publikacje %}
+			<tr>
+				<td>{{ forloop.counter }}</td>
+				<td>{{ publikacja.tytul }}</td>
+				<td>{{ publikacja.autor.imie }} {{ publikacja.autor.nazwisko }}</td>
+				<td>{{ publikacja.get_rodzaj_display }}</td>
+				<td>{{ publikacja.dziedzina }}</td>
+				<td>{{ publikacja.jezyk }}</td>
+				<td>
+					{% if publikacja.czy_publiczna == True %}
+						<div class="widocznosc_publiczna">PUBLICZNA</div>
+					{% else %}
+						<div class="widocznosc_prywatna">PRYWATNA</div>
+					{% endif %}
+				</td>
+				<td>
+					<a href="{% url 'publikacja' publikacja.id %}"><i class="fa fa-eye"></i> Zobacz</a>
+					<a href="{% url 'usun_publikacje' publikacja.id %}"><i class="fa fa-pencil"></i> Edytuj</a>
+					<a href="{% url 'usun_publikacje' publikacja.id %}"><i class="fa fa-trash-o"></i> Usuń</a>
+				</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{% endblock %}
+	

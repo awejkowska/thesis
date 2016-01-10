@@ -1,0 +1,230 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Dodaj nową publikację
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Dodaj nową publikację</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>Tutaj możesz dodać nową publikację naukową.</p>
+	{% endblock %}
+	
+	{% block dodatkowe_skrypty %}
+	<script>
+	$(function() {
+		$( "#nowa_publikacja_data_wydania" ).datepicker();
+		$( "#nowa_publikacja_data_publikacji" ).datepicker();
+		$( "#nowa_publikacja_data_konferencji" ).datepicker();
+		$( "#nowa_publikacja_data_odwiedzin" ).datepicker();
+	});
+	$(function() {
+		$( "#dodaj_publikacje_autor" ).select2();
+		$( "#dodaj_publikacje_dziedzina" ).select2();
+		$( "#dodaj_publikacje_jezyk" ).select2();
+		$( "#dodaj_publikacje_rodzaj" ).select2();
+		$( "#nowa_publikacja_id_ksiazki" ).select2();
+	});
+	</script>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(3);
+	</script> 
+	
+	<div class="dodaj_publikacje_form" onLoad="ustaw_pola_formularza_dodawania_publikacji_wg_rodzaju();">
+		<table id="tabela_dodaj_publikacje">
+			<form action="{% url 'dodaj_nowa_publikacje' %}" method="post"
+			onSubmit="return sprawdz_formularz_dodaj_publikacje();">
+				{% csrf_token %}
+				<input type="hidden" name="nowa_publikacja_utworzyl" 
+					value="{{ zalogowany.login }}">
+				<input type="hidden" name="nowa_publikacja_zmodyfikowal" 
+					value="{{ zalogowany.id }}">
+				<tr>
+					<td>Tytuł</td>
+					<td><input type="text" name="nowa_publikacja_tytul" id="nowa_publikacja_tytul" class="pole_tekstowe" style="width: 500px;"></td>
+				</tr>
+				<tr>
+					<td>Autor</td>
+					<td>
+						<select id="dodaj_publikacje_autor" name="dodaj_publikacje_autor" style="width: 500px;">
+						<option value="wybierz">Wybierz autora...</option>
+						{% for a in autorzy %}
+						<option value="{{ a.id }}">{{ a }}</option>
+						{% endfor %}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Dziedzina</td>
+					<td>
+						<select id="dodaj_publikacje_dziedzina" name="dodaj_publikacje_dziedzina" style="width: 500px;">
+						<option value="wybierz">Wybierz dziedzinę...</option>
+						{% for d in dziedziny %}
+						<option value="{{ d.id }}">{{ d.nazwa }}</option>
+						{% endfor %}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Język</td>
+					<td>
+						<select id="dodaj_publikacje_jezyk" name="dodaj_publikacje_jezyk" style="width: 250px;">
+						<option value="wybierz">Wybierz język...</option>
+						{% for j in jezyki %}
+						<option value="{{ j.id }}">{{ j.nazwa }}</option>
+						{% endfor %}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Rodzaj</td>
+					<td>
+						<select id="dodaj_publikacje_rodzaj" name="dodaj_publikacje_rodzaj" 
+						onChange="ustaw_pola_formularza_dodawania_publikacji_wg_rodzaju();" style="width: 250px;">
+						<option value="wybierz">Wybierz rodzaj...</option>
+						{% for r in rodzaje %}
+						<option value="{{ r.0 }}">{{ r.1 }}</option>
+						{% endfor %}
+						</select>
+					</td>
+				</tr>
+				
+				<!-- if ksiazka -->
+				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
+					<td>Data wydania</td>
+					<td><input type="text" name="nowa_publikacja_data_wydania" id="nowa_publikacja_data_wydania"class="pole_tekstowe" /></td>
+				</tr>
+				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
+					<td>Wydawnictwo</td>
+					<td><input type="text" name="nowa_publikacja_wydawnictwo" class="pole_tekstowe" /></td>
+				</tr>
+				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
+					<td>Format</td>
+					<td>
+					<input type="text" name="nowa_publikacja_format" class="pole_tekstowe" 
+					placeholder="np. B5, A5 lub 125x200"/>
+					<a tip="Podaj standardowy format lub wprowadź inny wymiar w milimetrach." class="tooltip">
+					<i class="fa fa-question-circle"></i>
+					</a>
+					<!-- 
+					http://grafmag.pl/artykuly/w-swiecie-typografii-podstawowe-zasady-skladu-i-lamania-tekstu-wybor-formatu/
+					
+					https://pl.wikipedia.org/wiki/Format_arkusza
+					
+					-->
+					</td>
+				</tr>
+				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
+					<td>Ilość stron</td>
+					<td><input type="text" name="nowa_publikacja_ilosc_stron" class="pole_tekstowe" /></td>
+				</tr>
+				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
+					<td>ISBN</td>
+					<td>
+					<input type="text" name="nowa_publikacja_isbn" maxlength="13" class="pole_tekstowe" />
+					<a tip="Wprowadż 13- lub 10-cyfrowy ISBN bez oddzielania cyfr myślnikami." class="tooltip">
+					<i class="fa fa-question-circle"></i>
+					</a>
+					</td>
+				</tr>
+				
+				<!-- else if artykul -->
+				<tr class="dodaj_publikacje_artykul" style="display: none;">
+					<td>Data publikacji</td>
+					<td><input type="text" name="nowa_publikacja_data_publikacji" id="nowa_publikacja_data_publikacji" class="pole_tekstowe" /></td>
+				</tr>
+				<tr class="dodaj_publikacje_artykul" style="display: none;">
+					<td>Czasopismo</td>
+					<td><input type="text" name="nowa_publikacja_czasopismo" class="pole_tekstowe" /></td>
+				</tr>
+				<tr class="dodaj_publikacje_artykul" style="display: none;">
+					<td>Zakres stron</td>
+					<td><input type="text" name="nowa_publikacja_zakres_stron" class="pole_tekstowe" /></td>
+				</tr>
+				
+				<!-- else if materialy -->
+				<tr class="dodaj_publikacje_materialy" style="display: none;">
+					<td>Nazwa konferencji</td>
+					<td><input type="text" name="nowa_publikacja_nazwa_konferencji" class="pole_tekstowe" /></td>
+				</tr>
+				<tr class="dodaj_publikacje_materialy" style="display: none;">
+					<td>Data konferencji</td>
+					<td><input type="text" name="nowa_publikacja_data_konferencji" id="nowa_publikacja_data_konferencji" class="pole_tekstowe"/></td>
+				</tr>
+				
+				<!-- else if witryna -->
+				<tr class="dodaj_publikacje_witryna" style="display: none;">
+					<td>Właściciel</td>
+					<td><input type="text" name="nowa_publikacja_wlasciciel" class="pole_tekstowe" /></td>
+				</tr>
+				<tr class="dodaj_publikacje_witryna" style="display: none;">
+					<td>Adres URL</td>
+					<td><input type="text" name="nowa_publikacja_adres_url" class="pole_tekstowe" /></td>
+				</tr>
+				<tr class="dodaj_publikacje_witryna" style="display: none;">
+					<td>Data odwiedzin</td>
+					<td><input type="text" name="nowa_publikacja_data_odwiedzin" id="nowa_publikacja_data_odwiedzin" class="pole_tekstowe" /></td>
+					<!-- DateTimeField !!! -->
+				</tr>
+				
+				<!-- else if rozdzial -->
+				<tr class="dodaj_publikacje_rozdzial" style="display: none;">
+					<td>Książka</td>
+					<td>
+						<select name="nowa_publikacja_id_ksiazki"
+						id="nowa_publikacja_id_ksiazki" style="width: 500px;">
+						<option value="wybierz">Wybierz książkę...</option>
+						{% for k in ksiazki %}
+						<option value="{{ k.id }}">{{ k.tytul }} ({{ k.autor.imie }} {{ k.autor.nazwisko }})</option>
+						{% endfor %}
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr>
+					<td>Opis</td>
+					<td><input type="text" name="nowa_publikacja_opis" class="pole_tekstowe" /></td>
+				</tr>
+				<tr>
+					<td>Słowa kluczowe</td>
+					<td>
+					<input type="text" name="nowa_publikacja_slowa_kluczowe" class="pole_tekstowe" />
+					<a tip="Wprowadź słowa kluczowe oddzielając je przecinkami." class="tooltip">
+					<i class="fa fa-question-circle"></i>
+					</a>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="checkbox" name="nowa_publikacja_czy_publiczna"> publiczna</td>
+				</tr>
+				<tr>
+					<td>URL</td>
+					<td><input type="text" name="nowa_publikacja_url" class="pole_tekstowe" /></td>
+				</tr>
+				<tr>
+					<td>Plik</td>
+					<td><input type="file" name="nowa_publikacja_plik" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Dodaj"></td>
+				</tr>
+			</form>
+		</table>
+	</div>
+	{% endblock %}
+	

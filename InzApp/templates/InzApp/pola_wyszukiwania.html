@@ -1,0 +1,89 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Pola wyszukiwania
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Pola wyszukiwania</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>Tutaj możesz wyszukać publikacje.</p>
+	{% endblock %}
+	
+	{% block dodatkowe_skrypty %}
+	<script>
+	$(function() {
+		$( "#p_dziedzina" ).select2();
+		$( "#p_jezyk" ).select2();
+		$( "#p_rodzaj" ).select2();
+	});
+	</script>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(1);
+	</script> 
+	
+	<div>
+		<table>
+			<form action="{% url 'wyniki_wyszukiwania' %}" method="POST" target="_blank">
+				<tr>
+					<td>
+						<input type="text" placeholder="tytuł" name="p_tytul" />
+					</td>
+					<td>
+						<input type="text" placeholder="autor" name="p_autor" />
+					</td>
+					<td>
+						<select name="p_rodzaj" id="p_rodzaj">
+						<option value="dowolny">dowolny rodzaj</option>
+						{% for r in rodzaje %}
+						<option value="{{ r.0 }}">{{ r.1 }}</option>
+						{% endfor %}
+						</select>
+					</td>
+					<td>
+						<select name="p_dziedzina" id="p_dziedzina" style="width: 200px;">
+						<option value="dowolny">dowolna dziedzina</option>
+						{% for d in dziedziny %}
+						<option value="{{ d.id }}">{{ d.nazwa }}</option>
+						{% endfor %}
+						</select>
+					</td>
+					<td>
+						<select name="p_jezyk" id="p_jezyk" style="width: 150px;">
+						<option value="dowolny">dowolny język</option>
+						{% for j in jezyki %}
+						<option value="{{ j.id }}">{{ j.nazwa }}</option>
+						{% endfor %}
+						</select>
+					</td>
+					<td>
+						<input type="text" placeholder="słowo kluczowe" name="p_kluczowe" />
+					</td>
+					<td>
+						<input type="text" placeholder="opis" name="p_opis" />
+					</td>
+					<td>
+						<input type="submit" value="Szukaj" />
+					</td>
+					<td></td>
+					
+				</tr>
+				<input type="hidden" name="zalogowany" 
+					value="{{ zalogowany.id }}">
+				{% csrf_token %}
+			</form>
+		</table>
+		
+	</div>
+	{% endblock %}
+	

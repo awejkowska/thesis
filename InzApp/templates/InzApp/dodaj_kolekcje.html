@@ -1,0 +1,51 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Dodaj nową kolekcję
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Dodaj nową kolekcję</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>Tutaj możesz stworzyć swoją nową kolekcję, w której później umieścisz ulubione publikacje naukowe.</p>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(6);
+	</script> 
+	
+	<div>
+		<table>
+			<form action="{% url 'dodaj_nowa_kolekcje' %}" method="post">
+				{% csrf_token %}
+				<input type="hidden" name="nowa_kolekcja_id_uzytkownika" 
+					value="{{ zalogowany.id }}">
+				<tr>
+					<td>Nazwa</td>
+					<td><input type="text" name="nowa_kolekcja_nazwa" required></td>
+				</tr>
+				<tr>
+					<td>Opis</td>
+					<td><input type="text" name="nowa_kolekcja_opis"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="checkbox" name="nowa_kolekcja_czy_publiczna"> publiczna</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Dodaj"></td>
+				</tr>
+			</form>
+		</table>
+	</div>
+	{% endblock %}
+	

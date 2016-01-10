@@ -1,0 +1,38 @@
+<html>
+<head>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'InzApp/style.css' %}" />
+	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+	<title>InzApp</title>
+</head>
+<body>
+	<div class="kontener">
+	
+		<div id="menu">
+		<ul id="menu_lista">
+		<li><a href="#">Strona główna</a></li>
+		<li><a href="#">Publikacje</a></li>
+		<li><a href="#">-- Dodaj publikacje</a></li>
+		<li><a href="{% url 'moje_kolekcje' %}">Moje kolekcje</a></li>
+		<li><a href="#">-- Dodaj kolekcje</a></li>
+		<li><a href="/profil">Mój profil</a></li>
+		</ul>
+		</div>
+		<div id="sekcja">
+		hello
+		</div>
+		<div id="sekcja">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur faucibus tristique dolor, eget efficitur odio fringilla at. Fusce molestie venenatis nibh, et dictum turpis. Ut semper magna ac pellentesque porttitor. Ut eu dui pharetra, feugiat massa ac, congue magna. Praesent pellentesque, arcu at hendrerit semper, tellus ante rhoncus quam, eu venenatis est lorem ut ante. Nulla eget interdum augue, sollicitudin ullamcorper eros. Quisque bibendum ligula at augue malesuada, id ultricies justo venenatis. Aliquam tincidunt non elit id viverra. Mauris in ante eget odio mattis dapibus. Donec mauris augue, rutrum sed sodales vitae, posuere sed augue. Cras feugiat lacinia dictum. Phasellus at nunc dui. Sed eros justo, 
+		</div>
+		<div id="sekcja">
+		{% block strona %}{% endblock %}
+		</div>
+	</div>
+	<div id="stopka">
+	(c) 2015
+	</div>
+</body>
+</html>

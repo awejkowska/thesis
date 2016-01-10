@@ -1,0 +1,70 @@
+<html style="background-color: #af4b6b;">
+<head>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'InzApp/style.css' %}" />
+	
+	<link rel="stylesheet" href="{% static 'InzApp/font-awesome-4.5.0/css/font-awesome.min.css' %}">
+	
+	<script type="text/javascript" src="{% static 'InzApp/javascript.js' %}" ></script>
+	
+	<meta charset="utf-8">
+	
+	<meta http-equiv="refresh" content="3; url={% url wynik.url_przekierowania %}">
+	
+	<title>Thesis | {{ wynik.nazwa_podstrony }}</title>
+	
+	<script type="text/javascript">
+	function odliczanie() {
+		var l = document.getElementById('licznik');
+		l.innerHTML = parseInt(l.innerHTML)-1;
+	}
+	setInterval(function(){ odliczanie(); },1000);
+	</script>
+	
+</head>
+<body style="background-color: #af4b6b;">
+	<div>
+		<table class="okno_logowania" style="width: 500px; text-align: center;">
+			
+				<tr>
+					<td>
+						<h4 style="color: #4B6BAF;">{{ wynik.nazwa }}</h4>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						{{ wynik.opis }}
+					</td>
+				</tr>
+				<tr>
+					<td> &nbsp; </td>
+				</tr>
+				<tr>
+					<td>
+						<i class="fa fa-spinner fa-spin fa-3x"></i>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Przekierowanie nastąpi za <span id="licznik">3</span>...
+					</td>
+				</tr>
+				<tr>
+					<td> &nbsp; </td>
+				</tr>
+				<tr>
+					<td>
+						<button onClick="document.location={% url 'strona_glowna' %}"><i class="fa fa-home"></i> Strona główna</button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button onClick="document.location={% url wynik.url_przekierowania %}"><i class="fa fa-arrow-left"></i> Powrót</button>
+					</td>
+				</tr>
+				
+		</table>
+	</div>
+</body>
+</html>
+	

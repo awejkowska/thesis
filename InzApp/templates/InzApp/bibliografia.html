@@ -1,0 +1,40 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Bibliografia
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Bibliografia</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>Witaj na podstronie z bibliografią.</p>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(5);
+	</script> 
+	
+	<div>
+		Bibliografia typu 
+		{% if typ == '1' %}
+		Havrard
+		{% elif typ == '2' %}
+		IEEE
+		{% elif typ == '3' %}
+		Bibtex
+		{% endif %}
+		<br /><br />
+		{% for pozycja in bibliografia_lista %}
+		{{ pozycja.0 }} <i>{{ pozycja.1 }}</i> {{ pozycja.2 }}<br />
+		{% endfor %}
+	</div>
+	{% endblock %}
+	

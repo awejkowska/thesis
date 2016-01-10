@@ -1,0 +1,159 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Publikacja: {{ tytul }}
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Publikacja</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>{{ rodzaj }}, nauki {{ dziedzina }}.</p>
+	{% endblock %}
+	
+	{% block dodatkowe_skrypty %}
+	<script>
+	$(function() {
+		$( "#publikacja_dodaj_do_kolekcji_kolekcja" ).select2();
+	});
+	</script>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(1);
+	</script> 
+	
+	<!--{{ czy_publiczna }}-->
+	
+	<h3>{{ tytul }}</h3>
+	<i>{{ autor }}</i>
+	<br><br>
+
+	<table>
+	<tr> 
+		<td>Rodzaj:</td>
+		<td>{{ rodzaj }} 
+			{% if rodzaj_skrot == 'R' %}
+				<a href="{% url 'publikacja' o_publikacji.id_ksiazki.id_publikacji.id %}">
+				{{ o_publikacji.id_ksiazki.id_publikacji.tytul }}</a>
+			{% endif %}
+		</td>
+	</tr>
+	<tr> 
+		<td>Dziedzina:</td>
+		<td>nauki {{ dziedzina }}</td>
+	</tr>
+	<tr> 
+		<td>Jezyk:</td>
+		<td>{{ jezyk }} </td>
+	</tr>
+	<tr> 
+		<td>Opis:</td>
+		<td>{{ opis }} </td>
+	</tr>
+	<tr> 
+		<td>Slowa kluczowe:</td>
+		<td>{{ slowa_kluczowe }}</td>
+	</tr>
+	
+	{% if rodzaj_skrot == 'K' %}
+	<tr>
+		<td>Data wydania:</td>
+		<td>{{ o_publikacji.data_wydania.day }}.{{ o_publikacji.data_wydania.month }}.{{ o_publikacji.data_wydania.year }}</td>
+	</tr>
+	<tr>
+		<td>Wydawnictwo:</td>
+		<td>{{ o_publikacji.wydawnictwo }}</td>
+	</tr>
+	<tr>
+		<td>Ilosc stron:</td>
+		<td>{{ o_publikacji.ilosc_stron }}</td>
+	</tr>
+	<tr>
+		<td>Format:</td>
+		<td>{{ o_publikacji.format }}</td>
+	</tr>
+	<tr>
+		<td>ISBN:</td>
+		<td>{{ o_publikacji.isbn }}</td>
+	</tr>
+	{% elif rodzaj_skrot == 'A' %}
+	<tr>
+		<td>Data publikacji:</td>
+		<td>{{ o_publikacji.data_publikacji.day }}.{{ o_publikacji.data_publikacji.month }}.{{ o_publikacji.data_publikacji.year }}</td>
+	</tr>
+	<tr>
+		<td>Czasopismo:</td>
+		<td>{{ o_publikacji.czasopismo }}</td>
+	</tr>
+	<tr>
+		<td>Zakres stron:</td>
+		<td>{{ o_publikacji.zakres_stron }}</td>
+	</tr>
+	{% elif rodzaj_skrot == 'M' %}
+	<tr>
+		<td>Nazwa konferencji:</td>
+		<td>{{ o_publikacji.nazwa_konferencji }}</td>
+	</tr>
+	<tr>
+		<td>Data konferencji:</td>
+		<td>{{ o_publikacji.data_konferencji.day }}.{{ o_publikacji.data_konferencji.month }}.{{ o_publikacji.data_konferencji.year }}</td>
+	</tr>
+	{% elif rodzaj_skrot == 'W' %}
+	<tr>
+		<td>Właściciel:</td>
+		<td>{{ o_publikacji.wlasciciel }}</td>
+	</tr>
+	<tr>
+		<td>Adres URL:</td>
+		<td><a href="{{ o_publikacji.adres_URL }}" target="blank">{{ o_publikacji.adres_URL }}</a></td>
+	</tr>
+	<tr>
+		<td>Data odwiedzin:</td>
+		<td>{{ o_publikacji.data_odwiedzin }}</td>
+	</tr>
+	{% endif %}
+	
+	<tr>
+		<td>Utworzono:</td>
+		<td>{{ utworzyl }} {{ data_utworzenia|slice:"0:19" }}</td>
+	</tr>
+	<tr>
+		<td>Zmodyfikowano:</td>
+		<td>{{ zmodyfikowal.login }} {{ data_modyfikacji|slice:"0:19" }}</td>
+	</tr>
+	<!--
+	<tr>
+		<td>Ilość odsłon:</td>
+		<td>{{ ilosc_odslon }}</td>
+	</tr>
+	-->
+	</table>
+	
+	<div id="publikacja_dodaj_do_kolekcji" style="display: none;">
+		<form method="post" action="{% url 'dodaj_publikacje_do_kolekcji_z_publikacji' %}">
+			{% csrf_token %}
+			<select name="publikacja_dodaj_do_kolekcji_kolekcja"
+			 id="publikacja_dodaj_do_kolekcji_kolekcja" style="width: 500px;">
+				{% for kolekcja in kolekcje %}
+				<option value="{{ kolekcja.id }}">{{ kolekcja.nazwa_kolekcji }}</option>
+				{% endfor %}
+			</select>
+			<input type="hidden" name="publikacja_dodaj_do_kolekcji_publikacja" value="{{ id }}" />
+			<input type="submit" value="+" />
+		</form>
+	</div>
+	<div>
+		<button onClick="return pokaz_dodawanie_do_kolekcji();">Dodaj do kolekcji</button>
+	</div>
+	
+	{% endblock %}
+
+	

@@ -1,0 +1,49 @@
+<html>
+<head>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'InzApp/style.css' %}" />
+	
+	<link rel="stylesheet" href="{% static 'InzApp/font-awesome-4.5.0/css/font-awesome.min.css' %}">
+	
+	<script type="text/javascript" src="{% static 'InzApp/javascript.js' %}" ></script>
+	
+	<meta charset="utf-8">
+	<title>Thesis | Logowanie</title>
+	
+</head>
+<body>
+	<div>
+		<table class="okno_logowania">
+			<form action="{% url 'zaloguj' %}" method="post"
+				name="logowanie_formularz">
+				{% csrf_token %}
+				<tr>
+					<td colspan="2" style="text-align: center;">
+						<img src="{% static "images/logo.png" %}" alt="LOGO"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><h4 style="text-align: center; color: #af4b6b;">Logowanie</h4></td>
+				</tr>
+				<tr>
+					<td>Login</td>
+					<td><input type="text" name="logowanie_login" id="logowanie_login" required></td>
+				</tr>
+				<tr>
+					<td>Hasło</td>
+					<td><input type="password" name="logowanie_haslo" id="logowanie_haslo" required></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" class="primary" value="Zaloguj"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><a href="{% url 'rejestracja' %}" >Zarejestruj</a></td>
+				</tr>
+			</form>
+		</table>
+	</div>
+
+</body>
+</html>

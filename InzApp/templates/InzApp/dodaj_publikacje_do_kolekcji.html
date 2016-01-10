@@ -1,0 +1,59 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Dodaj publikację do kolekcji
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Dodaj publikację do kolekcji: {{ kolekcja.nazwa_kolekcji }}</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>Tutaj możesz dołączyć publikację do swojej kolekcji.</p>
+	{% endblock %}
+	
+	{% block dodatkowe_skrypty %}
+	<script>
+	$(function() {
+		$( "#publikacja_do_kolekcji_id_publikacji" ).select2();
+	});
+	</script>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(5);
+	</script> 
+	
+	<div>
+		<table>
+			<form action="{% url 'dodaj_nowa_publikacje_do_kolekcji' %}" method="post">
+				{% csrf_token %}
+				<input type="hidden" name="publikacja_do_kolekcji_id_uzytkownika" 
+					value="{{ zalogowany.id }}" />
+				<input type="hidden" name="publikacja_do_kolekcji_id_kolekcji" 
+					value="{{ kolekcja.id }}" />
+				<tr>
+					<td>Wybierz publikację</td>
+					<td>
+						<select name="publikacja_do_kolekcji_id_publikacji"
+							id="publikacja_do_kolekcji_id_publikacji">
+							{% for publikacja in publikacje %}
+							<option value="{{ publikacja.id }}">
+							{{ publikacja.tytul }} ({{ publikacja.autor.imie }} {{ publikacja.autor.nazwisko }})
+							</option>
+							{% endfor %}
+						</select>
+					</td>
+					<td><input type="submit" value="Dodaj"></td>
+				</tr>
+			</form>
+		</table>
+	</div>
+	{% endblock %}
+	

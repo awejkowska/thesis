@@ -1,0 +1,81 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Użytkownicy
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Użytkownicy</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>Tutaj możesz zarządzać użytkownikami aplikacji.</p>
+	{% endblock %}
+	
+	{% block dodatkowe_skrypty %}
+	<script>
+	$(document).ready(function() { 
+    	$("#uzytkownicy").tablesorter({
+			sortList: [[0,0]],
+    	});
+		} 
+	); 
+	</script>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		//ustaw_aktywny_w_menu(7);
+	</script> 
+	
+	<div>
+		<table class="tablesorter" id="uzytkownicy"> 
+			<thead>
+			<tr>
+				<th>Login</th>
+				<th>E-mail</th>
+				<th>Data ostatniego logowania</th>
+				<th>Data rejestracji</th>
+				<th>Data modyfikacji</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for uzytkownik in lista_uzytkownikow %}
+			<tr>
+				<td style="font-weight: bold;">
+					{{ uzytkownik.login }}
+					{% if uzytkownik.jest_administratorem == True %}
+					<i class="fa fa-star-o" title="administrator"></i> 
+					{% endif %}
+				</td>
+				<td>{{ uzytkownik.email }}</td>
+				<td>
+					{{ uzytkownik.data_ostatniego_logowania|date:'Y-m-d H:i:s' }}
+					({{ uzytkownik.data_ostatniego_logowania|timesince }} temu)
+				</td>
+				<td>{{ uzytkownik.data_rejestracji|date:'Y-m-d H:i' }}</td>
+				<td>{{ uzytkownik.data_modyfikacji|date:'Y-m-d H:i' }}</td>
+				<td>
+					{% if uzytkownik.zablokowany == True %}
+					<a href="{% url 'zablokuj' uzytkownik.id 0 %}">
+						<i class="fa fa-lock"></i> Odblokuj 
+					</a>
+					{% else %}
+					<a href="{% url 'zablokuj' uzytkownik.id 1 %}">
+						<i class="fa fa-unlock"></i> Zablokuj 
+					</a>
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{% endblock %}
+	

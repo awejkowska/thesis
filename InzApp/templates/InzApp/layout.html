@@ -1,0 +1,102 @@
+<html>
+<head>
+	{% load i18n %}
+	{% get_current_language as LANGUAGE_CODE %}
+	
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'InzApp/style.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'InzApp/jquery-style.css' %}" />
+	<!--<link rel="stylesheet" type="text/css" href="{% static 'InzApp/jquery-ui.css' %}" />-->
+	<link rel="stylesheet" type="text/css" href="{% static 'InzApp/datepicker_calendar.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'InzApp/select2.css' %}" />
+	
+	<link rel="stylesheet" href="{% static 'InzApp/font-awesome-4.5.0/css/font-awesome.min.css' %}">
+	
+	<script type="text/javascript" src="{% static 'InzApp/javascript.js' %}" ></script>
+	<script type="text/javascript" src="{% static 'InzApp/jquery-1.11.3.js' %}"></script>
+	<script type="text/javascript" src="{% static 'InzApp/jquery-1.11.3.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'InzApp/jquery-ui.js' %}"></script>
+	<script type="text/javascript" src="{% static 'InzApp/jquery.tablesorter.js' %}"></script> 
+	<script type="text/javascript" src="{% static 'InzApp/select2.full.js' %}"></script> 
+	
+	<script>
+	function ustawSzerokoscPrawy() 
+	{
+		var prawy_szerokosc = $(window).width()-260;
+		document.getElementById("prawy").style.width = prawy_szerokosc;
+		document.getElementById("pasek_gorny").style.width = prawy_szerokosc;
+	}
+	
+	$(window).resize(function() {
+		ustawSzerokoscPrawy();
+	});
+	
+	function ustaw_aktywny_w_menu(id) {
+		document.getElementById("lista_menu").getElementsByTagName("li")[id].setAttribute("class", "aktywny");
+	}
+	</script>
+	
+	<meta charset="utf-8">
+	<title>Thesis | {% block tytul %}{% endblock %}</title>
+	
+	{% block dodatkowe_skrypty %}{% endblock %}
+</head>
+<body onLoad="return ustawSzerokoscPrawy();">
+	<div id="kontener">
+		<div id="zawartosc">
+			<div id="pasek_gorny">
+				
+				<div class="dropdown hover">
+					<button><i class="fa fa-user fa-lg fa-fw"></i>{% block uzytkownik_zalogowany %}{% endblock %}</button>
+					<ul class="dropdown-menu">
+						<li><a href="{% url 'ustawienia' %}"><i class="fa fa-wrench fa-fw"></i>Ustawienia</a></li>
+						<li><a href="{% url 'wyloguj' %}"><i class="fa fa-sign-out fa-fw"></i>Wyloguj</a></li>
+					</ul>
+				</div>
+
+			</div>
+			<div id="lewy">
+				<div id="logo">
+					<img src="{% static "images/logo.png" %}" alt="LOGO"/>
+				</div>
+				<div id="menu">
+					<ul id="lista_menu">
+						<li><a href="{% url 'strona_glowna' %}"><i class="fa fa-home fa-fw fa-lg"></i>
+						Strona główna</a></li>
+						<li><a href="{% url 'publikacje' %}"><i class="fa fa-book fa-fw fa-lg"></i>
+						Publikacje</a></li>
+						<li><a href="{% url 'moje_publikacje' %}">Moje publikacje</a></li>
+						<li><a href="{% url 'dodaj_publikacje' %}">Dodaj publikację</a></li>
+						<li><a href="#"><i class="fa fa-object-group fa-fw fa-lg"></i>
+						Kolekcje-</a></li>
+						<li><a href="{% url 'moje_kolekcje' %}">Moje kolekcje</a></li>
+						<li><a href="{% url 'dodaj_kolekcje' %}">Dodaj kolekcję</a></li>
+						
+					</ul>
+				</div>
+			</div>
+			<div id="prawy">
+				<div id="naglowek">
+					<div id="tytul">
+						<h1>{% block naglowek %}{% endblock %}</h1>
+					</div>
+					<div id="opis">
+						<p>{% block opis %}{% endblock %}</p>
+					</div>
+				</div>
+				<div id="glowna">
+					<div id="strona_kontener">
+						<div id="strona">
+							{% block strona %}{% endblock %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="stopka">
+		System powstał w wyniku realizacji pracy dyplomowej na Wydziale Informatyki Politechniki Białostockiej.<br />
+		<i class="fa fa-copyright fa-fw"></i>Anna Wejkowska 2015/2016
+	</div>
+</body>
+</html>
