@@ -276,9 +276,9 @@ def zaloguj(request):
                 'wynik': wynik,		
             }
             return render(request, 'InzApp/wynik.html', kontekst)
-        #else:
-         #   return HttpResponse("Bledne haslo!")
-   # else:
+        else:
+            return HttpResponse("Bledne haslo!")
+    else:
         wynik = {}
         wynik["nazwa"] = 'Błąd logowania!'
         wynik["opis"] = 'Błędny login i/lub hasło!'
