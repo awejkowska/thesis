@@ -1,1 +1,1 @@
-web: gunicorn InzSite.wsgi
+web: python manage.py runserver
