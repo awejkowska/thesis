@@ -713,4 +713,4 @@ def usun_publikacje(request, publikacja_id):
     return render(request, 'InzApp/wynik.html', kontekst)
 
 def page_not_found(request, template_name='InzApp/404.html'): 
-    eturn default_page_not_found(request, template_name=template_name)
+    return default_page_not_found(request, template_name=template_name)
