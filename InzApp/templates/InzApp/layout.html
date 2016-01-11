@@ -3,6 +3,8 @@
 	{% load i18n %}
 	{% get_current_language as LANGUAGE_CODE %}
 	
+	<link rel="icon" href="{% static 'InzApp/fav.ico' %}" type="image/x-icon" />
+	
 	{% load staticfiles %}
 	<link rel="stylesheet" type="text/css" href="{% static 'InzApp/style.css' %}" />
 	<link rel="stylesheet" type="text/css" href="{% static 'InzApp/jquery-style.css' %}" />
@@ -12,12 +14,12 @@
 	
 	<link rel="stylesheet" href="{% static 'InzApp/font-awesome-4.5.0/css/font-awesome.min.css' %}">
 	
-	<script type="text/javascript" src="{% static 'InzApp/javascript.js' %}" ></script>
 	<script type="text/javascript" src="{% static 'InzApp/jquery-1.11.3.js' %}"></script>
 	<script type="text/javascript" src="{% static 'InzApp/jquery-1.11.3.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'InzApp/jquery-ui.js' %}"></script>
 	<script type="text/javascript" src="{% static 'InzApp/jquery.tablesorter.js' %}"></script> 
 	<script type="text/javascript" src="{% static 'InzApp/select2.full.js' %}"></script> 
+	<script type="text/javascript" src="{% static 'InzApp/javascript.js' %}" ></script>
 	
 	<script>
 	function ustawSzerokoscPrawy() 
