@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.strona_glowna, name='strona_glowna'),
-    url(r'^/$', views.strona_glowna, name='strona_glowna'),
+    #url(r'^/$', views.strona_glowna, name='strona_glowna'),
     url(r'^/kolekcja/(?P<kolekcja_id>[0-9]+)/$', views.kolekcja, name='kolekcja'), # ?P<parametr> z views.FUNKCJA
     url(r'^/publikacja/(?P<publikacja_id>[0-9]+)/$', views.publikacja, name='publikacja'),
     url(r'^/moje-kolekcje/$', views.moje_kolekcje, name='moje_kolekcje'),
@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^/dodaj-nowa-publikacje-do-kolekcji/$', views.dodaj_nowa_publikacje_do_kolekcji, name='dodaj_nowa_publikacje_do_kolekcji'),
     url(r'^/usun-publikacje-z-kolekcji/(?P<kolekcja_id>[0-9]+)/(?P<publikacja_id>[0-9]+)/$', views.usun_publikacje_z_kolekcji, name='usun_publikacje_z_kolekcji'),
     url(r'^/dodaj-publikacje-do_kolekcji-z-publikacji/$', views.dodaj_publikacje_do_kolekcji_z_publikacji, name='dodaj_publikacje_do_kolekcji_z_publikacji'),
-    url(r'^/publikacje/$', views.publikacje, name='publikacje'),
+    url(r'^publikacje/$', views.publikacje, name='publikacje'),
     url(r'^/pola-wyszukiwania/$', views.pola_wyszukiwania, name='pola_wyszukiwania'),
     url(r'^/wyniki-wyszukiwania/$', views.wyniki_wyszukiwania, name='wyniki_wyszukiwania'),
     url(r'^/bibliografia/(?P<kolekcja_id>[0-9]+)/(?P<typ_id>[0-9]+)/$', views.bibliografia, name='bibliografia'),
