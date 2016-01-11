@@ -514,7 +514,7 @@ input[type="submit"].primary:disabled {
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-.okno_logowania > tr {
+.okno_logowania tr {
 	text-align: center;
 }
 
