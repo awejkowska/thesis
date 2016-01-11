@@ -36,12 +36,14 @@
 		<table>
 			<form action="{% url 'wyniki_wyszukiwania' %}" method="POST" target="_blank">
 				<tr>
-					<td>
+					<td colspan="2">
 						<input type="text" placeholder="tytuł" name="p_tytul" />
 					</td>
 					<td>
 						<input type="text" placeholder="autor" name="p_autor" />
 					</td>
+				</tr>
+				<tr>
 					<td>
 						<select name="p_rodzaj" id="p_rodzaj">
 						<option value="dowolny">dowolny rodzaj</option>
@@ -66,6 +68,8 @@
 						{% endfor %}
 						</select>
 					</td>
+				</tr>
+				<tr>
 					<td>
 						<input type="text" placeholder="słowo kluczowe" name="p_kluczowe" />
 					</td>
@@ -73,9 +77,8 @@
 						<input type="text" placeholder="opis" name="p_opis" />
 					</td>
 					<td>
-						<input type="submit" value="Szukaj" />
+						<input type="submit" class="primary" value="Szukaj" />
 					</td>
-					<td></td>
 					
 				</tr>
 				<input type="hidden" name="zalogowany" 
