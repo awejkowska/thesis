@@ -37,4 +37,4 @@ urlpatterns = [
     url(r'^usun-publikacje/(?P<publikacja_id>[0-9]+)/$', views.usun_publikacje, name='usun_publikacje'),
 ]
 
-handler404 = 'views.blad404'
+handler404 = 'views.page_not_found' 

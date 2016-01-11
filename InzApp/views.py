@@ -9,6 +9,9 @@ from django.template import RequestContext
 from django.shortcuts import redirect
 from django.utils.timesince import timesince
 
+from django.views.defaults import page_not_found as default_page_not_found 
+from django.views.defaults import server_error as default_server_error 
+
 from InzApp.models import Kolekcja, Uzytkownik, Publikacja, Kolekcja_Publikacja, Ksiazka, Artykul, Materialy_Konferencyjne, Witryna_Internetowa, Rozdzial_Ksiazki, Autor, Dziedzina, Jezyk
 
 import hashlib
@@ -709,5 +712,5 @@ def usun_publikacje(request, publikacja_id):
     }
     return render(request, 'InzApp/wynik.html', kontekst)
 
-def blad404(request):
-    return render(request, 'InzApp/404.html')
+def page_not_found(request, template_name='InzApp/404.html'): 
+    eturn default_page_not_found(request, template_name=template_name)
