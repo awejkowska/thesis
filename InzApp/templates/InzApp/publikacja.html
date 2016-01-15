@@ -33,7 +33,7 @@
 	<!--{{ czy_publiczna }}-->
 	
 	<h3>{{ tytul }}</h3>
-	<i>{{ autor.encode('utf-8') }}</i>
+	<i>{{ autor.text|safe }}</i>
 	<br><br>
 
 	<table>
