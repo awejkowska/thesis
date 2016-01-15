@@ -59,7 +59,7 @@
 						<select id="dodaj_publikacje_autor" name="dodaj_publikacje_autor" style="width: 500px;">
 						<option value="wybierz">Wybierz autora...</option>
 						{% for a in autorzy %}
-						<option value="{{ a.id }}">{{ a.text|safe }}</option>
+						<option value="{{ a.id }}">{{ a }}</option>
 						{% endfor %}
 						</select>
 					</td>

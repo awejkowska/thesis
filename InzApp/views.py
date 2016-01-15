@@ -714,3 +714,43 @@ def usun_publikacje(request, publikacja_id):
 
 def page_not_found(request, template_name='InzApp/404.html'): 
     return default_page_not_found(request, template_name=template_name)
+
+def edytuj_publikacje(request, publikacja_id):
+    if "zalogowany_login" not in request.session:
+        return logowanie(request) #gdy niezalogowany
+    else:
+        zalogowany = {}
+        zalogowany["login"] = request.session["zalogowany_login"]
+        zalogowany["id"] = request.session["zalogowany_id"]
+        zalogowany["email"] = request.session["zalogowany_email"]
+        zalogowany["ostatnio"] = request.session["zalogowany_ostatnio"]
+        obiekt = Publikacja.objects.filter(id = publikacja_id)
+        if obiekt.count() > 0:
+            p = Publikacja.objects.get(id = publikacja_id)
+            if p.rodzaj == 'K':
+                o_publikacji = Ksiazka.objects.get(id_publikacji__exact = p)
+            elif p.rodzaj == 'A':
+                o_publikacji = Artykul.objects.get(id_publikacji__exact = p)
+            elif p.rodzaj == 'M':
+                o_publikacji = Materialy_Konferencyjne.objects.get(id_publikacji__exact = p)
+            elif p.rodzaj == 'W':
+                o_publikacji = Witryna_Internetowa.objects.get(id_publikacji__exact = p)
+            elif p.rodzaj == 'R':
+                o_publikacji = Rozdzial_Ksiazki.objects.get(id_publikacji__exact = p)
+            autorzy = Autor.objects.all()
+            dziedziny = Dziedzina.objects.all()
+            jezyki = Jezyk.objects.all()
+            ksiazki = Publikacja.objects.filter(rodzaj__exact = 'K')
+            kontekst = {
+                'zalogowany': zalogowany,
+                'publikacja': p,
+                'o_publikacji': o_publikacji,
+                'autorzy': autorzy,
+                'dziedziny': dziedziny,
+                'jezyki': jezyki, 
+                'ksiazki': ksiazki,
+            }
+            return render(request, 'InzApp/edytuj_publikacje.html', kontekst) 
+        else:
+            p = "<font color=red>Blad nie ma takiej publikacji! </font>"
+            return HttpResponse(p)

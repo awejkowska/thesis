@@ -90,7 +90,7 @@
 					
 
 					<a href="{% url 'publikacja' i.id_publikacji.id %}" style="font-weight: bold; color: #8c3c55;"> {{ i.id_publikacji.tytul }} </a> <br> 
-					{{ i.id_publikacji.autor.text|safe }}<br />
+					{{ i.id_publikacji.autor }}<br />
 					{{ i.id_publikacji.opis }} <br />
 					<i class="fa fa-tags"></i> {{ i.id_publikacji.slowa_kluczowe }}
 					

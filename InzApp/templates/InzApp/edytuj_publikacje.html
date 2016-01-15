@@ -1,0 +1,235 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Edytuj publikację
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Edytuj publikację</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>Tutaj możesz edytować publikację naukową.</p>
+	{% endblock %}
+	
+	{% block dodatkowe_skrypty %}
+	<script>
+	$(function() {
+		$( "#edytuj_publikacje_data_wydania" ).datepicker();
+		$( "#edytuj_publikacje_data_publikacji" ).datepicker();
+		$( "#edytuj_publikacje_data_konferencji" ).datepicker();
+		$( "#edytuj_publikacje_data_odwiedzin" ).datepicker();
+	});
+	$(function() {
+		$( "#edytuj_publikacje_select2_autor" ).select2();
+		$( "#edytuj_publikacje_select2_dziedzina" ).select2();
+		$( "#edytuj_publikacje_select2_jezyk" ).select2();
+		$( "#edytuj_publikacje_select2_rodzaj" ).select2();
+		$( "#edytuj_publikacje_id_ksiazki" ).select2();
+	});
+	</script>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(3);
+	</script> 
+	
+	<div class="edytuj_publikacje_select2_form">
+		<table id="tabela_edytuj_publikacje">
+			<form action="{% url 'dodaj_nowa_publikacje' %}" method="post">
+				{% csrf_token %}
+				<input type="hidden" name="edytuj_publikacje_utworzyl" 
+					value="{{ zalogowany.login }}">
+				<input type="hidden" name="edytuj_publikacje_zmodyfikowal" 
+					value="{{ zalogowany.id }}">
+				<tr>
+					<td>Tytuł</td>
+					<td><input type="text" name="edytuj_publikacje_tytul" id="edytuj_publikacje_tytul" class="pole_tekstowe" style="width: 500px;" value="{{ publikacja.tytul }}" required></td>
+				</tr>
+				<tr>
+					<td>Autor</td>
+					<td>
+						<select id="edytuj_publikacje_select2_autor" name="edytuj_publikacje_select2_autor" style="width: 500px;">
+						{% for a in autorzy %}
+							{% if a.id == publikacja.autor.id %}
+							<option value="{{ a.id }}" selected>{{ a }}</option>
+							{% else %}
+							<option value="{{ a.id }}">{{ a }}</option>
+							{% endif %}
+						{% endfor %}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Dziedzina</td>
+					<td>
+						<select id="edytuj_publikacje_select2_dziedzina" name="edytuj_publikacje_select2_dziedzina" style="width: 500px;">
+						{% for d in dziedziny %}
+							{% if d.id == publikacja.dziedzina.id %}
+							<option value="{{ d.id }}" selected>{{ d.nazwa }}</option>
+							{% else %}
+							<option value="{{ d.id }}">{{ d.nazwa }}</option>
+							{% endif %}
+						{% endfor %}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Język</td>
+					<td>
+						<select id="edytuj_publikacje_select2_jezyk" name="edytuj_publikacje_select2_jezyk" style="width: 250px;">
+						{% for j in jezyki %}
+							{% if j.id == publikacja.jezyk.id %}
+							<option value="{{ j.id }}" selected>{{ j.nazwa }}</option>
+							{% else %}
+							<option value="{{ j.id }}">{{ j.nazwa }}</option>
+							{% endif %}
+						{% endfor %}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Rodzaj</td>
+					<td>
+						{{ publikacja.get_rodzaj_display }}
+					</td>
+				</tr>
+				
+				
+				{% if publikacja.rodzaj == 'K' %}
+				<tr>
+					<td>Data wydania</td>
+					<td><input type="text" name="edytuj_publikacje_data_wydania" id="edytuj_publikacje_data_wydania"class="pole_tekstowe" value="{{ o_publikacji.data_wydania }}" /></td>
+				</tr>
+				<tr>
+					<td>Wydawnictwo</td>
+					<td><input type="text" name="edytuj_publikacje_wydawnictwo" class="pole_tekstowe" value="{{ o_publikacji.wydawnictwo }}" /></td>
+				</tr>
+				<tr>
+					<td>Format</td>
+					<td>
+					<input type="text" name="edytuj_publikacje_format" class="pole_tekstowe" 
+					placeholder="np. B5, A5 lub 125x200" value="{{ o_publikacji.format }}" />
+					<a tip="Podaj standardowy format lub wprowadź inny wymiar w milimetrach." class="tooltip">
+					<i class="fa fa-question-circle"></i>
+					</a>
+					</td>
+				</tr>
+				<tr>
+					<td>Ilość stron</td>
+					<td><input type="text" name="edytuj_publikacje_ilosc_stron" class="pole_tekstowe" value="{{ o_publikacji.ilosc_stron }}" /></td>
+				</tr>
+				<tr>
+					<td>ISBN</td>
+					<td>
+					<input type="text" name="edytuj_publikacje_isbn" maxlength="13" class="pole_tekstowe" value="{{ o_publikacji.isbn }}" />
+					<a tip="Wprowadż 13- lub 10-cyfrowy ISBN bez oddzielania cyfr myślnikami." class="tooltip">
+					<i class="fa fa-question-circle"></i>
+					</a>
+					</td>
+				</tr>
+				
+				{% elif publikacja.rodzaj == 'A' %}
+				<tr>
+					<td>Data publikacji</td>
+					<td><input type="text" name="edytuj_publikacje_data_publikacji" id="edytuj_publikacje_data_publikacji" class="pole_tekstowe" value="{{ o_publikacji.data_publikacji }}" /></td>
+				</tr>
+				<tr>
+					<td>Czasopismo</td>
+					<td><input type="text" name="edytuj_publikacje_czasopismo" class="pole_tekstowe" value="{{ o_publikacji.czasopismo }}" /></td>
+				</tr>
+				<tr>
+					<td>Zakres stron</td>
+					<td><input type="text" name="edytuj_publikacje_zakres_stron" class="pole_tekstowe" value="{{ o_publikacji.zakres_stron }}" /></td>
+				</tr>
+				
+				{% elif publikacja.rodzaj == 'M' %}
+				<tr>
+					<td>Nazwa konferencji</td>
+					<td><input type="text" name="edytuj_publikacje_nazwa_konferencji" class="pole_tekstowe" value="{{ o_publikacji.opis }}" /></td>
+				</tr>
+				<tr>
+					<td>Data konferencji</td>
+					<td><input type="text" name="edytuj_publikacje_data_konferencji" id="edytuj_publikacje_data_konferencji" class="pole_tekstowe" value="{{ o_publikacji.opis }}" /></td>
+				</tr>
+				
+				{% elif publikacja.rodzaj == 'W' %}
+				<tr>
+					<td>Właściciel</td>
+					<td><input type="text" name="edytuj_publikacje_wlasciciel" class="pole_tekstowe" value="{{ o_publikacji.wlasciciel }}" /></td>
+				</tr>
+				<tr>
+					<td>Adres URL</td>
+					<td><input type="text" name="edytuj_publikacje_adres_url" class="pole_tekstowe" value="{{ o_publikacji.adres_url }}" /></td>
+				</tr>
+				<tr>
+					<td>Data odwiedzin</td>
+					<td><input type="text" name="edytuj_publikacje_data_odwiedzin" id="edytuj_publikacje_data_odwiedzin" class="pole_tekstowe" value="{{ o_publikacji.data_odwiedzin }}" /></td>
+					<!-- DateTimeField !!! -->
+				</tr>
+				
+				{% elif publikacja.rodzaj == 'R' %}
+				<tr>
+					<td>Książka</td>
+					<td>
+						<select name="edytuj_publikacje_id_ksiazki"
+						id="edytuj_publikacje_id_ksiazki" style="width: 500px;">
+						{% for k in ksiazki %}
+							{% if k.id == o_publikacji.id_ksiazki.id %}
+							<option value="{{ k.id }}" selected>{{ k.tytul }} ({{ k.autor.imie }} {{ k.autor.nazwisko }})</option>
+							{% else %}
+							<option value="{{ k.id }}">{{ k.tytul }} ({{ k.autor.imie }} {{ k.autor.nazwisko }})</option>
+							{% endif %}
+						{% endfor %}
+						</select>
+					</td>
+				</tr>
+				{% endif %}
+				
+				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr>
+					<td>Opis</td>
+					<td><input type="text" name="edytuj_publikacje_opis" class="pole_tekstowe" value="{{ publikacja.opis }}" /></td>
+				</tr>
+				<tr>
+					<td>Słowa kluczowe</td>
+					<td>
+					<input type="text" name="edytuj_publikacje_slowa_kluczowe" class="pole_tekstowe" value="{{ publikacja.slowa_kluczowe }} />
+					<a tip="Wprowadź słowa kluczowe oddzielając je przecinkami." class="tooltip">
+					<i class="fa fa-question-circle"></i>
+					</a>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+					<input type="checkbox" name="edytuj_publikacje_czy_publiczna"
+					{% if publikacja.czy_publiczna == True %} checked {% endif %}
+					> publiczna
+					</td>
+				</tr>
+				<tr>
+					<td>URL</td>
+					<td><input type="text" name="edytuj_publikacje_url" class="pole_tekstowe" /></td>
+				</tr>
+				<tr>
+					<td>Plik</td>
+					<td><input type="file" name="edytuj_publikacje_plik" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Zapisz zmiany"></td>
+				</tr>
+			</form>
+		</table>
+	</div>
+	{% endblock %}
+	
