@@ -109,7 +109,7 @@
 				</tr>
 				<tr>
 					<td>Wydawnictwo</td>
-					<td><input type="text" name="edytuj_publikacje_wydawnictwo" class="pole_tekstowe" value="{{ o_publikacji.wydawnictwo }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_wydawnictwo" class="pole_tekstowe" value="{{ o_publikacji.wydawnictwo }}" style="width: 500px;" /></td>
 				</tr>
 				<tr>
 					<td>Format</td>
@@ -123,12 +123,12 @@
 				</tr>
 				<tr>
 					<td>Ilość stron</td>
-					<td><input type="text" name="edytuj_publikacje_ilosc_stron" class="pole_tekstowe" value="{{ o_publikacji.ilosc_stron }}" /></td>
+					<td><input type="number" name="edytuj_publikacje_ilosc_stron" class="pole_tekstowe" value="{{ o_publikacji.ilosc_stron }}" /></td>
 				</tr>
 				<tr>
 					<td>ISBN</td>
 					<td>
-					<input type="text" name="edytuj_publikacje_isbn" maxlength="13" class="pole_tekstowe" value="{{ o_publikacji.isbn }}" />
+					<input type="number" name="edytuj_publikacje_isbn" maxlength="13" class="pole_tekstowe" value="{{ o_publikacji.isbn }}" />
 					<a tip="Wprowadż 13- lub 10-cyfrowy ISBN bez oddzielania cyfr myślnikami." class="tooltip">
 					<i class="fa fa-question-circle"></i>
 					</a>
@@ -142,7 +142,7 @@
 				</tr>
 				<tr>
 					<td>Czasopismo</td>
-					<td><input type="text" name="edytuj_publikacje_czasopismo" class="pole_tekstowe" value="{{ o_publikacji.czasopismo }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_czasopismo" class="pole_tekstowe" value="{{ o_publikacji.czasopismo }}" style="width: 500px;" /></td>
 				</tr>
 				<tr>
 					<td>Zakres stron</td>
@@ -152,7 +152,7 @@
 				{% elif publikacja.rodzaj == 'M' %}
 				<tr>
 					<td>Nazwa konferencji</td>
-					<td><input type="text" name="edytuj_publikacje_nazwa_konferencji" class="pole_tekstowe" value="{{ o_publikacji.opis }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_nazwa_konferencji" class="pole_tekstowe" value="{{ o_publikacji.opis }}" style="width: 500px;" /></td>
 				</tr>
 				<tr>
 					<td>Data konferencji</td>
@@ -166,7 +166,7 @@
 				</tr>
 				<tr>
 					<td>Adres URL</td>
-					<td><input type="text" name="edytuj_publikacje_adres_url" class="pole_tekstowe" value="{{ o_publikacji.adres_url }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_adres_url" class="pole_tekstowe" value="{{ o_publikacji.adres_url }}" style="width: 500px;"/></td>
 				</tr>
 				<tr>
 					<td>Data odwiedzin</td>
@@ -230,8 +230,11 @@
 				</tr>
 				
 				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr>
 					<td></td>
-					<td><input type="submit" value="Zapisz zmiany"></td>
+					<td><input type="submit" class="primary" value="Zapisz zmiany"></td>
 				</tr>
 			</form>
 		</table>

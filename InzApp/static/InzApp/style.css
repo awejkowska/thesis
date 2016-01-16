@@ -332,7 +332,7 @@ a:hover {
 	text-align: center;
 }
 
-input[type="text"], input[type="password"], .pole_tekstowe {
+input[type="text"], input[type="password"], input[type="number"], .pole_tekstowe {
 	background-color: #fff;
     border: 1px solid #aaa;
     border-radius: 4px;
@@ -341,6 +341,9 @@ input[type="text"], input[type="password"], .pole_tekstowe {
     height: 28px;
 	font-family: 'Open Sans';
 	font-size: 16px;
+	
+	padding-left: 8px;
+	padding-right: 8px;
 }
 
 textarea {

@@ -462,7 +462,7 @@ def dodaj_nowa_publikacje_do_kolekcji(request):
     nowa_publikacja_do_kolekcji = Kolekcja_Publikacja(id_kolekcji = kolekcja, id_publikacji = publikacja)
     nowa_publikacja_do_kolekcji.save()
     #return HttpResponse("Pomyslnie dodano nowa publikacje do kolekcji.")
-    return redirect('/InzApp/publikacje')
+    return redirect('/publikacje')
 
 def usun_publikacje_z_kolekcji(request, kolekcja_id, publikacja_id):
     kolekcja = Kolekcja.objects.get(id = kolekcja_id)

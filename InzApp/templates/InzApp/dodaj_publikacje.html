@@ -106,7 +106,7 @@
 				</tr>
 				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
 					<td>Wydawnictwo</td>
-					<td><input type="text" name="nowa_publikacja_wydawnictwo" class="pole_tekstowe" /></td>
+					<td><input type="text" name="nowa_publikacja_wydawnictwo" class="pole_tekstowe" style="width: 500px;" /></td>
 				</tr>
 				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
 					<td>Format</td>
@@ -126,12 +126,12 @@
 				</tr>
 				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
 					<td>Ilość stron</td>
-					<td><input type="text" name="nowa_publikacja_ilosc_stron" class="pole_tekstowe" /></td>
+					<td><input type="number" name="nowa_publikacja_ilosc_stron" class="pole_tekstowe" /></td>
 				</tr>
 				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
 					<td>ISBN</td>
 					<td>
-					<input type="text" name="nowa_publikacja_isbn" maxlength="13" class="pole_tekstowe" />
+					<input type="number" name="nowa_publikacja_isbn" maxlength="13" class="pole_tekstowe" />
 					<a tip="Wprowadż 13- lub 10-cyfrowy ISBN bez oddzielania cyfr myślnikami." class="tooltip">
 					<i class="fa fa-question-circle"></i>
 					</a>
@@ -145,7 +145,7 @@
 				</tr>
 				<tr class="dodaj_publikacje_artykul" style="display: none;">
 					<td>Czasopismo</td>
-					<td><input type="text" name="nowa_publikacja_czasopismo" class="pole_tekstowe" /></td>
+					<td><input type="text" name="nowa_publikacja_czasopismo" class="pole_tekstowe" style="width: 500px;" /></td>
 				</tr>
 				<tr class="dodaj_publikacje_artykul" style="display: none;">
 					<td>Zakres stron</td>
@@ -155,7 +155,7 @@
 				<!-- else if materialy -->
 				<tr class="dodaj_publikacje_materialy" style="display: none;">
 					<td>Nazwa konferencji</td>
-					<td><input type="text" name="nowa_publikacja_nazwa_konferencji" class="pole_tekstowe" /></td>
+					<td><input type="text" name="nowa_publikacja_nazwa_konferencji" class="pole_tekstowe" style="width: 500px;" /></td>
 				</tr>
 				<tr class="dodaj_publikacje_materialy" style="display: none;">
 					<td>Data konferencji</td>
@@ -169,7 +169,7 @@
 				</tr>
 				<tr class="dodaj_publikacje_witryna" style="display: none;">
 					<td>Adres URL</td>
-					<td><input type="text" name="nowa_publikacja_adres_url" class="pole_tekstowe" /></td>
+					<td><input type="text" name="nowa_publikacja_adres_url" class="pole_tekstowe" style="width: 500px;" /></td>
 				</tr>
 				<tr class="dodaj_publikacje_witryna" style="display: none;">
 					<td>Data odwiedzin</td>
@@ -225,8 +225,11 @@
 				</tr>
 				
 				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr>
 					<td></td>
-					<td><input type="submit" value="Dodaj"></td>
+					<td><input type="submit" class="primary" value="Dodaj"></td>
 				</tr>
 			</form>
 		</table>
