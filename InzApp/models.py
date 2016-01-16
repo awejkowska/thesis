@@ -13,7 +13,7 @@ class Uzytkownik(models.Model):
     data_ostatniego_logowania = models.DateTimeField()
     zablokowany = models.BooleanField(default=False)
     def __str__(self):
-	    return "Użytkownik: "+self.login+" ("+self.email+")"
+	    return "Użytkownik: "+self.login.encode('utf8')+" ("+self.email.encode('utf8')+")"
     
 class Kolekcja(models.Model):
     nazwa_kolekcji = models.CharField(max_length=255)
@@ -25,7 +25,7 @@ class Kolekcja(models.Model):
     # pole = models.ForeignKey(innaKlasa)
     # CharField / DateField / IntegerField
     def __str__(self):
-	    return self.nazwa_kolekcji+", utworzono: "+str(self.data_utworzenia)+", zmodyfikowano: "+str(self.data_modyfikacji)+"; "+self.opis+" ["+str(self.id_uzytkownika)+"]"
+	    return self.nazwa_kolekcji.encode('utf8')+", utworzono: "+str(self.data_utworzenia)+", zmodyfikowano: "+str(self.data_modyfikacji)+"; "+self.opis.encode('utf8')+" ["+str(self.id_uzytkownika)+"]"
 	
 class Autor(models.Model):
     imie = models.CharField(max_length=255)
@@ -33,21 +33,21 @@ class Autor(models.Model):
     opis = models.CharField(max_length=500, blank=True) #not required
     def __str__(self):
         if self.opis == "":
-            return u""+self.imie+" "+self.nazwisko
+            return self.imie.encode('utf8')+" "+self.nazwisko.encode('utf8')
         else:
-            return u""+self.imie+" "+self.nazwisko+" ("+self.opis+")"
+            return self.imie.encode('utf8')+" "+self.nazwisko.encode('utf8')+" ("+self.opis.encode('utf8')+")"
 
 class Dziedzina(models.Model):
     nazwa = models.CharField(max_length=255)
     skrot = models.CharField(max_length=3)
     def __str__(self):
-	    return "nauki "+self.nazwa
+	    return "nauki "+self.nazwa.encode('utf8')
 
 class Jezyk(models.Model):
     nazwa = models.CharField(max_length=255)
     skrot = models.CharField(max_length=15)	
     def __str__(self):
-	    return self.nazwa
+	    return self.nazwa.encode('utf8')
 	
 class Publikacja(models.Model):
     RODZAJE = ( # ----------------- p.rodzaj / p.get_rodzaj_display()
@@ -90,7 +90,7 @@ class Publikacja(models.Model):
     #plik = models.FilePathField(path='/InzApp/files', null=True, blank=True) #not required
     plik = models.FileField(upload_to='files/', null=True, blank=True) #not required
     def __str__(self):
-	    return self.tytul+" / "+str(self.autor)
+	    return self.tytul.encode('utf8')+" / "+str(self.autor)
 
 class Kolekcja_Publikacja(models.Model):
     id_kolekcji = models.ForeignKey(Kolekcja) # --- FK --- #
@@ -116,7 +116,7 @@ class Artykul(models.Model):
     zakres_stron = models.CharField(max_length=50, blank=True) #not required
     nr_czasopisma = models.CharField(max_length=50)
     def __str__(self):
-	    return str(self.id_publikacji)+" - data publikacji: "+str(self.data_publikacji)+", czasopismo: "+self.czasopismo+", zakres stron: "+self.zakres_stron
+	    return str(self.id_publikacji)+" - data publikacji: "+str(self.data_publikacji)+", czasopismo: "+self.czasopismo.encode('utf8')+", zakres stron: "+self.zakres_stron
 
 class Materialy_Konferencyjne(models.Model):
     id_publikacji = models.ForeignKey(Publikacja) # --- FK --- #
@@ -124,7 +124,7 @@ class Materialy_Konferencyjne(models.Model):
     data_konferencji = models.DateField() 
     lokalizacja_konferencji = models.CharField(max_length=255)
     def __str__(self):
-	    return str(self.id_publikacji)+" - nazwa konferencji: "+self.nazwa_konferencji+", data konferencji: "+str(self.data_konferencji)
+	    return str(self.id_publikacji)+" - nazwa konferencji: "+self.nazwa_konferencji.encode('utf8')+", data konferencji: "+str(self.data_konferencji)
 
 class Witryna_Internetowa(models.Model):
     id_publikacji = models.ForeignKey(Publikacja) # --- FK --- #
@@ -132,7 +132,7 @@ class Witryna_Internetowa(models.Model):
     adres_URL = models.CharField(max_length=255)
     data_odwiedzin = models.DateTimeField(default=datetime.now()) 
     def __str__(self):
-	    return str(self.id_publikacji)+" - adres URL: "+self.adres_URL+", wlasciciel: "+self.wlasciciel+", data odwiedzin: "+str(self.data_odwiedzin)
+	    return str(self.id_publikacji)+" - adres URL: "+self.adres_URL.encode('utf8')+", wlasciciel: "+self.wlasciciel.encode('utf8')+", data odwiedzin: "+str(self.data_odwiedzin)
 
 class Rozdzial_Ksiazki(models.Model):
     id_publikacji = models.ForeignKey(Publikacja) # --- FK --- #
