@@ -33,9 +33,9 @@ class Autor(models.Model):
     opis = models.CharField(max_length=500, blank=True) #not required
     def __str__(self):
         if self.opis == "":
-            return self.imie+" "+self.nazwisko
+            return u""+self.imie+" "+self.nazwisko
         else:
-            return self.imie+" "+self.nazwisko+" ("+self.opis+")"
+            return u""+self.imie+" "+self.nazwisko+" ("+self.opis+")"
 
 class Dziedzina(models.Model):
     nazwa = models.CharField(max_length=255)
