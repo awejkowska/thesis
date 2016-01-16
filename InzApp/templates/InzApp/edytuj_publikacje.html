@@ -197,12 +197,16 @@
 				</tr>
 				<tr>
 					<td>Opis</td>
-					<td><input type="text" name="edytuj_publikacje_opis" class="pole_tekstowe" value="{{ publikacja.opis }}" /></td>
+					<td>
+					<textarea name="edytuj_publikacje_opis">
+					{{ publikacja.opis }}
+					</textarea>
+					</td>
 				</tr>
 				<tr>
 					<td>Słowa kluczowe</td>
 					<td>
-					<input type="text" name="edytuj_publikacje_slowa_kluczowe" class="pole_tekstowe" value="{{ publikacja.slowa_kluczowe }} />
+					<input type="text" name="edytuj_publikacje_slowa_kluczowe" class="pole_tekstowe" value="{{ publikacja.slowa_kluczowe }}" style="width: 500px;" />
 					<a tip="Wprowadź słowa kluczowe oddzielając je przecinkami." class="tooltip">
 					<i class="fa fa-question-circle"></i>
 					</a>
@@ -218,7 +222,7 @@
 				</tr>
 				<tr>
 					<td>URL</td>
-					<td><input type="text" name="edytuj_publikacje_url" class="pole_tekstowe" /></td>
+					<td><input type="text" name="edytuj_publikacje_url" class="pole_tekstowe" style="width: 500px;" /></td>
 				</tr>
 				<tr>
 					<td>Plik</td>

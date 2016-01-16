@@ -343,6 +343,19 @@ input[type="text"], input[type="password"], .pole_tekstowe {
 	font-size: 16px;
 }
 
+textarea {
+	background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+	box-sizing: border-box;
+	font-family: 'Open Sans';
+	font-size: 16px;
+	
+	height: 60px;
+	width: 500px;
+	resize: none;
+}
+
 #publiczne_publikacje, #wyniki_wyszukiwania_publikacji, #moje_publikacje {
 	width: 96%;
 	margin: auto;
