@@ -17,7 +17,10 @@ from InzApp.models import Kolekcja, Uzytkownik, Publikacja, Kolekcja_Publikacja,
 import hashlib
 import operator
 import datetime
+import sys
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 def strona_glowna(request):
     if "zalogowany_login" not in request.session:
@@ -581,7 +584,7 @@ def bibliografia(request, kolekcja_id, typ_id):
                     szczegoly = Witryna_Internetowa.objects.get(id_publikacji__exact = publikacja.id_publikacji.id)
                     opis.append( publikacja.id_publikacji.autor.nazwisko + ", " + publikacja.id_publikacji.autor.imie[0] + ". (" + str(szczegoly.data_odwiedzin.year) + "). " )
                     opis.append( publikacja.id_publikacji.tytul + "," )
-                    opis.append( "[Online]. Dostępne z: ".decode('utf-8').encode('utf-8') + szczegoly.adres_URL + ". [Dostęp: ".decode('utf-8').encode('utf-8') + str(szczegoly.data_odwiedzin)[0:19] + "]." )
+                    opis.append( "[Online]. Dostępne z: " + szczegoly.adres_URL + ". [Dostęp: " + str(szczegoly.data_odwiedzin)[0:19] + "]." )
                 if publikacja.id_publikacji.rodzaj == 'R':
                     szczegoly = Rozdzial_Ksiazki.objects.get(id_publikacji__exact = publikacja.id_publikacji.id)
                     opis.append( publikacja.id_publikacji.autor.nazwisko + ", " + publikacja.id_publikacji.autor.imie[0] + ". (" + str(szczegoly.id_ksiazki.data_wydania.year) + "). " + publikacja.id_publikacji.tytul + ", w:" )

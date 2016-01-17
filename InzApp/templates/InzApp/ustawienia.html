@@ -9,11 +9,11 @@
 	{% endblock %}
 	
 	{% block naglowek %}
-	<h1>Ustawienia</h1>
+	Ustawienia
 	{% endblock %}
 	
 	{% block opis %}
-	<p>Tutaj możesz zmienić szczegóły dotyczące Twojego konta.</p>
+	Tutaj możesz zmienić szczegóły dotyczące Twojego konta.
 	{% endblock %}
 	
 	{% block strona %}
@@ -22,40 +22,40 @@
 		ustaw_aktywny_w_menu(0);
 	</script> 
 	
-	<div>
-		<table>
-			<form action="{% url 'zmien_ustawienia_konta' %}" method="post">
-				{% csrf_token %}
-				<input type="hidden" name="ustawienia_id_uzytkownika" 
-					value="{{ zalogowany.id }}">
-				<tr>
-					<td>Login</td>
-					<td><input type="text" name="ustawienia_login" value="{{ zalogowany.login }}" readonly required></td>
-				</tr>
-				<tr>
-					<td>Bieżące hasło</td>
-					<td><input type="password" name="ustawienia_bhaslo" required></td>
-				</tr>
-				<tr><td colspan="2">&nbsp</td></tr>
-				<tr>
-					<td>Nowe hasło</td>
-					<td><input type="password" name="ustawienia_nhaslo"></td>
-				</tr>
-				<tr>
-					<td>Powtórz nowe hasło</td>
-					<td><input type="password" name="ustawienia_pnhaslo"></td>
-				</tr>
-				<tr><td colspan="2">&nbsp</td></tr>
-				<tr>
-					<td>E-mail</td>
-					<td><input type="text" name="ustawienia_email" value="{{ email }}" required></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><input type="submit" value="Zapisz zmiany"></td>
-				</tr>
-			</form>
-		</table>
-	</div>
+	
+	<table>
+		<form action="{% url 'zmien_ustawienia_konta' %}" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="ustawienia_id_uzytkownika" 
+				value="{{ zalogowany.id }}">
+			<tr>
+				<td>Login</td>
+				<td><input type="text" name="ustawienia_login" value="{{ zalogowany.login }}" readonly required></td>
+			</tr>
+			<tr>
+				<td>Bieżące hasło</td>
+				<td><input type="password" name="ustawienia_bhaslo" required></td>
+			</tr>
+			<tr><td colspan="2">&nbsp</td></tr>
+			<tr>
+				<td>Nowe hasło</td>
+				<td><input type="password" name="ustawienia_nhaslo"></td>
+			</tr>
+			<tr>
+				<td>Powtórz nowe hasło</td>
+				<td><input type="password" name="ustawienia_pnhaslo"></td>
+			</tr>
+			<tr><td colspan="2">&nbsp</td></tr>
+			<tr>
+				<td>E-mail</td>
+				<td><input type="text" name="ustawienia_email" value="{{ email }}" required></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Zapisz zmiany"></td>
+			</tr>
+		</form>
+	</table>
+	
 	{% endblock %}
 	

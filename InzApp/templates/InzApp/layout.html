@@ -24,9 +24,12 @@
 	<script>
 	function ustawSzerokoscPrawy() 
 	{
-		var prawy_szerokosc = $(window).width()-260;
+		var prawy_szerokosc = $(window).width()-$("#lewy").width();
 		document.getElementById("prawy").style.width = prawy_szerokosc;
 		document.getElementById("pasek_gorny").style.width = prawy_szerokosc;
+		
+		var strona_wysokosc = $(window).height()-$("#pasek_gorny").height()-$("#naglowek").height()-$("#stopka").height();
+		document.getElementById("glowna").style.minHeight = strona_wysokosc;
 	}
 	
 	$(window).resize(function() {
@@ -46,20 +49,10 @@
 <body onLoad="return ustawSzerokoscPrawy();">
 	<div id="kontener">
 		<div id="zawartosc">
-			<div id="pasek_gorny">
-				
-				<div class="dropdown hover">
-					<button><i class="fa fa-user fa-lg fa-fw"></i>{% block uzytkownik_zalogowany %}{% endblock %}</button>
-					<ul class="dropdown-menu">
-						<li><a href="{% url 'ustawienia' %}"><i class="fa fa-wrench fa-fw"></i>Ustawienia</a></li>
-						<li><a href="{% url 'wyloguj' %}"><i class="fa fa-sign-out fa-fw"></i>Wyloguj</a></li>
-					</ul>
-				</div>
-
-			</div>
+			
 			<div id="lewy">
 				<div id="logo">
-					<img src="{% static "images/logo.png" %}" alt="LOGO"/>
+					<a href="{% url 'strona_glowna' %}"><img src="{% static "images/logo.png" %}" alt="LOGO"/></a>
 				</div>
 				<div id="menu">
 					<ul id="lista_menu">
@@ -77,28 +70,41 @@
 					</ul>
 				</div>
 			</div>
+			
 			<div id="prawy">
+				<div id="pasek_gorny">
+					<div class="dropdown hover">
+						<button><i class="fa fa-user fa-lg fa-fw"></i>{% block uzytkownik_zalogowany %}{% endblock %}</button>
+						<ul class="dropdown-menu">
+							<li><a href="{% url 'ustawienia' %}"><i class="fa fa-wrench fa-fw"></i>Ustawienia</a></li>
+							<li><a href="{% url 'wyloguj' %}"><i class="fa fa-sign-out fa-fw"></i>Wyloguj</a></li>
+						</ul>
+					</div>
+				</div>
+			
 				<div id="naglowek">
 					<div id="tytul">
-						<h1>{% block naglowek %}{% endblock %}</h1>
+						<p>{% block naglowek %}{% endblock %}</p>
 					</div>
 					<div id="opis">
 						<p>{% block opis %}{% endblock %}</p>
 					</div>
 				</div>
+				
 				<div id="glowna">
-					<div id="strona_kontener">
-						<div id="strona">
+					<div id="strona">
 							{% block strona %}{% endblock %}
-						</div>
 					</div>
 				</div>
+				
+				<div id="stopka">
+					System powstał w wyniku realizacji pracy dyplomowej na Wydziale Informatyki Politechniki Białostockiej.<br>
+					<i class="fa fa-copyright fa-fw"></i>Anna Wejkowska 2016
+				</div>
 			</div>
+			
 		</div>
 	</div>
-	<div id="stopka">
-		System powstał w wyniku realizacji pracy dyplomowej na Wydziale Informatyki Politechniki Białostockiej.<br />
-		<i class="fa fa-copyright fa-fw"></i>Anna Wejkowska 2016
-	</div>
+	
 </body>
 </html>

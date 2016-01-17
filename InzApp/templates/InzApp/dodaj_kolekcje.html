@@ -9,11 +9,11 @@
 	{% endblock %}
 	
 	{% block naglowek %}
-	<h1>Dodaj nową kolekcję</h1>
+	Dodaj nową kolekcję
 	{% endblock %}
 	
 	{% block opis %}
-	<p>Tutaj możesz stworzyć swoją nową kolekcję, w której później umieścisz ulubione publikacje naukowe.</p>
+	Tutaj możesz stworzyć swoją nową kolekcję, w której później umieścisz ulubione publikacje naukowe.
 	{% endblock %}
 	
 	{% block strona %}
@@ -22,30 +22,30 @@
 		ustaw_aktywny_w_menu(6);
 	</script> 
 	
-	<div>
-		<table>
-			<form action="{% url 'dodaj_nowa_kolekcje' %}" method="post">
-				{% csrf_token %}
-				<input type="hidden" name="nowa_kolekcja_id_uzytkownika" 
-					value="{{ zalogowany.id }}">
-				<tr>
-					<td>Nazwa</td>
-					<td><input type="text" name="nowa_kolekcja_nazwa" required></td>
-				</tr>
-				<tr>
-					<td>Opis</td>
-					<td><textarea name="nowa_kolekcja_opis"></textarea></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><input type="checkbox" name="nowa_kolekcja_czy_publiczna"> publiczna</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><input type="submit" class="primary" value="Dodaj"></td>
-				</tr>
-			</form>
-		</table>
-	</div>
+	
+	<table>
+		<form action="{% url 'dodaj_nowa_kolekcje' %}" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="nowa_kolekcja_id_uzytkownika" 
+				value="{{ zalogowany.id }}">
+			<tr>
+				<td>Nazwa</td>
+				<td><input type="text" name="nowa_kolekcja_nazwa" required></td>
+			</tr>
+			<tr>
+				<td>Opis</td>
+				<td><textarea name="nowa_kolekcja_opis"></textarea></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="checkbox" name="nowa_kolekcja_czy_publiczna"> publiczna</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" class="primary" value="Dodaj"></td>
+			</tr>
+		</form>
+	</table>
+	
 	{% endblock %}
 	

@@ -9,11 +9,11 @@
 	{% endblock %}
 	
 	{% block naglowek %}
-	<h1>Moje publikacje</h1>
+	Moje publikacje
 	{% endblock %}
 	
 	{% block opis %}
-	<p>Lista moich publikacji.</p>
+	Lista moich publikacji.
 	{% endblock %}
 	
 	{% block dodatkowe_skrypty %}
@@ -33,51 +33,51 @@
 		ustaw_aktywny_w_menu(2);
 	</script> 
 	
-	<div>
-		<div style="text-align: right;">
-			<a href="{% url 'dodaj_publikacje' %}">
-				<i class="fa fa-plus-square"></i> Dodaj publikację
-			</a>
-		</div>
-				
-		<table class="tablesorter" id="moje_publikacje"> 
-			<thead>
-			<tr>
-				<th>#</th>
-				<th>Tytuł</th>
-				<th>Autor</th>
-				<th>Rodzaj</th>
-				<th>Dziedzina</th>
-				<th>Język</th>
-				<th>Widoczność</th>
-				<th></th>
-			</tr>
-			</thead>
-			<tbody>
-			{% for publikacja in publikacje %}
-			<tr>
-				<td>{{ forloop.counter }}</td>
-				<td>{{ publikacja.tytul }}</td>
-				<td>{{ publikacja.autor.imie }} {{ publikacja.autor.nazwisko }}</td>
-				<td>{{ publikacja.get_rodzaj_display }}</td>
-				<td>{{ publikacja.dziedzina }}</td>
-				<td>{{ publikacja.jezyk }}</td>
-				<td>
-					{% if publikacja.czy_publiczna == True %}
-						<div class="widocznosc_publiczna">PUBLICZNA</div>
-					{% else %}
-						<div class="widocznosc_prywatna">PRYWATNA</div>
-					{% endif %}
-				</td>
-				<td>
-					<a href="{% url 'publikacja' publikacja.id %}"><i class="fa fa-eye"></i> Zobacz</a>
-					<a href="{% url 'edytuj_publikacje' publikacja.id %}"><i class="fa fa-pencil"></i> Edytuj</a>
-					<a href="{% url 'usun_publikacje' publikacja.id %}"><i class="fa fa-trash-o"></i> Usuń</a>
-				</td>
-			</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+	
+	<div style="text-align: right;">
+		<a href="{% url 'dodaj_publikacje' %}">
+			<i class="fa fa-plus-square"></i> Dodaj publikację
+		</a>
 	</div>
+			
+	<table class="tablesorter" id="moje_publikacje"> 
+		<thead>
+		<tr>
+			<th>#</th>
+			<th>Tytuł</th>
+			<th>Autor</th>
+			<th>Rodzaj</th>
+			<th>Dziedzina</th>
+			<th>Język</th>
+			<th>Widoczność</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for publikacja in publikacje %}
+		<tr>
+			<td>{{ forloop.counter }}</td>
+			<td>{{ publikacja.tytul }}</td>
+			<td>{{ publikacja.autor.imie }} {{ publikacja.autor.nazwisko }}</td>
+			<td>{{ publikacja.get_rodzaj_display }}</td>
+			<td>{{ publikacja.dziedzina }}</td>
+			<td>{{ publikacja.jezyk }}</td>
+			<td>
+				{% if publikacja.czy_publiczna == True %}
+					<div class="widocznosc_publiczna">PUBLICZNA</div>
+				{% else %}
+					<div class="widocznosc_prywatna">PRYWATNA</div>
+				{% endif %}
+			</td>
+			<td>
+				<a href="{% url 'publikacja' publikacja.id %}"><i class="fa fa-eye"></i> Zobacz</a>
+				<a href="{% url 'edytuj_publikacje' publikacja.id %}"><i class="fa fa-pencil"></i> Edytuj</a>
+				<a href="{% url 'usun_publikacje' publikacja.id %}"><i class="fa fa-trash-o"></i> Usuń</a>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	
 	{% endblock %}
 	

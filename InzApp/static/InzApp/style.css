@@ -24,13 +24,15 @@ html, body {
 	display: block;
 	color: #000000;
 	font-family: 'Open Sans';
-	/* height: 100%; */
 	weight: 100%;
 	box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 	background-color: #4B6BAF;
-	/*overflow: hidden;*/
+}
+
+body {
+	overflow-y: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -93,7 +95,6 @@ a:hover {
 	background-color: #ffffff;
 	color: #4B6BAF;
 	z-index: 999;
-	border-bottom: solid 1px #4B6BAF;
 }
 
 #pasek {
@@ -106,33 +107,32 @@ a:hover {
 
 #zawartosc {
 	width: 100%;
-	height: 98%;
+	height: 100%; 
 	background-color: white; 
 }
 
 #lewy {
 	float: left;
-	width: 256px;/*15%;*/
-	padding: 0px 2px;
+	width: 200px;
 	height: 100%;
 	background-color: #4B6BAF;
-	/*box-shadow: 0px 0px 2px #253557;*/
 	z-index: 998;
+	overflow-y: auto;
 }
 
 
 #prawy {
 	float: right;
-	width: auto; /* 85%;*/
-	height: auto;
-	background-color: #af4b6b; 
-	z-index: 999;
-	
+	background-color: #ffffff; 
+	overflow-y: auto;
+	height: 100%;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
 }
 
 
 #logo {
 	margin-bottom: 32px;
+	text-align: center;
 }
 
 #logo img {
@@ -183,7 +183,7 @@ a:hover {
 
 #menu ul li a {
 	text-decoration: none;
-	color: #ededed; /*#ffffff;*/
+	color: #ededed; 
 	width: 100%;
 	display: inline-block;
 }
@@ -212,16 +212,23 @@ a:hover {
 
 
 #naglowek {
-	
+	background-color: #af4b6b; 
+	clear: both;
 }
 
 #tytul {
 	
 }
 
-#tytul h1 {
+#tytul p {
+	font-family: 'Lobster';
+	font-weight: normal;
+	font-size: 48px;
+	
 	color: #ffffff;
 	text-shadow: 2px 2px #8c3c55;
+	margin: 0;
+	padding-left: 8px;
 }
 
 #opis {
@@ -229,33 +236,27 @@ a:hover {
 }
 
 #opis p {
-	margin: 0px 8px 8px 8px;
+	margin: 0; 
+	padding: 8px;
 	color: #ffffff;
 	text-shadow: 2px 2px #8c3c55;
 	font-weight: bolder;
 }
 
 #glowna {
-	
 	background-color: #fff;
-	box-shadow: inset 0px 0px 10px 0px #253557;
 }
 
-#strona_kontener {
-
-}
 
 #strona {
 	padding: 16 16 16 16;
-	/* height: 100%; */
-	min-height: 80%; /* 77%; */
+	
 }
 
 #stopka {
 	clear: both;
 	width: 100%;
-	height: 2%;
-	background-color: #4B6BAF;
+	background-color: #8c3c55; 
 	text-align: center;
 	color: #ffffff;
 }

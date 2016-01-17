@@ -8,12 +8,10 @@
 	{{ zalogowany.login }}
 	{% endblock %}
 	
-	{% block naglowek %}
-	<h1>Strona główna</h1>
-	{% endblock %}
+	{% block naglowek %}Strona główna{% endblock %}
 	
 	{% block opis %}
-	<p>Witaj {{ zalogowany.login }}!</p>
+	Witaj {{ zalogowany.login }}!
 	{% endblock %}
 	
 	
@@ -23,38 +21,38 @@
 		ustaw_aktywny_w_menu(0);
 	</script> 
 	
-	<div>
-		Ostatnie logowanie: {{ zalogowany.ostatnio|slice:"0:19" }} <i class="fa fa-clock-o"></i><br /><br />
-		
-		Utworzono: <br />
-		{{ statystyka.utworzone_kolekcje }} kolekcji <br />
-		{{ statystyka.utworzone_publikacje }} publikacji <br />
-		<br />
-		
-		Zgromadzono {{ statystyka.liczba_publikacji }} publikacji w kolekcjach. <br />
-		{% if statystyka.liczba_publikacji != 0 %}
-		<div class="miarka" style="width: 90%;">
-			<span style="width: {{ statystyka.ksiazki_p }}%; background-color: lightcoral;" title="{{ statystyka.ksiazki }} książki">{{ statystyka.ksiazki }} książki</span>
-		</div>
-		<div class="miarka" style="width: 90%;">
-			<span style="width: {{ statystyka.artykuly_p }}%; background-color: lightskyblue;" title="{{ statystyka.artykuly }} artykuły">{{ statystyka.artykuly }} artykuły</span>
-		</div>
-		<div class="miarka" style="width: 90%;">
-			<span style="width: {{ statystyka.materialy_p }}%; background-color: khaki;" title="{{ statystyka.materialy }} materiały konferencyjne">{{ statystyka.materialy }} materiały konferencyjne</span>
-		</div>
-		<div class="miarka" style="width: 90%;">
-			<span style="width: {{ statystyka.witryny_p }}%; background-color: lightseagreen;" title="{{ statystyka.witryny }} witryny internetowe">{{ statystyka.witryny }} witryny internetowe</span>
-		</div>
-		<div class="miarka" style="width: 90%;">
-			<span style="width: {{ statystyka.rozdzialy_p }}%; background-color: lightgray;" title="{{ statystyka.rozdzialy }} rozdziały książek">{{ statystyka.rozdzialy }} rozdziały książek</span>
-		</div>
-		{% endif %}
-		
-		<br /><br />
-		
-		{% if zalogowany.jest_administratorem == True %}
-		<a href="{% url 'uzytkownicy' %}"><i class="fa fa-users fa-2x fa-fw"></i> Zarządzaj kontami użytkowników aplikacji</a>
-		{% endif %}
+	
+	Ostatnie logowanie: {{ zalogowany.ostatnio|slice:"0:19" }} <i class="fa fa-clock-o"></i><br /><br />
+	
+	Utworzono: <br />
+	{{ statystyka.utworzone_kolekcje }} kolekcji <br />
+	{{ statystyka.utworzone_publikacje }} publikacji <br />
+	<br />
+	
+	Zgromadzono {{ statystyka.liczba_publikacji }} publikacji w kolekcjach. <br />
+	{% if statystyka.liczba_publikacji != 0 %}
+	<div class="miarka" style="width: 90%;">
+		<span style="width: {{ statystyka.ksiazki_p }}%; background-color: lightcoral;" title="{{ statystyka.ksiazki }} książki">{{ statystyka.ksiazki }} książki</span>
 	</div>
+	<div class="miarka" style="width: 90%;">
+		<span style="width: {{ statystyka.artykuly_p }}%; background-color: lightskyblue;" title="{{ statystyka.artykuly }} artykuły">{{ statystyka.artykuly }} artykuły</span>
+	</div>
+	<div class="miarka" style="width: 90%;">
+		<span style="width: {{ statystyka.materialy_p }}%; background-color: khaki;" title="{{ statystyka.materialy }} materiały konferencyjne">{{ statystyka.materialy }} materiały konferencyjne</span>
+	</div>
+	<div class="miarka" style="width: 90%;">
+		<span style="width: {{ statystyka.witryny_p }}%; background-color: lightseagreen;" title="{{ statystyka.witryny }} witryny internetowe">{{ statystyka.witryny }} witryny internetowe</span>
+	</div>
+	<div class="miarka" style="width: 90%;">
+		<span style="width: {{ statystyka.rozdzialy_p }}%; background-color: lightgray;" title="{{ statystyka.rozdzialy }} rozdziały książek">{{ statystyka.rozdzialy }} rozdziały książek</span>
+	</div>
+	{% endif %}
+	
+	<br /><br />
+	
+	{% if zalogowany.jest_administratorem == True %}
+	<a href="{% url 'uzytkownicy' %}"><i class="fa fa-users fa-2x fa-fw"></i> Zarządzaj kontami użytkowników aplikacji</a>
+	{% endif %}
+	
 	{% endblock %}
 	

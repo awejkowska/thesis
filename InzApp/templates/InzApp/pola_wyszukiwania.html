@@ -9,11 +9,11 @@
 	{% endblock %}
 	
 	{% block naglowek %}
-	<h1>Pola wyszukiwania</h1>
+	Pola wyszukiwania
 	{% endblock %}
 	
 	{% block opis %}
-	<p>Tutaj możesz wyszukać publikacje.</p>
+	Tutaj możesz wyszukać publikacje.
 	{% endblock %}
 	
 	{% block dodatkowe_skrypty %}
@@ -32,79 +32,79 @@
 		ustaw_aktywny_w_menu(1);
 	</script> 
 	
-	<div>
-		<table>
-			<form action="{% url 'wyniki_wyszukiwania' %}" method="POST" target="_blank">
-				<tr>
-					<td>Tytuł</td>
-					<td>
-						<input type="text" placeholder="tytuł" name="p_tytul" style="width: 500px;" />
-					</td>
-				</tr>
-				<tr>
-					<td>Autor</td>
-					<td>
-						<input type="text" placeholder="autor" name="p_autor" style="width: 500px;" />
-					</td>
-				</tr>
-				<tr>
-					<td>Rodzaj</td>
-					<td>
-						<select name="p_rodzaj" id="p_rodzaj">
-						<option value="dowolny">dowolny rodzaj</option>
-						{% for r in rodzaje %}
-						<option value="{{ r.0 }}">{{ r.1 }}</option>
-						{% endfor %}
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>Dziedzina</td>
-					<td>
-						<select name="p_dziedzina" id="p_dziedzina" style="width: 200px;">
-						<option value="dowolny">dowolna dziedzina</option>
-						{% for d in dziedziny %}
-						<option value="{{ d.id }}">{{ d.nazwa }}</option>
-						{% endfor %}
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>Język</td>
-					<td>
-						<select name="p_jezyk" id="p_jezyk" style="width: 150px;">
-						<option value="dowolny">dowolny język</option>
-						{% for j in jezyki %}
-						<option value="{{ j.id }}">{{ j.nazwa }}</option>
-						{% endfor %}
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>Słowo kluczowe</td>
-					<td>
-						<input type="text" placeholder="słowo kluczowe" name="p_kluczowe" style="width: 500px;" />
-					</td>
-				</tr>
-				<tr>
-					<td>Opis</td>
-					<td>
-						<input type="text" placeholder="opis" name="p_opis" style="width: 500px;" />
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>
-						<input type="submit" class="primary" value="Szukaj" />
-					</td>
-					
-				</tr>
-				<input type="hidden" name="zalogowany" 
-					value="{{ zalogowany.id }}">
-				{% csrf_token %}
-			</form>
-		</table>
-		
-	</div>
+	
+	<table>
+		<form action="{% url 'wyniki_wyszukiwania' %}" method="POST" target="_blank">
+			<tr>
+				<td>Tytuł</td>
+				<td>
+					<input type="text" placeholder="tytuł" name="p_tytul" style="width: 500px;" />
+				</td>
+			</tr>
+			<tr>
+				<td>Autor</td>
+				<td>
+					<input type="text" placeholder="autor" name="p_autor" style="width: 500px;" />
+				</td>
+			</tr>
+			<tr>
+				<td>Rodzaj</td>
+				<td>
+					<select name="p_rodzaj" id="p_rodzaj">
+					<option value="dowolny">dowolny rodzaj</option>
+					{% for r in rodzaje %}
+					<option value="{{ r.0 }}">{{ r.1 }}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Dziedzina</td>
+				<td>
+					<select name="p_dziedzina" id="p_dziedzina" style="width: 200px;">
+					<option value="dowolny">dowolna dziedzina</option>
+					{% for d in dziedziny %}
+					<option value="{{ d.id }}">{{ d.nazwa }}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Język</td>
+				<td>
+					<select name="p_jezyk" id="p_jezyk" style="width: 150px;">
+					<option value="dowolny">dowolny język</option>
+					{% for j in jezyki %}
+					<option value="{{ j.id }}">{{ j.nazwa }}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Słowo kluczowe</td>
+				<td>
+					<input type="text" placeholder="słowo kluczowe" name="p_kluczowe" style="width: 500px;" />
+				</td>
+			</tr>
+			<tr>
+				<td>Opis</td>
+				<td>
+					<input type="text" placeholder="opis" name="p_opis" style="width: 500px;" />
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<input type="submit" class="primary" value="Szukaj" />
+				</td>
+				
+			</tr>
+			<input type="hidden" name="zalogowany" 
+				value="{{ zalogowany.id }}">
+			{% csrf_token %}
+		</form>
+	</table>
+	
+	
 	{% endblock %}
 	

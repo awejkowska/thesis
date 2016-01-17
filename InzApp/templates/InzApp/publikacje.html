@@ -9,11 +9,11 @@
 	{% endblock %}
 	
 	{% block naglowek %}
-	<h1>Publikacje</h1>
+	Publikacje
 	{% endblock %}
 	
 	{% block opis %}
-	<p>Lista publikacji.</p>
+	Lista publikacji.
 	{% endblock %}
 	
 	{% block dodatkowe_skrypty %}
@@ -33,69 +33,67 @@
 		ustaw_aktywny_w_menu(1);
 	</script> 
 	
-	<div>
-		<table style="width: 100%; text-align: center;">
-			<tr>
-				<td><a href="{% url 'pola_wyszukiwania' %}">
-				<i class="fa fa-search fa-3x"></i><br />
-				Wyszukaj publikacje</a></td>
-				<td><a href="{% url 'moje_publikacje' %}">
-				<i class="fa fa-shopping-bag fa-3x"></i><br />
-				Moje publikacje</a></td>
-				<td><a href="{% url 'dodaj_publikacje' %}">
-				<i class="fa fa-plus-square fa-3x"></i><br />
-				Dodaj publikację</a></td>
-			</tr>
-		</table>
-		<br />
-		<table class="tablesorter" id="publiczne_publikacje"> 
-			<thead>
-			<tr>
-				<th>#</th>
-				<th>Tytuł</th>
-				<th>Autor</th>
-				<th>Rodzaj</th>
-				<th>Dziedzina</th>
-				<th>Język</th>
-				<th>Widoczność</th>
-				<th></th>
-			</tr>
-			</thead>
-			<tbody>
-			{% for publikacja in publikacje %}
-			<tr>
+	
+	<table style="width: 100%; text-align: center;">
+		<tr>
+			<td><a href="{% url 'pola_wyszukiwania' %}">
+			<i class="fa fa-search fa-3x"></i><br />
+			Wyszukaj publikacje</a></td>
+			<td><a href="{% url 'moje_publikacje' %}">
+			<i class="fa fa-shopping-bag fa-3x"></i><br />
+			Moje publikacje</a></td>
+			<td><a href="{% url 'dodaj_publikacje' %}">
+			<i class="fa fa-plus-square fa-3x"></i><br />
+			Dodaj publikację</a></td>
+		</tr>
+	</table>
+	<br />
+	<table class="tablesorter" id="publiczne_publikacje"> 
+		<thead>
+		<tr>
+			<th>#</th>
+			<th>Tytuł</th>
+			<th>Autor</th>
+			<th>Rodzaj</th>
+			<th>Dziedzina</th>
+			<th>Język</th>
+			<th>Widoczność</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for publikacja in publikacje %}
+		<tr>
 
-				<!--<td {% if publikacja.utworzyl == zalogowany.login %}
-						class="moja_publikacja"
-					{% endif %}
-				>{{ forloop.counter }}</td>-->
-				
-				<td>
-					{% if publikacja.utworzyl == zalogowany.login %}
-					<a tip="moja publikacja" class="tooltip">
-					<i class="fa fa-key"></i>
-					</a>
-					{% endif %}
-				</td>
-				<td>{{ publikacja.tytul }}</td>
-				<td>{{ publikacja.autor.imie }} {{ publikacja.autor.nazwisko }}</td>
-				<td>{{ publikacja.get_rodzaj_display }}</td>
-				<td>{{ publikacja.dziedzina }}</td>
-				<td>{{ publikacja.jezyk }}</td>
-				<td>
-					{% if publikacja.czy_publiczna == True %}
-						<div class="widocznosc_publiczna">PUBLICZNA</div>
-					{% else %}
-						<div class="widocznosc_prywatna">PRYWATNA</div>
-					{% endif %}
-				</td>
-				<td>
-					<a href="{% url 'publikacja' publikacja.id %}">Zobacz szczegóły...</a>
-				</td>
-			</tr>
-			{% endfor %}
-			</tbody>
-		</table>
-	</div>
+			<!--<td {% if publikacja.utworzyl == zalogowany.login %}
+					class="moja_publikacja"
+				{% endif %}
+			>{{ forloop.counter }}</td>-->
+			
+			<td>
+				{% if publikacja.utworzyl == zalogowany.login %}
+				<a tip="Moja publikacja" class="tooltip"><i class="fa fa-key"></i></a>
+				{% endif %}
+			</td>
+			<td>{{ publikacja.tytul }}</td>
+			<td>{{ publikacja.autor.imie }} {{ publikacja.autor.nazwisko }}</td>
+			<td>{{ publikacja.get_rodzaj_display }}</td>
+			<td>{{ publikacja.dziedzina }}</td>
+			<td>{{ publikacja.jezyk }}</td>
+			<td>
+				{% if publikacja.czy_publiczna == True %}
+					<div class="widocznosc_publiczna">PUBLICZNA</div>
+				{% else %}
+					<div class="widocznosc_prywatna">PRYWATNA</div>
+				{% endif %}
+			</td>
+			<td>
+				<a href="{% url 'publikacja' publikacja.id %}">Zobacz szczegóły...</a>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	
 	{% endblock %}
 	
