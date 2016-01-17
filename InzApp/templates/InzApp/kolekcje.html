@@ -1,0 +1,89 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Kolekcje
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	<h1>Kolekcje</h1>
+	{% endblock %}
+	
+	{% block opis %}
+	<p>Zbiór wszystkich kolekcji.</p>
+	{% endblock %}
+	
+	{% block dodatkowe_skrypty %}
+	<script>
+	$(document).ready(function() { 
+    	$("#publiczne_kolekcje").tablesorter({
+    	sortList: [[1,0]] 
+    	});
+		} 
+	); 
+	</script>
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(4);
+	</script> 
+	
+	<div>
+		
+		<table class="tablesorter" id="publiczne_kolekcje"> 
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Nazwa</th>
+				<th>Opis</th>
+				<th>Daty</th>
+				<th>Autor</th>
+				<th>Widoczność</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for kolekcja in kolekcje %}
+			<tr>
+				<td>
+					{{ forloop.counter }}. <!-- licznik foreach template-->
+				</td>
+				<td>
+					<a href="{% url 'kolekcja' kolekcja.id %}" style="color: #8c3c55; font-style: italic;">{{ kolekcja.nazwa_kolekcji }}</a> 
+				</td>
+				<td>
+					{{ kolekcja.opis }} 
+				</td>
+				<td>
+					utworzono: {{ kolekcja.data_utworzenia }} </br>
+					zmodyfikowano: {{ kolekcja.data_modyfikacji }}
+				</td>
+				<td>
+					{{ kolekcja.id_uzytkownika.login }}
+				</td>
+				<td>
+					{% if kolekcja.czy_publiczna == True %}
+						<div class="widocznosc_publiczna">PUBLICZNA</div>
+					{% else %}
+						<div class="widocznosc_prywatna">PRYWATNA</div>
+					{% endif %}
+				</td>
+				<td>
+					<a href="{% url 'kolekcja' kolekcja.id %}">
+					<i class="fa fa-eye fa-fw"></i>
+					Szczegóły</a>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+		</table>
+	</div>
+	<br />
+	
+	{% endblock %}
+	

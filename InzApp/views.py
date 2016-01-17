@@ -429,6 +429,24 @@ def publikacje(request): # publiczne i zalogowanego
         }
         return render(request, 'InzApp/publikacje.html', kontekst)
 
+def kolekcje(request):
+    if "zalogowany_login" not in request.session:
+        return logowanie(request) #gdy niezalogowany
+    else:
+        zalogowany = {} # = [] gdy liczby jako klucze
+        zalogowany["login"] = request.session["zalogowany_login"]
+        zalogowany["id"] = request.session["zalogowany_id"]
+        zalogowany["email"] = request.session["zalogowany_email"]
+        zalogowany["ostatnio"] = request.session["zalogowany_ostatnio"]
+        uzytkownik = Uzytkownik.objects.get(id = int(zalogowany["id"]))
+        kolekcje = Kolekcja.objects.filter(Q(czy_publiczna__exact = True) | Q(id_uzytkownika__exact = uzytkownik))
+        kontekst = {
+            'zalogowany': zalogowany,
+            'uzytkownik': uzytkownik,
+            'kolekcje': kolekcje,
+        }
+        return render(request, 'InzApp/kolekcje.html', kontekst)
+
 def dodaj_publikacje_do_kolekcji(request, kolekcja_id):
     if "zalogowany_login" not in request.session:
         return logowanie(request) #gdy niezalogowany

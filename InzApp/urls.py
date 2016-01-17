@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^zablokuj/(?P<uzytkownik_id>[0-9]+)/(?P<zablokuj>[0-9]+)/$', views.zablokuj, name='zablokuj'),
     url(r'^usun-publikacje/(?P<publikacja_id>[0-9]+)/$', views.usun_publikacje, name='usun_publikacje'),
     url(r'^edytuj-publikacje/(?P<publikacja_id>[0-9]+)/$', views.edytuj_publikacje, name='edytuj_publikacje'),
+    url(r'^kolekcje/$', views.kolekcje, name='kolekcje'),
 ]
 
 handler404 = 'views.page_not_found' 
