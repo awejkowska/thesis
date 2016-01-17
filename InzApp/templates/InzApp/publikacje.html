@@ -65,10 +65,18 @@
 			{% for publikacja in publikacje %}
 			<tr>
 
-				<td {% if publikacja.utworzyl == zalogowany.login %}
+				<!--<td {% if publikacja.utworzyl == zalogowany.login %}
 						class="moja_publikacja"
 					{% endif %}
-				>{{ forloop.counter }}</td>
+				>{{ forloop.counter }}</td>-->
+				
+				<td>
+					{% if publikacja.utworzyl == zalogowany.login %}
+					<a tip="moja publikacja" class="tooltip">
+					<i class="fa fa-key"></i>
+					</a>
+					{% endif %}
+				</td>
 				<td>{{ publikacja.tytul }}</td>
 				<td>{{ publikacja.autor.imie }} {{ publikacja.autor.nazwisko }}</td>
 				<td>{{ publikacja.get_rodzaj_display }}</td>
