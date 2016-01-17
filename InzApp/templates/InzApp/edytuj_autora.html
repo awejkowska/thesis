@@ -1,0 +1,51 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Edytuj autora
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	Edytuj autora
+	{% endblock %}
+	
+	{% block opis %}
+	Tutaj możesz zmienić informacje o wybranym autorze.
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(7);
+	</script> 
+	
+	
+	<table>
+		<form action="{% url 'edytuj_autora_zapisz' %}" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="edytuj_autor_id" 
+				value="{{ autor.id }}">
+			<tr>
+				<td>Imię</td>
+				<td><input type="text" name="edytuj_autor_imie" value="{{ autor.imie }}" required></td>
+			</tr>
+			<tr>
+				<td>Nazwisko</td>
+				<td><input type="text" name="edytuj_autor_nazwisko" value="{{ autor.nazwisko }}" required></td>
+			</tr>
+			<tr>
+				<td>Opis</td>
+				<td><textarea name="edytuj_autor_opis">{{ autor.opis }}</textarea></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" class="primary" value="Zapisz zmiany"></td>
+			</tr>
+		</form>
+	</table>
+	
+	{% endblock %}
+	

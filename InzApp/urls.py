@@ -37,6 +37,11 @@ urlpatterns = [
     url(r'^usun-publikacje/(?P<publikacja_id>[0-9]+)/$', views.usun_publikacje, name='usun_publikacje'),
     url(r'^edytuj-publikacje/(?P<publikacja_id>[0-9]+)/$', views.edytuj_publikacje, name='edytuj_publikacje'),
     url(r'^kolekcje/$', views.kolekcje, name='kolekcje'),
+    url(r'^dodaj-autora/$', views.dodaj_autora, name='dodaj_autora'),
+    url(r'^dodaj-nowego-autora/$', views.dodaj_nowego_autora, name='dodaj_nowego_autora'),
+    url(r'^edytuj-autora/(?P<autor_id>[0-9]+)/$', views.edytuj_autora, name='edytuj_autora'),
+    url(r'^edytuj-autora-zapisz/$', views.edytuj_autora_zapisz, name='edytuj_autora_zapisz'),
+    url(r'^autorzy/$', views.autorzy, name='autorzy'),
 ]
 
 handler404 = 'views.page_not_found' 

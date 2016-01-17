@@ -783,3 +783,82 @@ def edytuj_publikacje(request, publikacja_id):
         else:
             p = "<font color=red>Blad nie ma takiej publikacji! </font>"
             return HttpResponse(p)
+
+def dodaj_autora(request):
+    if "zalogowany_login" not in request.session:
+        return logowanie(request) #gdy niezalogowany
+    else:
+        zalogowany = {} # = [] gdy liczby jako klucze
+        zalogowany["login"] = request.session["zalogowany_login"]
+        zalogowany["id"] = request.session["zalogowany_id"]
+        zalogowany["email"] = request.session["zalogowany_email"]
+        zalogowany["ostatnio"] = request.session["zalogowany_ostatnio"]
+        kontekst = {
+            'zalogowany': zalogowany,
+        }
+        return render(request, 'InzApp/dodaj_autora.html', kontekst)
+
+def dodaj_nowego_autora(request):
+    opis_autora = request.POST.get('nowy_autor_opis')
+    if opis_autora != '':
+        autor = Autor(imie = request.POST.get('nowy_autor_imie'), nazwisko = request.POST.get('nowy_autor_nazwisko'), opis = opis_autora)
+    else:
+        autor = Autor(imie = request.POST.get('nowy_autor_imie'), nazwisko = request.POST.get('nowy_autor_nazwisko'))
+    autor.save()
+    wynik = {}
+    wynik["nazwa"] = 'Dodano autora.'
+    wynik["opis"] = 'Pomyślnie dodano nowego autora do bazy danych aplikacji.'
+    wynik["nazwa_podstrony"] = 'Dodano autora'
+    wynik["url_przekierowania"] = 'dodaj_autora'
+    kontekst = {
+        'wynik': wynik,		
+    }
+    return render(request, 'InzApp/wynik.html', kontekst)
+
+def edytuj_autora(request, autor_id):
+    if "zalogowany_login" not in request.session:
+        return logowanie(request) #gdy niezalogowany
+    else:
+        zalogowany = {} # = [] gdy liczby jako klucze
+        zalogowany["login"] = request.session["zalogowany_login"]
+        zalogowany["id"] = request.session["zalogowany_id"]
+        zalogowany["email"] = request.session["zalogowany_email"]
+        zalogowany["ostatnio"] = request.session["zalogowany_ostatnio"]
+        autor = Autor.objects.get(id = autor_id)
+        kontekst = {
+            'zalogowany': zalogowany,
+            'autor': autor,
+        }
+        return render(request, 'InzApp/edytuj_autora.html', kontekst)
+
+def edytuj_autora_zapisz(request):
+    autor = Autor.objects.get(id = request.POST.get('edytuj_autor_id'))
+    autor.imie = request.POST.get('edytuj_autor_imie')
+    autor.nazwisko = request.POST.get('edytuj_autor_nazwisko')
+    autor.opis = request.POST.get('edytuj_autor_opis')
+    autor.save()
+    wynik = {}
+    wynik["nazwa"] = 'Zapisano zmiany.'
+    wynik["opis"] = 'Pomyślnie zapisano zmiany w danych autora.'
+    wynik["nazwa_podstrony"] = 'Zapisano zmiany'
+    wynik["url_przekierowania"] = 'strona_glowna'
+    kontekst = {
+        'wynik': wynik,		
+    }
+    return render(request, 'InzApp/wynik.html', kontekst)
+
+def autorzy(request):
+    if "zalogowany_login" not in request.session:
+        return logowanie(request) #gdy niezalogowany
+    else:
+        zalogowany = {} # = [] gdy liczby jako klucze
+        zalogowany["login"] = request.session["zalogowany_login"]
+        zalogowany["id"] = request.session["zalogowany_id"]
+        zalogowany["email"] = request.session["zalogowany_email"]
+        zalogowany["ostatnio"] = request.session["zalogowany_ostatnio"]
+        autorzy = Autor.objects.all()
+        kontekst = {
+            'zalogowany': zalogowany,
+            'autorzy': autorzy,
+        }
+        return render(request, 'InzApp/autorzy.html', kontekst)

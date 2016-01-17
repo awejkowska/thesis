@@ -62,6 +62,10 @@
 						<option value="{{ a.id }}">{{ a }}</option>
 						{% endfor %}
 						</select>
+						
+						<a tip="Dodaj nowego autora." class="tooltip" href="{% url 'dodaj_autora' %}" target="_blank">
+						<i class="fa fa-plus-circle"></i>
+						</a>
 					</td>
 				</tr>
 				<tr>

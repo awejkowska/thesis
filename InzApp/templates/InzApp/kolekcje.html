@@ -51,7 +51,9 @@
 		{% for kolekcja in kolekcje %}
 			<tr>
 				<td>
-					{{ forloop.counter }}. <!-- licznik foreach template-->
+					{% if kolekcja.id_uzytkownika.id == zalogowany.id %}
+					<a tip="Moja kolekcja" class="tooltip"><i class="fa fa-key"></i></a>
+					{% endif %}
 				</td>
 				<td>
 					<a href="{% url 'kolekcja' kolekcja.id %}" style="color: #8c3c55; font-style: italic;">{{ kolekcja.nazwa_kolekcji }}</a> 
@@ -73,10 +75,9 @@
 						<div class="widocznosc_prywatna">PRYWATNA</div>
 					{% endif %}
 				</td>
-				<td>
-					<a href="{% url 'kolekcja' kolekcja.id %}">
-					<i class="fa fa-eye fa-fw"></i>
-					Szczegóły</a>
+				<td style="text-align: center;">
+					<a href="{% url 'kolekcja' kolekcja.id %}" style="font-size: smaller;">
+					<i class="fa fa-eye fa-lg"></i><br>Zobacz<br>szczegóły</a>
 				</td>
 			</tr>
 		{% endfor %}

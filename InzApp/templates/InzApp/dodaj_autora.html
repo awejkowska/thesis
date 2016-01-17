@@ -1,0 +1,51 @@
+{% extends 'InzApp/layout.html' %}
+
+	{% block tytul %}
+	Dodaj nowego autora
+	{% endblock %}
+	
+	{% block uzytkownik_zalogowany %}
+	{{ zalogowany.login }}
+	{% endblock %}
+	
+	{% block naglowek %}
+	Dodaj nowego autora
+	{% endblock %}
+	
+	{% block opis %}
+	Tutaj możesz dodać nowego autora do bazy danych aplikacji.
+	{% endblock %}
+	
+	{% block strona %}
+	
+	<script>
+		ustaw_aktywny_w_menu(8);
+	</script> 
+	
+	
+	<table>
+		<form action="{% url 'dodaj_nowego_autora' %}" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="nowy_autor_id_uzytkownika" 
+				value="{{ zalogowany.id }}">
+			<tr>
+				<td>Imię</td>
+				<td><input type="text" name="nowy_autor_imie" required></td>
+			</tr>
+			<tr>
+				<td>Nazwisko</td>
+				<td><input type="text" name="nowy_autor_nazwisko" required></td>
+			</tr>
+			<tr>
+				<td>Opis</td>
+				<td><textarea name="nowy_autor_opis"></textarea></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" class="primary" value="Dodaj"></td>
+			</tr>
+		</form>
+	</table>
+	
+	{% endblock %}
+	

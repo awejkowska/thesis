@@ -34,7 +34,7 @@
 	</script> 
 	
 	
-	<div style="text-align: right;">
+	<div style="text-align: right; padding: 0px 35px 10px 0px;">
 		<a href="{% url 'dodaj_publikacje' %}">
 			<i class="fa fa-plus-square"></i> Dodaj publikację
 		</a>
@@ -43,20 +43,23 @@
 	<table class="tablesorter" id="moje_publikacje"> 
 		<thead>
 		<tr>
-			<th>#</th>
+			<th></th>
 			<th>Tytuł</th>
 			<th>Autor</th>
 			<th>Rodzaj</th>
 			<th>Dziedzina</th>
 			<th>Język</th>
 			<th>Widoczność</th>
-			<th></th>
 		</tr>
 		</thead>
 		<tbody>
 		{% for publikacja in publikacje %}
 		<tr>
-			<td>{{ forloop.counter }}</td>
+			<td>
+				<a href="{% url 'publikacja' publikacja.id %}" tip="Zobacz" class="tooltip"><i class="fa fa-eye"></i></a>
+				<a href="{% url 'edytuj_publikacje' publikacja.id %}" tip="Edytuj" class="tooltip"><i class="fa fa-pencil"></i></a>
+				<a href="{% url 'usun_publikacje' publikacja.id %}" tip="Usuń" class="tooltip"><i class="fa fa-trash-o"></i></a>
+			</td>
 			<td>{{ publikacja.tytul }}</td>
 			<td>{{ publikacja.autor.imie }} {{ publikacja.autor.nazwisko }}</td>
 			<td>{{ publikacja.get_rodzaj_display }}</td>
@@ -69,11 +72,7 @@
 					<div class="widocznosc_prywatna">PRYWATNA</div>
 				{% endif %}
 			</td>
-			<td>
-				<a href="{% url 'publikacja' publikacja.id %}"><i class="fa fa-eye"></i> Zobacz</a>
-				<a href="{% url 'edytuj_publikacje' publikacja.id %}"><i class="fa fa-pencil"></i> Edytuj</a>
-				<a href="{% url 'usun_publikacje' publikacja.id %}"><i class="fa fa-trash-o"></i> Usuń</a>
-			</td>
+			
 		</tr>
 		{% endfor %}
 		</tbody>
