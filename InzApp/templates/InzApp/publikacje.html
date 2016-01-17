@@ -65,11 +65,6 @@
 		{% for publikacja in publikacje %}
 		<tr>
 
-			<!--<td {% if publikacja.utworzyl == zalogowany.login %}
-					class="moja_publikacja"
-				{% endif %}
-			>{{ forloop.counter }}</td>-->
-			
 			<td>
 				{% if publikacja.utworzyl == zalogowany.login %}
 				<a tip="Moja publikacja" class="tooltip"><i class="fa fa-key"></i></a>
@@ -94,6 +89,21 @@
 		{% endfor %}
 		</tbody>
 	</table>
+	
+	<ul class="pager_list">
+	{% for nr_strony in zakres_stron %}
+	
+		<li>
+			<a 
+			{% if nr_strony == strona %}
+				class="pager active" 
+			{% else %}
+				class="pager" 
+			{% endif %}
+			href="{% url 'publikacje' nr_strony %}">{{ nr_strony }}</a>
+		</li>
+	{% endfor %}
+	<ul>
 	
 	{% endblock %}
 	

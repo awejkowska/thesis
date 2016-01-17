@@ -18,6 +18,7 @@ import hashlib
 import operator
 import datetime
 import sys
+from  math import ceil
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -415,7 +416,7 @@ def moje_publikacje(request):
         }
         return render(request, 'InzApp/moje_publikacje.html', kontekst)
 	
-def publikacje(request): # publiczne i zalogowanego
+def publikacje(request, strona = 1): # publiczne i zalogowanego
     if "zalogowany_login" not in request.session:
         return logowanie(request) #gdy niezalogowany
     else:
@@ -425,10 +426,17 @@ def publikacje(request): # publiczne i zalogowanego
         zalogowany["email"] = request.session["zalogowany_email"]
         zalogowany["ostatnio"] = request.session["zalogowany_ostatnio"]
         uzytkownik = Uzytkownik.objects.get(id = int(zalogowany["id"]))
+        elementow_na_stronie = 3
         publikacje = Publikacja.objects.filter(Q(czy_publiczna__exact = True) | Q(utworzyl__exact = uzytkownik.login))
+        ile_stron = int(ceil(float(len(publikacje))/float(elementow_na_stronie)))
+        publikacje = publikacje[ (int(strona)-1)*elementow_na_stronie : (int(strona)-1)*elementow_na_stronie+elementow_na_stronie ]
+        zakres_stron = range(1,ile_stron+1)
         kontekst = {
             'zalogowany': zalogowany,
             'publikacje': publikacje,
+            'ile_stron': ile_stron,
+            'zakres_stron': zakres_stron,
+            'strona': int(strona),
         }
         return render(request, 'InzApp/publikacje.html', kontekst)
 
