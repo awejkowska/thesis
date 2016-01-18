@@ -122,7 +122,7 @@ a:hover {
 
 
 #prawy {
-	float: right;
+	/*float: right;*/
 	background-color: #ffffff; 
 	overflow-y: auto;
 	height: 100%;
@@ -275,10 +275,8 @@ a:hover {
 	float: right;
 }
 
-/*
-	-webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;*/
+
+
 
 #tabela_dodaj_publikacje tr td:first-child {
 	width: 150px;
@@ -546,7 +544,6 @@ input[type="submit"].primary:disabled {
 .miarka {
 	height: 25px;
 	position: relative;
-	/*background: #D1D6E6; */ /*#4B6BAF;*/
 	border-bottom: 1px solid #4B6BAF;
 	text-align: center;
 }
