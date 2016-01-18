@@ -135,7 +135,7 @@ def publikacja(request, publikacja_id):
         obiekt = Publikacja.objects.filter(id = publikacja_id)
         if obiekt.count() > 0:
             p = Publikacja.objects.get(id = publikacja_id)
-            if p.utworzyl != zalogowany["login"]:
+            if p.czy_publiczna == False:
                 wynik = {}
                 wynik["nazwa"] = 'Brak dostępu!'
                 wynik["opis"] = 'Kolekcja prywatna! Brak dostępu.'
