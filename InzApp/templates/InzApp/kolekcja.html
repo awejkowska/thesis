@@ -21,6 +21,15 @@
 	$(function() {
 		$( ".przenies_do" ).select2();
 	});
+	
+	function utworz_link_przenies(id_kolekcji, id_publikacji) {
+    var select_przenies_do = document.getElementById("przenies_do_"+id_kolekcji+"_"+id_publikacji);
+    var kolekcja_id_przenies = select_przenies_do.options[select_przenies_do.selectedIndex].value;
+	
+	var link = document.getElementById("href_"+id_kolekcji+"_"+id_publikacji).href;
+	document.getElementById("href_"+id_kolekcji+"_"+id_publikacji).href = link+kolekcja_id_przenies;
+    //alert(link+kolekcja_id_przenies);
+   }
 	</script>
 	{% endblock %}
 	
@@ -83,7 +92,7 @@
 					{% endif %}
 					</a>
 					</div>
-					{{ forloop.counter }}. <!-- licznik foreach template-->
+					{{ forloop.counter }}. 
 				</td>
 				<td>
 				
@@ -113,12 +122,21 @@
 				<td style="width: 250px;">
 					<a href="{% url 'usun_publikacje_z_kolekcji' kolekcja i.id_publikacji.id %}" onClick="return confirm('Czy na pewno chcesz usunąć tą publikację z kolekcji?');" class="tooltip" tip="Usuń z kolekcji">
 					<i class="fa fa-trash"></i></a> 
-					<a class="tooltip" tip="Przenieś do kolekcji"><i class="fa fa-hand-o-right"></i></a>
-					<select class="przenies_do">
+					
+					<a class="tooltip" tip="Przenieś do kolekcji"
+					href="{% url 'przenies_publikacje' i.id_publikacji.id kolekcja %}"
+					id="href_{{ kolekcja }}_{{ i.id_publikacji.id }}" 
+					><i class="fa fa-hand-o-right"></i></a>
+					<select class="przenies_do" 
+					id="przenies_do_{{ kolekcja }}_{{ i.id_publikacji.id }}" 
+					name="przenies_do_{{ kolekcja }}_{{ i.id_publikacji.id }}" 
+					onChange="utworz_link_przenies({{ kolekcja }}, {{ i.id_publikacji.id }});">
+					<option value="wybierz">wybierz kolekcję...</option>
 					{% for kolekcja in moje_kolekcje %}
 					<option value="{{ kolekcja.id }}">{{ kolekcja.nazwa_kolekcji }}</option>
 					{% endfor %}
 					</select>
+					
 				</td>
 			</tr>
 		

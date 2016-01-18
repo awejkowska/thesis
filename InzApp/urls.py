@@ -25,7 +25,9 @@ urlpatterns = [
     url(r'^dodaj-publikacje-do-kolekcji/(?P<kolekcja_id>[0-9]+)/$', views.dodaj_publikacje_do_kolekcji, name='dodaj_publikacje_do_kolekcji'),
     url(r'^dodaj-nowa-publikacje-do-kolekcji/$', views.dodaj_nowa_publikacje_do_kolekcji, name='dodaj_nowa_publikacje_do_kolekcji'),
     url(r'^usun-publikacje-z-kolekcji/(?P<kolekcja_id>[0-9]+)/(?P<publikacja_id>[0-9]+)/$', views.usun_publikacje_z_kolekcji, name='usun_publikacje_z_kolekcji'),
-    url(r'^dodaj-publikacje-do_kolekcji-z-publikacji/$', views.dodaj_publikacje_do_kolekcji_z_publikacji, name='dodaj_publikacje_do_kolekcji_z_publikacji'),
+    url(r'^przenies_publikacje/(?P<publikacja_id>[0-9]+)/(?P<kolekcja_id>[0-9]+)/(?P<kolekcja_cel>[0-9]+)/$', views.przenies_publikacje, name='przenies_publikacje'),
+    url(r'^przenies_publikacje/(?P<publikacja_id>[0-9]+)/(?P<kolekcja_id>[0-9]+)/$', views.przenies_publikacje, name='przenies_publikacje'),
+    url(r'^dodaj-publikacje-do-kolekcji-z-publikacji/$', views.dodaj_publikacje_do_kolekcji_z_publikacji, name='dodaj_publikacje_do_kolekcji_z_publikacji'),
     url(r'^pola-wyszukiwania/$', views.pola_wyszukiwania, name='pola_wyszukiwania'),
     url(r'^wyniki-wyszukiwania/$', views.wyniki_wyszukiwania, name='wyniki_wyszukiwania'),
     url(r'^bibliografia/(?P<kolekcja_id>[0-9]+)/(?P<typ_id>[0-9]+)/$', views.bibliografia, name='bibliografia'),
@@ -42,6 +44,7 @@ urlpatterns = [
     url(r'^edytuj-autora/(?P<autor_id>[0-9]+)/$', views.edytuj_autora, name='edytuj_autora'),
     url(r'^edytuj-autora-zapisz/$', views.edytuj_autora_zapisz, name='edytuj_autora_zapisz'),
     url(r'^autorzy/$', views.autorzy, name='autorzy'),
+    url(r'^edytuj-publikacje-zapisz/$', views.edytuj_publikacje_zapisz, name='edytuj_publikacje_zapisz'),
 ]
 
 handler404 = 'views.page_not_found' 

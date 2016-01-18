@@ -34,6 +34,17 @@
 	</script> 
 	
 	<div>
+		<table style="width: 100%; text-align: center;">
+			<tr>
+				<td><a href="{% url 'moje_kolekcje' %}">
+				<i class="fa fa-shopping-bag fa-3x"></i><br />
+				Moje kolekcje</a></td>
+				<td><a href="{% url 'dodaj_kolekcje' %}">
+				<i class="fa fa-plus-square fa-3x"></i><br />
+				Dodaj kolekcje</a></td>
+			</tr>
+		</table>
+		<br />
 		
 		<table class="tablesorter" id="publiczne_kolekcje"> 
 		<thead>
@@ -75,9 +86,8 @@
 						<div class="widocznosc_prywatna">PRYWATNA</div>
 					{% endif %}
 				</td>
-				<td style="text-align: center;">
-					<a href="{% url 'kolekcja' kolekcja.id %}" style="font-size: smaller;">
-					<i class="fa fa-eye fa-lg"></i><br>Zobacz<br>szczegóły</a>
+				<td>
+					<a href="{% url 'kolekcja' kolekcja.id %}">Zobacz szczegóły...</a>
 				</td>
 			</tr>
 		{% endfor %}

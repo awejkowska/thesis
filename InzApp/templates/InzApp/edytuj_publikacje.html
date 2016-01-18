@@ -42,12 +42,14 @@
 	
 	<div class="edytuj_publikacje_select2_form">
 		<table id="tabela_edytuj_publikacje">
-			<form action="{% url 'dodaj_nowa_publikacje' %}" method="post">
+			<form action="{% url 'edytuj_publikacje_zapisz' %}" method="post">
 				{% csrf_token %}
 				<input type="hidden" name="edytuj_publikacje_utworzyl" 
 					value="{{ zalogowany.login }}">
 				<input type="hidden" name="edytuj_publikacje_zmodyfikowal" 
 					value="{{ zalogowany.id }}">
+				<input type="hidden" name="edytuj_publikacje_id" 
+					value="{{ publikacja.id }}">
 				<tr>
 					<td>Tytuł</td>
 					<td><input type="text" name="edytuj_publikacje_tytul" id="edytuj_publikacje_tytul" class="pole_tekstowe" style="width: 500px;" value="{{ publikacja.tytul }}" required></td>
@@ -105,7 +107,7 @@
 				{% if publikacja.rodzaj == 'K' %}
 				<tr>
 					<td>Data wydania</td>
-					<td><input type="text" name="edytuj_publikacje_data_wydania" id="edytuj_publikacje_data_wydania"class="pole_tekstowe" value="{{ o_publikacji.data_wydania }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_data_wydania" id="edytuj_publikacje_data_wydania"class="pole_tekstowe" value="{{ o_publikacji.data_wydania|date:'Y-m-d' }}" /></td>
 				</tr>
 				<tr>
 					<td>Wydawnictwo</td>
@@ -128,7 +130,7 @@
 				<tr>
 					<td>ISBN</td>
 					<td>
-					<input type="number" name="edytuj_publikacje_isbn" maxlength="13" class="pole_tekstowe" value="{{ o_publikacji.isbn }}" />
+					<input type="text" name="edytuj_publikacje_isbn" maxlength="13" class="pole_tekstowe" value="{{ o_publikacji.isbn }}" />
 					<a tip="Wprowadż 13- lub 10-cyfrowy ISBN bez oddzielania cyfr myślnikami." class="tooltip">
 					<i class="fa fa-question-circle"></i>
 					</a>
@@ -138,7 +140,7 @@
 				{% elif publikacja.rodzaj == 'A' %}
 				<tr>
 					<td>Data publikacji</td>
-					<td><input type="text" name="edytuj_publikacje_data_publikacji" id="edytuj_publikacje_data_publikacji" class="pole_tekstowe" value="{{ o_publikacji.data_publikacji }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_data_publikacji" id="edytuj_publikacje_data_publikacji" class="pole_tekstowe" value="{{ o_publikacji.data_publikacji|date:'Y-m-d' }}" /></td>
 				</tr>
 				<tr>
 					<td>Czasopismo</td>
@@ -152,11 +154,11 @@
 				{% elif publikacja.rodzaj == 'M' %}
 				<tr>
 					<td>Nazwa konferencji</td>
-					<td><input type="text" name="edytuj_publikacje_nazwa_konferencji" class="pole_tekstowe" value="{{ o_publikacji.opis }}" style="width: 500px;" /></td>
+					<td><input type="text" name="edytuj_publikacje_nazwa_konferencji" class="pole_tekstowe" value="{{ o_publikacji.nazwa_konferencji }}" style="width: 500px;" /></td>
 				</tr>
 				<tr>
 					<td>Data konferencji</td>
-					<td><input type="text" name="edytuj_publikacje_data_konferencji" id="edytuj_publikacje_data_konferencji" class="pole_tekstowe" value="{{ o_publikacji.opis }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_data_konferencji" id="edytuj_publikacje_data_konferencji" class="pole_tekstowe" value="{{ o_publikacji.data_konferencji|date:'Y-m-d' }}" /></td>
 				</tr>
 				
 				{% elif publikacja.rodzaj == 'W' %}
@@ -166,11 +168,11 @@
 				</tr>
 				<tr>
 					<td>Adres URL</td>
-					<td><input type="text" name="edytuj_publikacje_adres_url" class="pole_tekstowe" value="{{ o_publikacji.adres_url }}" style="width: 500px;"/></td>
+					<td><input type="url" name="edytuj_publikacje_adres_url" class="pole_tekstowe" value="{{ o_publikacji.adres_url }}" style="width: 500px;"/></td>
 				</tr>
 				<tr>
 					<td>Data odwiedzin</td>
-					<td><input type="text" name="edytuj_publikacje_data_odwiedzin" id="edytuj_publikacje_data_odwiedzin" class="pole_tekstowe" value="{{ o_publikacji.data_odwiedzin }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_data_odwiedzin" id="edytuj_publikacje_data_odwiedzin" class="pole_tekstowe" value="{{ o_publikacji.data_odwiedzin|date:'Y-m-d' }}" /></td>
 					<!-- DateTimeField !!! -->
 				</tr>
 				
@@ -213,7 +215,7 @@
 				
 				<tr>
 					<td>URL</td>
-					<td><input type="text" name="edytuj_publikacje_url" class="pole_tekstowe" style="width: 500px;" /></td>
+					<td><input type="url" name="edytuj_publikacje_url" class="pole_tekstowe" style="width: 500px;" /></td>
 				</tr>
 				<tr>
 					<td>Plik</td>

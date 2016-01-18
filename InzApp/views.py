@@ -129,9 +129,6 @@ def publikacja(request, publikacja_id):
                 o_publikacji = Witryna_Internetowa.objects.get(id_publikacji__exact = p)
             elif p.rodzaj == 'R':
                 o_publikacji = Rozdzial_Ksiazki.objects.get(id_publikacji__exact = p)
-            
-            #p.ilosc_odslon = F('ilosc_odslon') + 1
-            #p.save()
             kp = Kolekcja_Publikacja.objects.filter(id_publikacji__exact = Publikacja.objects.get(id = publikacja_id)).values("id_kolekcji") #wartosci danego pola z QuerySet !!!
             kolekcje_w_ktorych_juz_jest = []
             kolekcje = Kolekcja.objects.filter(id_uzytkownika__exact = Uzytkownik.objects.get(id = zalogowany["id"])).exclude(id__in = kp)
@@ -198,13 +195,10 @@ def dodaj_kolekcje(request):
         return render(request, 'InzApp/dodaj_kolekcje.html', kontekst)
 
 def dodaj_nowa_kolekcje(request):
-    osoba = Uzytkownik.objects.filter(id = request.POST.get('nowa_kolekcja_id_uzytkownika'))
-    if osoba.count() > 0:
-        uzytkownik_kolekcji = Uzytkownik.objects.get(id = request.POST.get('nowa_kolekcja_id_uzytkownika'))
-        nowa_kolekcja = Kolekcja(nazwa_kolekcji = request.POST.get('nowa_kolekcja_nazwa'), opis = request.POST.get('nowa_kolekcja_opis'), data_utworzenia = timezone.now(), data_modyfikacji = timezone.now(), id_uzytkownika = uzytkownik_kolekcji, czy_publiczna = request.POST.get('nowa_kolekcja_czy_publiczna'))
-        nowa_kolekcja.save()
-        return HttpResponse("Dodano nowa kolekcje.")
-    return HttpResponse("Blad.")
+    uzytkownik_kolekcji = Uzytkownik.objects.get(id = request.POST.get('nowa_kolekcja_id_uzytkownika'))
+    nowa_kolekcja = Kolekcja(nazwa_kolekcji = request.POST.get('nowa_kolekcja_nazwa'), opis = request.POST.get('nowa_kolekcja_opis'), data_utworzenia = timezone.now(), data_modyfikacji = timezone.now(), id_uzytkownika = uzytkownik_kolekcji, czy_publiczna = request.POST.get('nowa_kolekcja_czy_publiczna'))
+    nowa_kolekcja.save()
+    return redirect('/moje-kolekcje') 
 
 def edytuj_kolekcje(request, kolekcja_id):
     if "zalogowany_login" not in request.session:
@@ -248,7 +242,7 @@ def edytuj_kolekcje_zapisz(request):
 def usun_kolekcje(request, kolekcja_id):
     kolekcja = Kolekcja.objects.get(id = kolekcja_id)
     kolekcja.delete()
-    return HttpResponse("Pomyslnie usunieto kolekcje.")
+    return redirect('/moje-kolekcje') 
 
 def rejestracja(request):
     return render(request, 'InzApp/rejestracja.html')
@@ -256,7 +250,7 @@ def rejestracja(request):
 def zarejestruj(request):
     nowy = Uzytkownik(login = request.POST.get('rejestracja_login'), haslo = hashlib.sha1(request.POST.get('rejestracja_haslo')).hexdigest(), email = request.POST.get('rejestracja_email'), data_ostatniego_logowania = timezone.now()) 
     nowy.save()
-    return HttpResponse("Dodano nowego uzytkownika")
+    return redirect('/') #return HttpResponse("Dodano nowego uzytkownika")
 
 def logowanie(request):
     return render(request, 'InzApp/logowanie.html')
@@ -398,6 +392,58 @@ def dodaj_nowa_publikacje(request):
         nowy_rk.save()
     return HttpResponse("Pomyslnie dodano publikacje.")
 
+def edytuj_publikacje_zapisz(request):
+    publikacja = Publikacja.objects.get(id = request.POST.get('edytuj_publikacje_id'))
+    publikacja.tytul = request.POST.get("edytuj_publikacje_tytul")
+    publikacja.autor = Autor.objects.get(id = request.POST.get("edytuj_publikacje_select2_autor")) 
+    publikacja.dziedzina = Dziedzina.objects.get(id = request.POST.get("edytuj_publikacje_select2_dziedzina"))
+    publikacja.jezyk = Jezyk.objects.get(id = request.POST.get("edytuj_publikacje_select2_jezyk"))
+    publikacja.opis = request.POST.get("edytuj_publikacje_opis")
+    publikacja.slowa_kluczowe = request.POST.get("edytuj_publikacje_slowa_kluczowe")
+    publikacja.czy_publiczna = request.POST.get("edytuj_publikacje_czy_publiczna")
+    publikacja.url = request.POST.get("edytuj_publikacje_url")
+    publikacja.plik = request.FILES.get("edytuj_publikacje_plik")
+    publikacja.save()
+    rodzaj = publikacja.rodzaj
+    if rodzaj == 'K':
+        ksiazka = Ksiazka.objects.get(id_publikacji = Publikacja.objects.get(id = publikacja.id)) 
+        ksiazka.data_wydania = request.POST.get("edytuj_publikacje_data_wydania")
+        ksiazka.wydawnictwo = request.POST.get("edytuj_publikacje_wydawnictwo") 
+        ksiazka.format = request.POST.get("edytuj_publikacje_format")
+        ksiazka.ilosc_stron = request.POST.get("edytuj_publikacje_ilosc_stron")
+        ksiazka.isbn = request.POST.get("edytuj_publikacje_isbn")
+        ksiazka.save()
+    elif rodzaj == 'A':
+        artykul = Artykul.objects.get(id_publikacji = Publikacja.objects.get(id = publikacja.id))
+        artykul.data_publikacji = request.POST.get("edytuj_publikacje_data_publikacji") 
+        artykul.czasopismo = request.POST.get("edytuj_publikacje_czasopismo")
+        artykul.zakres_stron = request.POST.get("edytuj_publikacje_zakres_stron")
+        artykul.save()
+    elif rodzaj == 'M':
+        mk = Materialy_Konferencyjne.objects.get(id_publikacji = Publikacja.objects.get(id = publikacja.id))
+        mk.nazwa_konferencji = request.POST.get("edytuj_publikacje_nazwa_konferencji")
+        mk.data_konferencji = request.POST.get("edytuj_publikacje_data_konferencji")
+        mk.save()
+    elif rodzaj == 'W':
+        wi = Witryna_Internetowa.objects.get(id_publikacji = Publikacja.objects.get(id = publikacja.id)) 
+        wi.wlasciciel = request.POST.get("edytuj_publikacje_wlasciciel")
+        wi.adres_URL = request.POST.get("edytuj_publikacje_adres_url")
+        wi.data_odwiedzin = request.POST.get("edytuj_publikacje_data_odwiedzin")
+        wi.save()
+    elif rodzaj == 'R':
+        rk = Rozdzial_Ksiazki.objects.get(id_publikacji = Publikacja.objects.get(id = publikacja.id)) 
+        rk.id_ksiazki = Ksiazka.objects.get(id = request.POST.get("edytuj_publikacje_id_ksiazki"))
+        rk.save()
+    wynik = {}
+    wynik["nazwa"] = 'Zapisano zmiany.'
+    wynik["opis"] = 'Pomyslnie zapisano zmiany w szczegółach publikacji.'
+    wynik["nazwa_podstrony"] = 'Zapisano zmiany'
+    wynik["url_przekierowania"] = 'moje_publikacje'
+    kontekst = {
+        'wynik': wynik,		
+    }
+    return render(request, 'InzApp/wynik.html', kontekst)
+
 def moje_publikacje(request):
     if "zalogowany_login" not in request.session:
         return logowanie(request) #gdy niezalogowany
@@ -490,20 +536,33 @@ def dodaj_nowa_publikacje_do_kolekcji(request):
     publikacja = Publikacja.objects.get(id = request.POST.get('publikacja_do_kolekcji_id_publikacji'))
     nowa_publikacja_do_kolekcji = Kolekcja_Publikacja(id_kolekcji = kolekcja, id_publikacji = publikacja)
     nowa_publikacja_do_kolekcji.save()
-    #return HttpResponse("Pomyslnie dodano nowa publikacje do kolekcji.")
-    return redirect('/publikacje')
+    return redirect('/kolekcja/'+str(request.POST.get('publikacja_do_kolekcji_id_kolekcji')))
 
 def usun_publikacje_z_kolekcji(request, kolekcja_id, publikacja_id):
     kolekcja = Kolekcja.objects.get(id = kolekcja_id)
     publikacja = Publikacja.objects.get(id = publikacja_id)
     kp = Kolekcja_Publikacja.objects.get(id_kolekcji__exact = kolekcja, id_publikacji__exact = publikacja)
     kp.delete()
-    return HttpResponse("Pomyslnie usunieto publikacje z kolekcji.")
+    return redirect('/kolekcja/'+kolekcja_id)
+
+def przenies_publikacje(request, publikacja_id, kolekcja_id, kolekcja_cel = 0):
+    if kolekcja_cel == 0:
+        return redirect('/kolekcja/'+kolekcja_id)
+    publikacja = Publikacja.objects.get(id = publikacja_id)
+    kolekcja_z = Kolekcja.objects.get(id = kolekcja_id)
+    kolekcja_do = Kolekcja.objects.get(id = kolekcja_cel)
+    czy_istnieje = Kolekcja_Publikacja.objects.filter(id_kolekcji__exact = kolekcja_do, id_publikacji__exact = publikacja)
+    if czy_istnieje.count() == 0:
+        nowa_kp = Kolekcja_Publikacja(id_kolekcji = kolekcja_do, id_publikacji = publikacja)
+        nowa_kp.save()
+    kp = Kolekcja_Publikacja.objects.get(id_kolekcji__exact = kolekcja_z, id_publikacji__exact = publikacja)
+    kp.delete()
+    return redirect('/kolekcja/'+kolekcja_id)
 
 def dodaj_publikacje_do_kolekcji_z_publikacji(request):
     nowa_kp = Kolekcja_Publikacja(id_kolekcji = Kolekcja.objects.get(id = request.POST.get('publikacja_dodaj_do_kolekcji_kolekcja')), id_publikacji = Publikacja.objects.get(id = request.POST.get('publikacja_dodaj_do_kolekcji_publikacja')))
     nowa_kp.save()
-    return HttpResponse("Pomyslnie dodano nowa publikacje do kolekcji.")
+    return redirect('/publikacja/'+str(nowa_kp.id_publikacji.id))
 	
 def pola_wyszukiwania(request):
     if "zalogowany_login" not in request.session:
@@ -546,7 +605,7 @@ def wyniki_wyszukiwania(request):
         if request.POST.get('p_opis') != "":
             lista_warunkow.append( Q(opis__icontains = request.POST.get('p_opis')) )
         if request.POST.get('p_rodzaj') != "dowolny":
-            lista_warunkow.append( Q(rodzaj__exact = request.POST.get('p_rodzaj')) ) #return HttpResponse("rodzaj "+request.POST.get('p_rodzaj')+" jezyk "+request.POST.get('p_jezyk')+" , dziedzina "+request.POST.get('p_dziedzina'))
+            lista_warunkow.append( Q(rodzaj__exact = request.POST.get('p_rodzaj')) ) 
         if request.POST.get('p_dziedzina') != "dowolny":
             lista_warunkow.append( Q(dziedzina__exact = Dziedzina.objects.get(id = request.POST.get('p_dziedzina'))) )
         if request.POST.get('p_jezyk') != "dowolny":
