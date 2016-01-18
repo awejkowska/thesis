@@ -558,7 +558,7 @@ def publikacje(request, strona = 1): # publiczne i zalogowanego
         zalogowany["email"] = request.session["zalogowany_email"]
         zalogowany["ostatnio"] = request.session["zalogowany_ostatnio"]
         uzytkownik = Uzytkownik.objects.get(id = int(zalogowany["id"]))
-        elementow_na_stronie = 3
+        elementow_na_stronie = 7
         publikacje = Publikacja.objects.filter(Q(czy_publiczna__exact = True) | Q(utworzyl__exact = uzytkownik.login))
         ile_stron = int(ceil(float(len(publikacje))/float(elementow_na_stronie)))
         publikacje = publikacje[ (int(strona)-1)*elementow_na_stronie : (int(strona)-1)*elementow_na_stronie+elementow_na_stronie ]
