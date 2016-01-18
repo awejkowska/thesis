@@ -135,6 +135,16 @@ def publikacja(request, publikacja_id):
         obiekt = Publikacja.objects.filter(id = publikacja_id)
         if obiekt.count() > 0:
             p = Publikacja.objects.get(id = publikacja_id)
+            if p.utworzyl != zalogowany["login"]:
+                wynik = {}
+                wynik["nazwa"] = 'Brak dostępu!'
+                wynik["opis"] = 'Kolekcja prywatna! Brak dostępu.'
+                wynik["nazwa_podstrony"] = 'Brak dostępu'
+                wynik["url_przekierowania"] = 'strona_glowna'
+                kontekst = {
+                    'wynik': wynik,		
+                }
+                return render(request, 'InzApp/wynik.html', kontekst)
             if p.rodzaj == 'K':
                 o_publikacji = Ksiazka.objects.get(id_publikacji__exact = p)
             elif p.rodzaj == 'A':
@@ -217,8 +227,12 @@ def dodaj_kolekcje(request):
         return render(request, 'InzApp/dodaj_kolekcje.html', kontekst)
 
 def dodaj_nowa_kolekcje(request):
+    if request.POST.get('nowa_kolekcja_czy_publiczna') is None:
+        publiczna = False
+    else:
+        publiczna = request.POST.get('nowa_kolekcja_czy_publiczna')
     uzytkownik_kolekcji = Uzytkownik.objects.get(id = request.POST.get('nowa_kolekcja_id_uzytkownika'))
-    nowa_kolekcja = Kolekcja(nazwa_kolekcji = request.POST.get('nowa_kolekcja_nazwa'), opis = request.POST.get('nowa_kolekcja_opis'), data_utworzenia = timezone.now(), data_modyfikacji = timezone.now(), id_uzytkownika = uzytkownik_kolekcji, czy_publiczna = request.POST.get('nowa_kolekcja_czy_publiczna'))
+    nowa_kolekcja = Kolekcja(nazwa_kolekcji = request.POST.get('nowa_kolekcja_nazwa'), opis = request.POST.get('nowa_kolekcja_opis'), data_utworzenia = timezone.now(), data_modyfikacji = timezone.now(), id_uzytkownika = uzytkownik_kolekcji, czy_publiczna = publiczna)
     nowa_kolekcja.save()
     return redirect('/moje-kolekcje') 
 
@@ -586,7 +600,15 @@ def dodaj_publikacje_do_kolekcji(request, kolekcja_id):
         zalogowany["ostatnio"] = request.session["zalogowany_ostatnio"]
         kolekcja = Kolekcja.objects.get(id = kolekcja_id)
         if kolekcja.id_uzytkownika != Uzytkownik.objects.get(id = zalogowany["id"]):
-            return HttpResponse("Nie Twoja kolekcja!")
+            wynik = {}
+            wynik["nazwa"] = 'Błąd!'
+            wynik["opis"] = 'Brak uprawnień do kolekcji, której nie jesteś twórcą.'
+            wynik["nazwa_podstrony"] = 'Błąd'
+            wynik["url_przekierowania"] = 'strona_glowna'
+            kontekst = {
+                'wynik': wynik,		
+            }
+            return render(request, 'InzApp/wynik.html', kontekst)
         kp = Kolekcja_Publikacja.objects.filter(id_kolekcji__exact = kolekcja)
         id_publikacji_z_kolekcji = []
         for rekord in kp:
@@ -783,11 +805,19 @@ def zmien_ustawienia_konta(request):
             if request.POST.get('ustawienia_nhaslo') != "":
                 zalogowany.haslo = hashlib.sha1(request.POST.get('ustawienia_nhaslo')).hexdigest()
         zalogowany.email = request.POST.get('ustawienia_email')
-        zalogowany.data_modyfikacji = datetime.now()
+        zalogowany.data_modyfikacji = datetime.datetime.now()
         zalogowany.save()
-        return HttpResponse("Zapisano zmiany.")
+        return redirect('/ustawienia') #"Zapisano zmiany."
     else:
-        return HttpResponse("Bledne biezace haslo!")
+        wynik = {}
+        wynik["nazwa"] = 'Błąd!'
+        wynik["opis"] = 'Błędne bieżące hasło.'
+        wynik["nazwa_podstrony"] = 'Błąd'
+        wynik["url_przekierowania"] = 'ustawienia'
+        kontekst = {
+            'wynik': wynik,		
+        }
+        return render(request, 'InzApp/wynik.html', kontekst)
 
 def wynik(request):
     wynik = {}
@@ -886,6 +916,16 @@ def edytuj_publikacje(request, publikacja_id):
         obiekt = Publikacja.objects.filter(id = publikacja_id)
         if obiekt.count() > 0:
             p = Publikacja.objects.get(id = publikacja_id)
+            if p.utworzyl != zalogowany["login"]:
+                wynik = {}
+                wynik["nazwa"] = 'Brak dostępu!'
+                wynik["opis"] = 'Brak uprawnień do edycji tej publikacji!'
+                wynik["nazwa_podstrony"] = 'Brak dostępu'
+                wynik["url_przekierowania"] = 'strona_glowna'
+                kontekst = {
+                    'wynik': wynik,		
+                }
+                return render(request, 'InzApp/wynik.html', kontekst)
             if p.rodzaj == 'K':
                 o_publikacji = Ksiazka.objects.get(id_publikacji__exact = p)
             elif p.rodzaj == 'A':
@@ -911,8 +951,15 @@ def edytuj_publikacje(request, publikacja_id):
             }
             return render(request, 'InzApp/edytuj_publikacje.html', kontekst) 
         else:
-            p = "<font color=red>Blad nie ma takiej publikacji! </font>"
-            return HttpResponse(p)
+            wynik = {}
+            wynik["nazwa"] = 'Błąd!'
+            wynik["opis"] = 'Nie ma takiej publikacji!'
+            wynik["nazwa_podstrony"] = 'Błąd'
+            wynik["url_przekierowania"] = 'strona_glowna'
+            kontekst = {
+                'wynik': wynik,		
+            }
+            return render(request, 'InzApp/wynik.html', kontekst)
 
 def dodaj_autora(request):
     if "zalogowany_login" not in request.session:

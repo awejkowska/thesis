@@ -147,6 +147,7 @@
 	<div id="publikacja_dodaj_do_kolekcji" style="display: none;">
 		<form method="post" action="{% url 'dodaj_publikacje_do_kolekcji_z_publikacji' %}">
 			{% csrf_token %}
+			{% if kolekcje.all %}
 			<select name="publikacja_dodaj_do_kolekcji_kolekcja"
 			 id="publikacja_dodaj_do_kolekcji_kolekcja" style="width: 500px;">
 				{% for kolekcja in kolekcje %}
@@ -155,6 +156,10 @@
 			</select>
 			<input type="hidden" name="publikacja_dodaj_do_kolekcji_publikacja" value="{{ id }}" />
 			<input type="submit" value="+" />
+			{% else %}
+			<br>
+			<i>Brak utworzonych kolekcji.</i> <a href="{% url 'dodaj_kolekcje' %}"><i class="fa fa-plus-square fa-fw"></i>Dodaj kolekcje</a>
+			{% endif %}
 		</form>
 	</div>
 	<div>
