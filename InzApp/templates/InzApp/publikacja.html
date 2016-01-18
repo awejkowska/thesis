@@ -158,7 +158,7 @@
 			<input type="submit" value="+" />
 			{% else %}
 			<br>
-			<i>Brak utworzonych kolekcji.</i> <a href="{% url 'dodaj_kolekcje' %}"><i class="fa fa-plus-square fa-fw"></i>Dodaj kolekcje</a>
+			<a tip="Brak utworzonych kolekcji lub dana publikacja jest już we wszystkich stworzonych kolekcjach" class="tooltip" style="font-style: italic;">Brak kolekcji do wyboru.</a> <a href="{% url 'dodaj_kolekcje' %}"><i class="fa fa-plus-square fa-fw"></i>Dodaj kolekcje</a>
 			{% endif %}
 		</form>
 	</div>
