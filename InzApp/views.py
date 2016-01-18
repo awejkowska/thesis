@@ -135,7 +135,45 @@ def publikacja(request, publikacja_id):
         obiekt = Publikacja.objects.filter(id = publikacja_id)
         if obiekt.count() > 0:
             p = Publikacja.objects.get(id = publikacja_id)
-            if p.czy_publiczna == False:
+            if p.czy_publiczna == True or (p.czy_publiczna == False and p.id_uzytkownika == zalogowany["id"]):
+                if p.rodzaj == 'K':
+                    o_publikacji = Ksiazka.objects.get(id_publikacji__exact = p)
+                elif p.rodzaj == 'A':
+                    o_publikacji = Artykul.objects.get(id_publikacji__exact = p)
+                elif p.rodzaj == 'M':
+                    o_publikacji = Materialy_Konferencyjne.objects.get(id_publikacji__exact = p)
+                elif p.rodzaj == 'W':
+                    o_publikacji = Witryna_Internetowa.objects.get(id_publikacji__exact = p)
+                elif p.rodzaj == 'R':
+                    o_publikacji = Rozdzial_Ksiazki.objects.get(id_publikacji__exact = p)
+                kp = Kolekcja_Publikacja.objects.filter(id_publikacji__exact = Publikacja.objects.get(id = publikacja_id)).values("id_kolekcji") #wartosci danego pola z QuerySet !!!
+                kolekcje_w_ktorych_juz_jest = []
+                kolekcje = Kolekcja.objects.filter(id_uzytkownika__exact = Uzytkownik.objects.get(id = zalogowany["id"])).exclude(id__in = kp)
+                kontekst = {
+                    'id': p.id, 
+                    'tytul': p.tytul, 
+                    'autor': p.autor, 
+                    'rodzaj_skrot': p.rodzaj,
+                    'rodzaj': p.get_rodzaj_display(), 
+                    'dziedzina': p.dziedzina.nazwa,
+                    'dziedzina_skrot': p.dziedzina.skrot,			
+                    'slowa_kluczowe': p.slowa_kluczowe, 
+                    'jezyk': p.jezyk.nazwa,
+                    'jezyk_skrot': p.jezyk.skrot,			
+                    'opis': p.opis, 
+                    'url': p.url,
+                    'plik': p.plik,
+                    'czy_publiczna': p.czy_publiczna,
+                    'utworzyl': p.utworzyl, #login
+                    'zmodyfikowal': p.zmodyfikowal, #Uzytkownik
+                    'data_utworzenia': str(p.data_utworzenia),
+                    'data_modyfikacji': str(p.data_modyfikacji),
+                    'o_publikacji': o_publikacji,
+                    'zalogowany': zalogowany,
+                    'kolekcje': kolekcje,
+                }
+                return render(request, 'InzApp/publikacja.html', kontekst) 
+            else:
                 wynik = {}
                 wynik["nazwa"] = 'Brak dostępu!'
                 wynik["opis"] = 'Kolekcja prywatna! Brak dostępu.'
@@ -145,43 +183,6 @@ def publikacja(request, publikacja_id):
                     'wynik': wynik,		
                 }
                 return render(request, 'InzApp/wynik.html', kontekst)
-            if p.rodzaj == 'K':
-                o_publikacji = Ksiazka.objects.get(id_publikacji__exact = p)
-            elif p.rodzaj == 'A':
-                o_publikacji = Artykul.objects.get(id_publikacji__exact = p)
-            elif p.rodzaj == 'M':
-                o_publikacji = Materialy_Konferencyjne.objects.get(id_publikacji__exact = p)
-            elif p.rodzaj == 'W':
-                o_publikacji = Witryna_Internetowa.objects.get(id_publikacji__exact = p)
-            elif p.rodzaj == 'R':
-                o_publikacji = Rozdzial_Ksiazki.objects.get(id_publikacji__exact = p)
-            kp = Kolekcja_Publikacja.objects.filter(id_publikacji__exact = Publikacja.objects.get(id = publikacja_id)).values("id_kolekcji") #wartosci danego pola z QuerySet !!!
-            kolekcje_w_ktorych_juz_jest = []
-            kolekcje = Kolekcja.objects.filter(id_uzytkownika__exact = Uzytkownik.objects.get(id = zalogowany["id"])).exclude(id__in = kp)
-            kontekst = {
-                'id': p.id, 
-                'tytul': p.tytul, 
-                'autor': p.autor, 
-                'rodzaj_skrot': p.rodzaj,
-                'rodzaj': p.get_rodzaj_display(), 
-                'dziedzina': p.dziedzina.nazwa,
-                'dziedzina_skrot': p.dziedzina.skrot,			
-                'slowa_kluczowe': p.slowa_kluczowe, 
-                'jezyk': p.jezyk.nazwa,
-                'jezyk_skrot': p.jezyk.skrot,			
-                'opis': p.opis, 
-                'url': p.url,
-                'plik': p.plik,
-                'czy_publiczna': p.czy_publiczna,
-                'utworzyl': p.utworzyl, #login
-                'zmodyfikowal': p.zmodyfikowal, #Uzytkownik
-                'data_utworzenia': str(p.data_utworzenia),
-                'data_modyfikacji': str(p.data_modyfikacji),
-                'o_publikacji': o_publikacji,
-                'zalogowany': zalogowany,
-                'kolekcje': kolekcje,
-            }
-            return render(request, 'InzApp/publikacja.html', kontekst) 
         else:
             wynik = {}
             wynik["nazwa"] = 'Błąd!'
