@@ -141,9 +141,20 @@
 		<td>Zmodyfikowano:</td>
 		<td>{{ zmodyfikowal.login }} ({{ data_modyfikacji|slice:"0:19" }})</td>
 	</tr>
-	
+	<tr>
+		<td>
+		{% if url != '' %}
+		<a href="{{ url }}" target="_blank"><i class="fa fa-external-link"></i> Przejdź do strony</a>
+		{% endif %}
+		</td>
+		<td>
+		{% if plik.url != '' %}
+		<a href="{{ plik.url|slice:'6:' }}"><i class="fa fa-download"></i> Pobierz plik</a>
+		{% endif %}
+		</td>
+	</tr>
 	</table>
-	
+	<br>
 	<div id="publikacja_dodaj_do_kolekcji" style="display: none;">
 		<form method="post" action="{% url 'dodaj_publikacje_do_kolekcji_z_publikacji' %}">
 			{% csrf_token %}

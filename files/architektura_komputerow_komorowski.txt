@@ -1,5 +1,0 @@
-publikacja naukowa
-ksi¹¿ka
-----------------------------------
-Witold Komorowski
-Architektura komputerów. Model CISC

@@ -49,7 +49,7 @@ class Jezyk(models.Model):
     skrot = models.CharField(max_length=15)	
     def __str__(self):
 	    return self.nazwa.encode('utf8')
-	
+
 class Publikacja(models.Model):
     RODZAJE = ( # ----------------- p.rodzaj / p.get_rodzaj_display()
         ('K','Książka'),
@@ -87,8 +87,7 @@ class Publikacja(models.Model):
     data_utworzenia = models.DateTimeField(default=datetime.datetime.now()) 
     data_modyfikacji = models.DateTimeField(default=datetime.datetime.now())
     url = models.URLField(null=True, blank=True) #not required
-    #plik = models.FilePathField(path='/InzApp/files', null=True, blank=True) #not required
-    plik = models.FileField(upload_to='files/', null=True, blank=True) #not required
+    plik = models.FileField(upload_to='InzApp/static/files/', null=True, blank=True) #not required
     def __str__(self):
 	    return self.tytul.encode('utf8')+" / "+str(self.autor)
 

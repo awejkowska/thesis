@@ -476,6 +476,10 @@ def dodaj_nowa_publikacje(request):
     return redirect('/moje-publikacje') #"Pomyslnie dodano publikacje."
 
 def edytuj_publikacje_zapisz(request):
+    if request.POST.get("edytuj_publikacje_czy_publiczna") == None:
+        publiczna = False
+    else:
+        publiczna = True
     publikacja = Publikacja.objects.get(id = request.POST.get('edytuj_publikacje_id'))
     publikacja.tytul = request.POST.get("edytuj_publikacje_tytul")
     publikacja.autor = Autor.objects.get(id = request.POST.get("edytuj_publikacje_select2_autor")) 
@@ -483,9 +487,10 @@ def edytuj_publikacje_zapisz(request):
     publikacja.jezyk = Jezyk.objects.get(id = request.POST.get("edytuj_publikacje_select2_jezyk"))
     publikacja.opis = request.POST.get("edytuj_publikacje_opis")
     publikacja.slowa_kluczowe = request.POST.get("edytuj_publikacje_slowa_kluczowe")
-    publikacja.czy_publiczna = request.POST.get("edytuj_publikacje_czy_publiczna")
+    publikacja.czy_publiczna = publiczna
     publikacja.url = request.POST.get("edytuj_publikacje_url")
     publikacja.plik = request.FILES.get("edytuj_publikacje_plik")
+    publikacja.data_modyfikacji = datetime.datetime.now()
     publikacja.save()
     rodzaj = publikacja.rodzaj
     if rodzaj == 'K':
@@ -558,7 +563,7 @@ def publikacje(request, strona = 1): # publiczne i zalogowanego
         zalogowany["email"] = request.session["zalogowany_email"]
         zalogowany["ostatnio"] = request.session["zalogowany_ostatnio"]
         uzytkownik = Uzytkownik.objects.get(id = int(zalogowany["id"]))
-        elementow_na_stronie = 7
+        elementow_na_stronie = 10
         publikacje = Publikacja.objects.filter(Q(czy_publiczna__exact = True) | Q(utworzyl__exact = uzytkownik.login))
         ile_stron = int(ceil(float(len(publikacje))/float(elementow_na_stronie)))
         publikacje = publikacje[ (int(strona)-1)*elementow_na_stronie : (int(strona)-1)*elementow_na_stronie+elementow_na_stronie ]

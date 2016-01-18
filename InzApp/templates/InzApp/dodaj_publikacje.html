@@ -43,7 +43,8 @@
 	<div class="dodaj_publikacje_form" onLoad="ustaw_pola_formularza_dodawania_publikacji_wg_rodzaju();">
 		<table id="tabela_dodaj_publikacje">
 			<form action="{% url 'dodaj_nowa_publikacje' %}" method="post"
-			onSubmit="return sprawdz_formularz_dodaj_publikacje();">
+			onSubmit="return sprawdz_formularz_dodaj_publikacje();"
+			enctype="multipart/form-data">
 				{% csrf_token %}
 				<input type="hidden" name="nowa_publikacja_utworzyl" 
 					value="{{ zalogowany.login }}">
@@ -139,7 +140,7 @@
 				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
 					<td>ISBN</td>
 					<td>
-					<input type="number" name="nowa_publikacja_isbn" maxlength="13" class="pole_tekstowe" />
+					<input type="text" name="nowa_publikacja_isbn" maxlength="13" class="pole_tekstowe" />
 					<a tip="Wprowadż 13- lub 10-cyfrowy ISBN bez oddzielania cyfr myślnikami." class="tooltip">
 					<i class="fa fa-question-circle"></i>
 					</a>

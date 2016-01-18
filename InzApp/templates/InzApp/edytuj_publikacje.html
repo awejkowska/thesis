@@ -42,7 +42,8 @@
 	
 	<div class="edytuj_publikacje_select2_form">
 		<table id="tabela_edytuj_publikacje">
-			<form action="{% url 'edytuj_publikacje_zapisz' %}" method="post">
+			<form action="{% url 'edytuj_publikacje_zapisz' %}" method="post"
+			enctype="multipart/form-data">
 				{% csrf_token %}
 				<input type="hidden" name="edytuj_publikacje_utworzyl" 
 					value="{{ zalogowany.login }}">
@@ -227,11 +228,11 @@
 				
 				<tr>
 					<td>URL</td>
-					<td><input type="url" name="edytuj_publikacje_url" class="pole_tekstowe" style="width: 500px;" /></td>
+					<td><input type="url" name="edytuj_publikacje_url" class="pole_tekstowe" style="width: 500px;" value="{{ publikacja.url }}" /></td>
 				</tr>
 				<tr>
 					<td>Plik</td>
-					<td><input type="file" name="edytuj_publikacje_plik" /></td>
+					<td><input type="file" name="edytuj_publikacje_plik" value="{{ publikacja.plik }}" /></td>
 				</tr>
 				
 				<tr>
