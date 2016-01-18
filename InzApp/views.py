@@ -135,7 +135,7 @@ def publikacja(request, publikacja_id):
         obiekt = Publikacja.objects.filter(id = publikacja_id)
         if obiekt.count() > 0:
             p = Publikacja.objects.get(id = publikacja_id)
-            if p.czy_publiczna == True or (p.czy_publiczna == False and p.id_uzytkownika == zalogowany["id"]):
+            if p.czy_publiczna == True or (p.czy_publiczna == False and p.utworzyl == zalogowany["login"]):
                 if p.rodzaj == 'K':
                     o_publikacji = Ksiazka.objects.get(id_publikacji__exact = p)
                 elif p.rodzaj == 'A':
