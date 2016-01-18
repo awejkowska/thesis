@@ -774,6 +774,23 @@ def bibliografia(request, kolekcja_id, typ_id):
                     opis.append( publikacja.id_publikacji.autor.imie[0] + ". " + publikacja.id_publikacji.autor.nazwisko + ", " + "'" + publikacja.id_publikacji.tytul + "', " + "w " )
                     opis.append( szczegoly.id_ksiazki.id_publikacji.tytul + "," ) #kursywa
                     opis.append( szczegoly.id_ksiazki.miejsce_wydania + ": " + szczegoly.id_ksiazki.wydawnictwo + ", " + str(szczegoly.id_ksiazki.data_wydania.year) + "." )
+            if typ_id == '3': # if bibtex
+                klucz_cytowania = kolekcja.id_uzytkownika.login+'-'+str(kolekcja.id)
+                if publikacja.id_publikacji.rodzaj == 'K':
+                    szczegoly = Ksiazka.objects.get(id_publikacji__exact = publikacja.id_publikacji.id)
+                    opis.append('@Book{'+klucz_cytowania+', author = "'+publikacja.id_publikacji.autor.imie+' '+publikacja.id_publikacji.autor.nazwisko+'", title = "'+publikacja.id_publikacji.tytul+'", publisher = "'+szczegoly.wydawnictwo+'", year = "'+str(szczegoly.data_wydania.year)+'", isbn = "'+szczegoly.isbn+'"}')
+                if publikacja.id_publikacji.rodzaj == 'A':
+                    szczegoly = Artykul.objects.get(id_publikacji__exact = publikacja.id_publikacji.id)
+                    opis.append('@Article{'+klucz_cytowania+', author = "'+publikacja.id_publikacji.autor.imie+' '+publikacja.id_publikacji.autor.nazwisko+'", title = "'+publikacja.id_publikacji.tytul+'", journal = "'+szczegoly.czasopismo+'", year = "'+str(szczegoly.data_publikacji.year)+'", pages = "'+szczegoly.zakres_stron+'"}')
+                if publikacja.id_publikacji.rodzaj == 'M':
+                    szczegoly = Materialy_Konferencyjne.objects.get(id_publikacji__exact = publikacja.id_publikacji.id)
+                    opis.append('@Inproceedings{'+klucz_cytowania+', author = "'+publikacja.id_publikacji.autor.imie+' '+publikacja.id_publikacji.autor.nazwisko+'", title = "'+publikacja.id_publikacji.tytul+'", booktitle = "'+szczegoly.nazwa_konferencji+'", year = "'+str(szczegoly.data_konferencji.year)+'"}')
+                if publikacja.id_publikacji.rodzaj == 'W':
+                    szczegoly = Witryna_Internetowa.objects.get(id_publikacji__exact = publikacja.id_publikacji.id)
+                    opis.append('@misc{'+klucz_cytowania+', author = "'+publikacja.id_publikacji.autor.imie+' '+publikacja.id_publikacji.autor.nazwisko+'", title = "'+publikacja.id_publikacji.tytul+'", howpublished = "[Online]", year = "'+str(szczegoly.data_odwiedzin.year)+'", note = "[Dostęp: '+str(szczegoly.data_odwiedzin)[0:10]+']", annote = "Dostępny w Internecie: \url{'+szczegoly.adres_URL+'}" }')
+                if publikacja.id_publikacji.rodzaj == 'R':
+                    szczegoly = Rozdzial_Ksiazki.objects.get(id_publikacji__exact = publikacja.id_publikacji.id)
+                    opis.append('@Incollection{'+klucz_cytowania+', author = "'+publikacja.id_publikacji.autor.imie+' '+publikacja.id_publikacji.autor.nazwisko+'", title = "'+publikacja.id_publikacji.tytul+'", booktitle = "'+szczegoly.id_ksiazki.id_publikacji.tytul+'", publisher = "'+szczegoly.id_ksiazki.wydawnictwo+'", year = "'+str(szczegoly.id_ksiazki.data_wydania.year)+'}')
             bibliografia_lista.append(opis)
         kontekst = {
             'zalogowany': zalogowany, 
