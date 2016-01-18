@@ -167,7 +167,6 @@ def publikacja(request, publikacja_id):
                 'zmodyfikowal': p.zmodyfikowal, #Uzytkownik
                 'data_utworzenia': str(p.data_utworzenia),
                 'data_modyfikacji': str(p.data_modyfikacji),
-                'ilosc_odslon': p.ilosc_odslon,
                 'o_publikacji': o_publikacji,
                 'zalogowany': zalogowany,
                 'kolekcje': kolekcje,
@@ -318,6 +317,16 @@ def zaloguj(request):
             c = RequestContext(request, {
                 'foo': 'bar',
             })
+            if uzytkownik.zablokowany == True:
+                wynik = {}
+                wynik["nazwa"] = 'Użytkownik zablokowany!'
+                wynik["opis"] = 'Odmowa zalogowania się użytkownika do portalu Thesis z powodu blokady przez administratora.'
+                wynik["nazwa_podstrony"] = 'Użytkownik zablokowany'
+                wynik["url_przekierowania"] = 'logowanie'
+                kontekst = {
+                    'wynik': wynik,		
+                }
+                return render(request, 'InzApp/wynik.html', kontekst)
             wynik = {}
             wynik["nazwa"] = 'Logowanie'
             wynik["opis"] = 'Trwa logowanie użytkownika do portalu Thesis.'
@@ -415,35 +424,41 @@ def dodaj_nowa_publikacje(request):
     if rodzaj == 'K':
         nowa_ksiazka = Ksiazka(id_publikacji = Publikacja.objects.get(id = nowa_publikacja.id),
         wydawnictwo = request.POST.get("nowa_publikacja_wydawnictwo"), 
-        format = request.POST.get("nowa_publikacja_format"), 
-        ilosc_stron = request.POST.get("nowa_publikacja_ilosc_stron"), 
-        isbn = request.POST.get("nowa_publikacja_isbn"))
-        print request.POST.get("nowa_publikacja_data_wydania")
-        if request.POST.get("nowa_publikacja_data_wydania") != '':
-            nowa_ksiazka.data_wydania = request.POST.get("nowa_publikacja_data_wydania")
+        miejsce_wydania = request.POST.get("nowa_publikacja_miejsce_wydania"), 
+        data_wydania = request.POST.get("nowa_publikacja_data_wydania"))
+        if request.POST.get("nowa_publikacja_format") != '':
+            nowa_ksiazka.format = request.POST.get("nowa_publikacja_format")
+        if request.POST.get("nowa_publikacja_ilosc_stron") != '':
+            nowa_ksiazka.ilosc_stron = request.POST.get("nowa_publikacja_ilosc_stron")
+        if request.POST.get("nowa_publikacja_isbn") != '':
+            nowa_ksiazka.isbn = request.POST.get("nowa_publikacja_isbn")
         nowa_ksiazka.save()
     elif rodzaj == 'A':
         nowy_artykul = Artykul(id_publikacji = Publikacja.objects.get(id = nowa_publikacja.id), 
         data_publikacji = request.POST.get("nowa_publikacja_data_publikacji"), 
         czasopismo = request.POST.get("nowa_publikacja_czasopismo"), 
-        zakres_stron = request.POST.get("nowa_publikacja_zakres_stron"))
+        nr_czasopisma = request.POST.get("nowa_publikacja_nr_czasopisma")) 
+        if request.POST.get("nowa_publikacja_zakres_stron") != '':
+            nowy_artykul.zakres_stron = request.POST.get("nowa_publikacja_zakres_stron")
         nowy_artykul.save()
     elif rodzaj == 'M':
-        mowe_mk = Materialy_Konferencyjne(id_publikacji = Publikacja.objects.get(id = nowa_publikacja.id), 
+        nowe_mk = Materialy_Konferencyjne(id_publikacji = Publikacja.objects.get(id = nowa_publikacja.id), 
         nazwa_konferencji = request.POST.get("nowa_publikacja_nazwa_konferencji"), 
-        data_konferencji = request.POST.get("nowa_publikacja_data_konferencji"))
-        mowe_mk.save()
+        data_konferencji = request.POST.get("nowa_publikacja_data_konferencji"), 
+        lokalizacja_konferencji = request.POST.get("nowa_publikacja_lokalizacja_konferencji"))
+        nowe_mk.save()
     elif rodzaj == 'W':
-        nowa_wi = Witryna_Internetowa(id_publikacji = Publikacja.objects.get(id = nowa_publikacja.id), 
-        wlasciciel = request.POST.get("nowa_publikacja_wlasciciel"), 
+        nowa_wi = Witryna_Internetowa(id_publikacji = Publikacja.objects.get(id = nowa_publikacja.id),  
         adres_URL = request.POST.get("nowa_publikacja_adres_url"), 
         data_odwiedzin = request.POST.get("nowa_publikacja_data_odwiedzin"))
+        if request.POST.get("nowa_publikacja_wlasciciel") != '':
+            nowa_wi.wlasciciel = request.POST.get("nowa_publikacja_wlasciciel")
         nowa_wi.save()
     elif rodzaj == 'R':
         nowy_rk = Rozdzial_Ksiazki(id_publikacji = Publikacja.objects.get(id = nowa_publikacja.id), 
         id_ksiazki = Ksiazka.objects.get(id = request.POST.get("nowa_publikacja_id_ksiazki")))
         nowy_rk.save()
-    return redirect('/moje-publikacje') #return HttpResponse("Pomyslnie dodano publikacje.")
+    return redirect('/moje-publikacje') #"Pomyslnie dodano publikacje."
 
 def edytuj_publikacje_zapisz(request):
     publikacja = Publikacja.objects.get(id = request.POST.get('edytuj_publikacje_id'))
@@ -465,17 +480,20 @@ def edytuj_publikacje_zapisz(request):
         ksiazka.format = request.POST.get("edytuj_publikacje_format")
         ksiazka.ilosc_stron = request.POST.get("edytuj_publikacje_ilosc_stron")
         ksiazka.isbn = request.POST.get("edytuj_publikacje_isbn")
+        ksiazka.miejsce_wydania = request.POST.get("edytuj_publikacje_miejsce_wydania")
         ksiazka.save()
     elif rodzaj == 'A':
         artykul = Artykul.objects.get(id_publikacji = Publikacja.objects.get(id = publikacja.id))
         artykul.data_publikacji = request.POST.get("edytuj_publikacje_data_publikacji") 
         artykul.czasopismo = request.POST.get("edytuj_publikacje_czasopismo")
         artykul.zakres_stron = request.POST.get("edytuj_publikacje_zakres_stron")
+        artykul.nr_czasopisma = request.POST.get("edytuj_publikacje_nr_czasopisma")
         artykul.save()
     elif rodzaj == 'M':
         mk = Materialy_Konferencyjne.objects.get(id_publikacji = Publikacja.objects.get(id = publikacja.id))
         mk.nazwa_konferencji = request.POST.get("edytuj_publikacje_nazwa_konferencji")
         mk.data_konferencji = request.POST.get("edytuj_publikacje_data_konferencji")
+        mk.lokalizacja_konferencji = request.POST.get("edytuj_publikacje_lokalizacja_konferencji")
         mk.save()
     elif rodzaj == 'W':
         wi = Witryna_Internetowa.objects.get(id_publikacji = Publikacja.objects.get(id = publikacja.id)) 
@@ -704,7 +722,7 @@ def bibliografia(request, kolekcja_id, typ_id):
                     szczegoly = Witryna_Internetowa.objects.get(id_publikacji__exact = publikacja.id_publikacji.id)
                     opis.append( publikacja.id_publikacji.autor.nazwisko + ", " + publikacja.id_publikacji.autor.imie[0] + ". (" + str(szczegoly.data_odwiedzin.year) + "). " )
                     opis.append( publikacja.id_publikacji.tytul + "," )
-                    opis.append( "[Online]. Dostępne z: " + szczegoly.adres_URL + ". [Dostęp: " + str(szczegoly.data_odwiedzin)[0:19] + "]." )
+                    opis.append( "[Online]. Dostępne z: " + szczegoly.adres_URL + ". [Dostęp: " + str(szczegoly.data_odwiedzin)[0:10] + "]." )
                 if publikacja.id_publikacji.rodzaj == 'R':
                     szczegoly = Rozdzial_Ksiazki.objects.get(id_publikacji__exact = publikacja.id_publikacji.id)
                     opis.append( publikacja.id_publikacji.autor.nazwisko + ", " + publikacja.id_publikacji.autor.imie[0] + ". (" + str(szczegoly.id_ksiazki.data_wydania.year) + "). " + publikacja.id_publikacji.tytul + ", w:" )
@@ -728,7 +746,7 @@ def bibliografia(request, kolekcja_id, typ_id):
                     opis.append( szczegoly.lokalizacja_konferencji + ", " + str(szczegoly.data_konferencji.year) + "." )
                 if publikacja.id_publikacji.rodzaj == 'W':
                     szczegoly = Witryna_Internetowa.objects.get(id_publikacji__exact = publikacja.id_publikacji.id)
-                    opis.append( publikacja.id_publikacji.autor.imie[0] + ". " + publikacja.id_publikacji.autor.nazwisko + ", " + "'" + publikacja.id_publikacji.tytul + "', " + str(szczegoly.data_odwiedzin.year) + ". [Online]. Dostępne: " + szczegoly.adres_URL + ". [Dostęp: " + str(szczegoly.data_odwiedzin)[0:19] + "]." )
+                    opis.append( publikacja.id_publikacji.autor.imie[0] + ". " + publikacja.id_publikacji.autor.nazwisko + ", " + "'" + publikacja.id_publikacji.tytul + "', " + str(szczegoly.data_odwiedzin.year) + ". [Online]. Dostępne: " + szczegoly.adres_URL + ". [Dostęp: " + str(szczegoly.data_odwiedzin)[0:10] + "]." )
                 if publikacja.id_publikacji.rodzaj == 'R':
                     szczegoly = Rozdzial_Ksiazki.objects.get(id_publikacji__exact = publikacja.id_publikacji.id)
                     opis.append( publikacja.id_publikacji.autor.imie[0] + ". " + publikacja.id_publikacji.autor.nazwisko + ", " + "'" + publikacja.id_publikacji.tytul + "', " + "w " )

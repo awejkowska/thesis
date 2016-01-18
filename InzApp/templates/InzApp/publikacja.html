@@ -73,6 +73,10 @@
 		<td>{{ o_publikacji.wydawnictwo }}</td>
 	</tr>
 	<tr>
+		<td>Miejsce wydania:</td>
+		<td>{{ o_publikacji.miejsce_wydania }}</td>
+	</tr>
+	<tr>
 		<td>Ilosc stron:</td>
 		<td>{{ o_publikacji.ilosc_stron }}</td>
 	</tr>
@@ -94,6 +98,10 @@
 		<td>{{ o_publikacji.czasopismo }}</td>
 	</tr>
 	<tr>
+		<td>Numer czasopisma:</td>
+		<td>{{ o_publikacji.nr_czasopisma }}</td>
+	</tr>
+	<tr>
 		<td>Zakres stron:</td>
 		<td>{{ o_publikacji.zakres_stron }}</td>
 	</tr>
@@ -105,6 +113,10 @@
 	<tr>
 		<td>Data konferencji:</td>
 		<td>{{ o_publikacji.data_konferencji.day }}.{{ o_publikacji.data_konferencji.month }}.{{ o_publikacji.data_konferencji.year }}</td>
+	</tr>
+	<tr>
+		<td>Lokalizacja konferencji:</td>
+		<td>{{ o_publikacji.lokalizacja_konferencji }}</td>
 	</tr>
 	{% elif rodzaj_skrot == 'W' %}
 	<tr>
@@ -123,18 +135,13 @@
 	
 	<tr>
 		<td>Utworzono:</td>
-		<td>{{ utworzyl }} {{ data_utworzenia|slice:"0:19" }}</td>
+		<td>{{ utworzyl }} ({{ data_utworzenia|slice:"0:19" }})</td>
 	</tr>
 	<tr>
 		<td>Zmodyfikowano:</td>
-		<td>{{ zmodyfikowal.login }} {{ data_modyfikacji|slice:"0:19" }}</td>
+		<td>{{ zmodyfikowal.login }} ({{ data_modyfikacji|slice:"0:19" }})</td>
 	</tr>
-	<!--
-	<tr>
-		<td>Ilość odsłon:</td>
-		<td>{{ ilosc_odslon }}</td>
-	</tr>
-	-->
+	
 	</table>
 	
 	<div id="publikacja_dodaj_do_kolekcji" style="display: none;">

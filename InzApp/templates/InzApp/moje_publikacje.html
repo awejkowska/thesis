@@ -55,7 +55,7 @@
 		<tbody>
 		{% for publikacja in publikacje %}
 		<tr>
-			<td>
+			<td style="text-align: center;">
 				<a href="{% url 'publikacja' publikacja.id %}" tip="Zobacz" class="tooltip"><i class="fa fa-eye"></i></a>
 				<a href="{% url 'edytuj_publikacje' publikacja.id %}" tip="Edytuj" class="tooltip"><i class="fa fa-pencil"></i></a>
 				<a href="{% url 'usun_publikacje' publikacja.id %}" tip="Usuń" class="tooltip"><i class="fa fa-trash-o"></i></a>

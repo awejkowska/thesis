@@ -55,18 +55,29 @@ function ustaw_pola_formularza_dodawania_publikacji_wg_rodzaju()
 	if (rodzaj == 'K')
 	{
 		pokaz_pola_formularza_dodawania_publikacji_wg_rodzaju("dodaj_publikacje_ksiazka");
+		document.getElementById("nowa_publikacja_data_wydania").required = true;
+		document.getElementById("nowa_publikacja_wydawnictwo").required = true;
+		document.getElementById("nowa_publikacja_miejsce_wydania").required = true;
 	}
 	if (rodzaj == 'A')
 	{
 		pokaz_pola_formularza_dodawania_publikacji_wg_rodzaju("dodaj_publikacje_artykul");
+		document.getElementById("nowa_publikacja_data_publikacji").required = true;
+		document.getElementById("nowa_publikacja_czasopismo").required = true;
+		document.getElementById("nowa_publikacja_nr_czasopisma").required = true;
 	}
 	if (rodzaj == 'M')
 	{
 		pokaz_pola_formularza_dodawania_publikacji_wg_rodzaju("dodaj_publikacje_materialy");
+		document.getElementById("nowa_publikacja_nazwa_konferencji").required = true;
+		document.getElementById("nowa_publikacja_data_konferencji").required = true;
+		document.getElementById("nowa_publikacja_lokalizacja_konferencji").required = true;
 	}
 	if (rodzaj == 'W')
 	{
 		pokaz_pola_formularza_dodawania_publikacji_wg_rodzaju("dodaj_publikacje_witryna");
+		document.getElementById("nowa_publikacja_adres_url").required = true;
+		document.getElementById("nowa_publikacja_data_odwiedzin").required = true;
 	}
 	if (rodzaj == 'R')
 	{

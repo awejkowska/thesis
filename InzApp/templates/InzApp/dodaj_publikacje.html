@@ -51,12 +51,12 @@
 					value="{{ zalogowany.id }}">
 				<tr>
 					<td>Tytuł</td>
-					<td><input type="text" name="nowa_publikacja_tytul" id="nowa_publikacja_tytul" class="pole_tekstowe" style="width: 500px;"></td>
+					<td><input type="text" name="nowa_publikacja_tytul" id="nowa_publikacja_tytul" class="pole_tekstowe" style="width: 500px;" required /></td>
 				</tr>
 				<tr>
 					<td>Autor</td>
 					<td>
-						<select id="dodaj_publikacje_autor" name="dodaj_publikacje_autor" style="width: 500px;">
+						<select id="dodaj_publikacje_autor" name="dodaj_publikacje_autor" style="width: 500px;" required="true">
 						<option value="wybierz">Wybierz autora...</option>
 						{% for a in autorzy %}
 						<option value="{{ a.id }}">{{ a }}</option>
@@ -71,7 +71,7 @@
 				<tr>
 					<td>Dziedzina</td>
 					<td>
-						<select id="dodaj_publikacje_dziedzina" name="dodaj_publikacje_dziedzina" style="width: 500px;">
+						<select id="dodaj_publikacje_dziedzina" name="dodaj_publikacje_dziedzina" style="width: 500px;" required="true">
 						<option value="wybierz">Wybierz dziedzinę...</option>
 						{% for d in dziedziny %}
 						<option value="{{ d.id }}">{{ d.nazwa }}</option>
@@ -82,7 +82,7 @@
 				<tr>
 					<td>Język</td>
 					<td>
-						<select id="dodaj_publikacje_jezyk" name="dodaj_publikacje_jezyk" style="width: 250px;">
+						<select id="dodaj_publikacje_jezyk" name="dodaj_publikacje_jezyk" style="width: 250px;" required="true">
 						<option value="wybierz">Wybierz język...</option>
 						{% for j in jezyki %}
 						<option value="{{ j.id }}">{{ j.nazwa }}</option>
@@ -94,7 +94,7 @@
 					<td>Rodzaj</td>
 					<td>
 						<select id="dodaj_publikacje_rodzaj" name="dodaj_publikacje_rodzaj" 
-						onChange="ustaw_pola_formularza_dodawania_publikacji_wg_rodzaju();" style="width: 250px;">
+						onChange="ustaw_pola_formularza_dodawania_publikacji_wg_rodzaju();" style="width: 250px;" required="true">
 						<option value="wybierz">Wybierz rodzaj...</option>
 						{% for r in rodzaje %}
 						<option value="{{ r.0 }}">{{ r.1 }}</option>
@@ -106,11 +106,15 @@
 				<!-- if ksiazka -->
 				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
 					<td>Data wydania</td>
-					<td><input type="text" name="nowa_publikacja_data_wydania" id="nowa_publikacja_data_wydania"class="pole_tekstowe" /></td>
+					<td><input type="text" name="nowa_publikacja_data_wydania" id="nowa_publikacja_data_wydania"class="pole_tekstowe" /></td> <!-- required JS -->
 				</tr>
 				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
 					<td>Wydawnictwo</td>
-					<td><input type="text" name="nowa_publikacja_wydawnictwo" class="pole_tekstowe" style="width: 500px;" /></td>
+					<td><input type="text" name="nowa_publikacja_wydawnictwo" id="nowa_publikacja_wydawnictwo" class="pole_tekstowe" style="width: 500px;"  /></td> <!-- required JS -->
+				</tr>
+				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
+					<td>Miejsce wydania</td>
+					<td><input type="text" name="nowa_publikacja_miejsce_wydania" id="nowa_publikacja_miejsce_wydania" class="pole_tekstowe" style="width: 500px;"  /></td> <!-- required JS -->
 				</tr>
 				<tr class="dodaj_publikacje_ksiazka" style="display: none;">
 					<td>Format</td>
@@ -142,14 +146,19 @@
 					</td>
 				</tr>
 				
+				
 				<!-- else if artykul -->
 				<tr class="dodaj_publikacje_artykul" style="display: none;">
 					<td>Data publikacji</td>
-					<td><input type="text" name="nowa_publikacja_data_publikacji" id="nowa_publikacja_data_publikacji" class="pole_tekstowe" /></td>
+					<td><input type="text" name="nowa_publikacja_data_publikacji" id="nowa_publikacja_data_publikacji" class="pole_tekstowe"  /></td> <!-- required JS -->
 				</tr>
 				<tr class="dodaj_publikacje_artykul" style="display: none;">
 					<td>Czasopismo</td>
-					<td><input type="text" name="nowa_publikacja_czasopismo" class="pole_tekstowe" style="width: 500px;" /></td>
+					<td><input type="text" name="nowa_publikacja_czasopismo" id="nowa_publikacja_czasopismo" class="pole_tekstowe" style="width: 500px;"  /></td> <!-- required JS -->
+				</tr>
+				<tr class="dodaj_publikacje_artykul" style="display: none;">
+					<td>Numer czasopisma</td>
+					<td><input type="number" name="nowa_publikacja_nr_czasopisma" id="nowa_publikacja_nr_czasopisma" class="pole_tekstowe"  /></td> <!-- required JS -->
 				</tr>
 				<tr class="dodaj_publikacje_artykul" style="display: none;">
 					<td>Zakres stron</td>
@@ -159,11 +168,15 @@
 				<!-- else if materialy -->
 				<tr class="dodaj_publikacje_materialy" style="display: none;">
 					<td>Nazwa konferencji</td>
-					<td><input type="text" name="nowa_publikacja_nazwa_konferencji" class="pole_tekstowe" style="width: 500px;" /></td>
+					<td><input type="text" name="nowa_publikacja_nazwa_konferencji" id="nowa_publikacja_nazwa_konferencji" class="pole_tekstowe" style="width: 500px;"  /></td> <!-- required JS -->
 				</tr>
 				<tr class="dodaj_publikacje_materialy" style="display: none;">
 					<td>Data konferencji</td>
-					<td><input type="text" name="nowa_publikacja_data_konferencji" id="nowa_publikacja_data_konferencji" class="pole_tekstowe"/></td>
+					<td><input type="text" name="nowa_publikacja_data_konferencji" id="nowa_publikacja_data_konferencji" class="pole_tekstowe"  /></td> <!-- required JS -->
+				</tr>
+				<tr class="dodaj_publikacje_materialy" style="display: none;">
+					<td>Lokalizacja konferencji</td>
+					<td><input type="text" name="nowa_publikacja_lokalizacja_konferencji" id="nowa_publikacja_lokalizacja_konferencji" class="pole_tekstowe" style="width: 500px;"  /></td> <!-- required JS -->
 				</tr>
 				
 				<!-- else if witryna -->
@@ -173,12 +186,12 @@
 				</tr>
 				<tr class="dodaj_publikacje_witryna" style="display: none;">
 					<td>Adres URL</td>
-					<td><input type="text" name="nowa_publikacja_adres_url" class="pole_tekstowe" style="width: 500px;" /></td>
+					<td><input type="text" name="nowa_publikacja_adres_url" id="nowa_publikacja_adres_url" class="pole_tekstowe" style="width: 500px;"  /></td> <!-- required JS -->
 				</tr>
 				<tr class="dodaj_publikacje_witryna" style="display: none;">
 					<td>Data odwiedzin</td>
-					<td><input type="text" name="nowa_publikacja_data_odwiedzin" id="nowa_publikacja_data_odwiedzin" class="pole_tekstowe" /></td>
-					<!-- DateTimeField !!! -->
+					<td><input type="text" name="nowa_publikacja_data_odwiedzin" id="nowa_publikacja_data_odwiedzin" class="pole_tekstowe"  /></td>
+					<!-- required JS -->
 				</tr>
 				
 				<!-- else if rozdzial -->
@@ -186,7 +199,7 @@
 					<td>Książka</td>
 					<td>
 						<select name="nowa_publikacja_id_ksiazki"
-						id="nowa_publikacja_id_ksiazki" style="width: 500px;">
+						id="nowa_publikacja_id_ksiazki" style="width: 500px;" required="true">
 						<option value="wybierz">Wybierz książkę...</option>
 						{% for k in ksiazki %}
 						<option value="{{ k.id }}">{{ k.tytul }} ({{ k.autor.imie }} {{ k.autor.nazwisko }})</option>

@@ -107,11 +107,15 @@
 				{% if publikacja.rodzaj == 'K' %}
 				<tr>
 					<td>Data wydania</td>
-					<td><input type="text" name="edytuj_publikacje_data_wydania" id="edytuj_publikacje_data_wydania"class="pole_tekstowe" value="{{ o_publikacji.data_wydania|date:'Y-m-d' }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_data_wydania" id="edytuj_publikacje_data_wydania"class="pole_tekstowe" value="{{ o_publikacji.data_wydania|date:'Y-m-d' }}" required /></td>
 				</tr>
 				<tr>
 					<td>Wydawnictwo</td>
-					<td><input type="text" name="edytuj_publikacje_wydawnictwo" class="pole_tekstowe" value="{{ o_publikacji.wydawnictwo }}" style="width: 500px;" /></td>
+					<td><input type="text" name="edytuj_publikacje_wydawnictwo" class="pole_tekstowe" value="{{ o_publikacji.wydawnictwo }}" style="width: 500px;" required /></td>
+				</tr>
+				<tr>
+					<td>Miejsce wydania</td>
+					<td><input type="text" name="edytuj_publikacje_miejsce_wydania" class="pole_tekstowe" value="{{ o_publikacji.miejsce_wydania }}" style="width: 500px;" required /></td>
 				</tr>
 				<tr>
 					<td>Format</td>
@@ -140,11 +144,15 @@
 				{% elif publikacja.rodzaj == 'A' %}
 				<tr>
 					<td>Data publikacji</td>
-					<td><input type="text" name="edytuj_publikacje_data_publikacji" id="edytuj_publikacje_data_publikacji" class="pole_tekstowe" value="{{ o_publikacji.data_publikacji|date:'Y-m-d' }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_data_publikacji" id="edytuj_publikacje_data_publikacji" class="pole_tekstowe" value="{{ o_publikacji.data_publikacji|date:'Y-m-d' }}" required /></td>
 				</tr>
 				<tr>
 					<td>Czasopismo</td>
-					<td><input type="text" name="edytuj_publikacje_czasopismo" class="pole_tekstowe" value="{{ o_publikacji.czasopismo }}" style="width: 500px;" /></td>
+					<td><input type="text" name="edytuj_publikacje_czasopismo" class="pole_tekstowe" value="{{ o_publikacji.czasopismo }}" style="width: 500px;" required /></td>
+				</tr>
+				<tr>
+					<td>Numer czasopisma</td>
+					<td><input type="number" name="edytuj_publikacje_nr_czasopisma" class="pole_tekstowe" value="{{ o_publikacji.nr_czasopisma }}" required /></td>
 				</tr>
 				<tr>
 					<td>Zakres stron</td>
@@ -154,11 +162,15 @@
 				{% elif publikacja.rodzaj == 'M' %}
 				<tr>
 					<td>Nazwa konferencji</td>
-					<td><input type="text" name="edytuj_publikacje_nazwa_konferencji" class="pole_tekstowe" value="{{ o_publikacji.nazwa_konferencji }}" style="width: 500px;" /></td>
+					<td><input type="text" name="edytuj_publikacje_nazwa_konferencji" class="pole_tekstowe" value="{{ o_publikacji.nazwa_konferencji }}" style="width: 500px;" required /></td>
 				</tr>
 				<tr>
 					<td>Data konferencji</td>
-					<td><input type="text" name="edytuj_publikacje_data_konferencji" id="edytuj_publikacje_data_konferencji" class="pole_tekstowe" value="{{ o_publikacji.data_konferencji|date:'Y-m-d' }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_data_konferencji" id="edytuj_publikacje_data_konferencji" class="pole_tekstowe" value="{{ o_publikacji.data_konferencji|date:'Y-m-d' }}" required /></td>
+				</tr>
+				<tr>
+					<td>Lokalizacja konferencji</td>
+					<td><input type="text" name="edytuj_publikacje_lokalizacja_konferencji" class="pole_tekstowe" style="width: 500px;" value="{{ o_publikacji.lokalizacja_konferencji }}" required /></td>
 				</tr>
 				
 				{% elif publikacja.rodzaj == 'W' %}
@@ -168,11 +180,11 @@
 				</tr>
 				<tr>
 					<td>Adres URL</td>
-					<td><input type="url" name="edytuj_publikacje_adres_url" class="pole_tekstowe" value="{{ o_publikacji.adres_url }}" style="width: 500px;"/></td>
+					<td><input type="url" name="edytuj_publikacje_adres_url" class="pole_tekstowe" value="{{ o_publikacji.adres_url }}" style="width: 500px;"required /></td>
 				</tr>
 				<tr>
 					<td>Data odwiedzin</td>
-					<td><input type="text" name="edytuj_publikacje_data_odwiedzin" id="edytuj_publikacje_data_odwiedzin" class="pole_tekstowe" value="{{ o_publikacji.data_odwiedzin|date:'Y-m-d' }}" /></td>
+					<td><input type="text" name="edytuj_publikacje_data_odwiedzin" id="edytuj_publikacje_data_odwiedzin" class="pole_tekstowe" value="{{ o_publikacji.data_odwiedzin|date:'Y-m-d' }}" required /></td>
 					<!-- DateTimeField !!! -->
 				</tr>
 				

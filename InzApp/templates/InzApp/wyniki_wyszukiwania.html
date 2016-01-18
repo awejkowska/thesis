@@ -52,10 +52,11 @@
 		<tbody>
 		{% for publikacja in wyszukane_publikacje %}
 		<tr>
-			<td {% if publikacja.utworzyl == zalogowany.login %}
-					class="moja_publikacja"
+			<td>
+				{% if publikacja.utworzyl == zalogowany.login %}
+				<a tip="Moja publikacja" class="tooltip"><i class="fa fa-key"></i></a>
 				{% endif %}
-			>{{ forloop.counter }}</td>
+			</td>
 			<td>{{ publikacja.tytul }}</td>
 			<td>{{ publikacja.autor.imie }} {{ publikacja.autor.nazwisko }}</td>
 			<td>{{ publikacja.get_rodzaj_display }}</td>
